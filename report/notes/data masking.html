@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>data masking</title></head>
+<body><p>&nbsp;</p>
+<p>&nbsp;</p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Single table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a Data Masking model.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: SELECT id,k FROM t_test WHERE id = # AND k = #
+Comparative type: SELECT
+</code></pre>
+<p>&nbsp;</p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Single table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a Data Masking model.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: UPDATE t_test SET k = # WHERE id = # AND k = #
+Comparative type: UPDATE
+</code></pre>
+<p>&nbsp;</p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Single table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a Data Masking model.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: DELETE FROM t_test WHERE id = # AND k = #
+Comparative type: DELETE
+</code></pre>
+<p>&nbsp;</p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Single table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a Data Masking model.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: INSERT INTO t_test(k,c,pad) VALUES(#,#,#)
+Comparative type: INSERT
+</code></pre>
+<p>&nbsp;</p>
+</body>
+</html>

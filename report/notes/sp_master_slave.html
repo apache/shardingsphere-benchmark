@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>sp_master_slave</title></head>
+<body><p><img src='../sp_raw/select_single_raw.png' alt='select_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave model.Including One master, one subordinate.We used id, k, c, pad fields in the table.
+Sql Example:SELECT id,k FROM t_test WHERE id = 1
+Comparative type: SELECT
+</code></pre>
+<p><img src='../sp_raw/select_single_raw.png' alt='select_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave model.Including One master, one subordinate.We used id, k, c, pad fields in the table.
+Sql Example: UPDATE t_test SET pad = # WHERE id = #
+Comparative type: UPDATE
+</code></pre>
+<p><img src='../sp_raw/select_single_raw.png' alt='select_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave model.Including One master, one subordinate.We used id, k, c, pad fields in the table.
+Sql Example: DELETE FROM t_test WHERE id = 1
+</code></pre>
+<p><img src='../sp_raw/select_single_raw.png' alt='select_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave model.Including One master, one subordinate.We used id, k, c, pad fields in the table.
+Sql Example: INSERT INTO t_test(k,c,pad) VALUES(#,#,#)
+Comparative type: INSERT
+</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

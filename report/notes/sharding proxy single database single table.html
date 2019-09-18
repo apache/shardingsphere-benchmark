@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>sharding proxy single database single table</title></head>
+<body><p><img src='../scenario_1/select_single.png' alt='insert_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a SingleDataBase and SingleTable model.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: SELECT id,k FROM t_test WHERE id = # AND k = #
+Comparative type: SELECT
+</code></pre>
+<p><img src='../scenario_1/update_single.png' alt='update_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a SingleDataBase and SingleTable model.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: UPDATE t_test SET pad = # WHERE id = # AND k = #
+Comparative type: UPDATE
+</code></pre>
+<p><img src='../scenario_1/delete_single.png' alt='delete_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a SingleDataBase and SingleTable model.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: DELETE FROM t_test WHERE id = # AND k = #
+Comparative type: DELETE
+</code></pre>
+<p><img src='../scenario_1/insert_single.png' alt='insert_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a SingleDataBase and SingleTable model.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: INSERT INTO t_test(k,c,pad) VALUES(#,#,#)
+Comparative type: INSERT
+</code></pre>
+<p>&nbsp;</p>
+</body>
+</html

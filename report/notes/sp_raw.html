@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>sp_raw</title></head>
+<body><p><img src='../sp_raw/select_single_raw.png' alt='select_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single Table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a model for connecting directly to a database through a proxy.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: SELECT id,k FROM t_test WHERE id = # AND k = #
+Comparative type: SELECT
+</code></pre>
+<p><img src='../sp_raw/update_single_raw.png' alt='update_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single Table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a model for connecting directly to a database through a proxy.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: UPDATE t_test SET k = # WHERE id = # AND k = #
+Comparative type: UPDATE
+</code></pre>
+<p><img src='../sp_raw/delete_single_raw.png' alt='delete_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single Table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a model for connecting directly to a database through a proxy.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: DELETE FROM t_test WHERE id = # AND k = #
+Comparative type: DELETE
+</code></pre>
+<p><img src='../sp_raw/insert_single_raw.png' alt='insert_single_raw' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number: single Table(e.g:t_test)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a model for connecting directly to a database through a proxy.We used id, k, c, pad fields in the table.Including a database and a table.
+Sql Example: INSERT INTO t_test(k,c,pad) VALUES(#,#,#)
+Comparative type: INSERT
+</code></pre>
+<p>&nbsp;</p>
+</body>
+</html>
