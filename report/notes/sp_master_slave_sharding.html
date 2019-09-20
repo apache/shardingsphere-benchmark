@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>sp_master_slave_sharding</title></head>
+<body><p><img src='../master_slave/select_ms_sharding_single.png' alt='select_ms_sharding_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number:  Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave Sharding model.Including two master, two subordinate.Means that each master database contains two slave databases.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: SELECT id,k FROM t_test WHERE id = # AND k = #
+Comparative type: SELECT
+</code></pre>
+<p><img src='../master_slave/update_ms_sharding_single.png' alt='update_ms_sharding_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number:  Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave Sharding model.Including two master, two subordinate.Means that each master database contains two slave databases.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: UPDATE t_test SET pad = # WHERE id = # AND k = #
+Comparative type: UPDATE
+</code></pre>
+<p><img src='../master_slave/delete_ms_sharding_single.png' alt='delete_ms_sharding_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number:  Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave Sharding model.Including two master, two subordinate.Means that each master database contains two slave databases.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: DELETE FROM t_test WHERE id = # AND k = #
+Comparative type: DELETE
+</code></pre>
+<p><img src='../master_slave/insert_ms_sharding_single.png' alt='insert_ms_sharding_single' referrerPolicy='no-referrer' /></p>
+<pre><code>Comparative Version:
+	Mysql: 5.1.42(red curve)
+	ShardingSphere-proxy: 3.0(blue curve) or 4.0(aqua curve)
+Table Number:  Multi table(e.g:t_test_0,t_test_1......)
+Data Volume: 200w
+Axis:
+	X: (TEST TIMES)/DAY
+	Y: TPS
+Scene Description：This is a MasterSlave Sharding model.Including two master, two subordinate.Means that each master database contains two slave databases.We used id, k, c, pad fields in the table.Database fragmentation key is ID, Table fragmentation key is K.
+Sql Example: INSERT INTO t_test(k,c,pad) VALUES(#,#,#)
+Comparative type: INSERT
+</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
