@@ -1,6 +1,17 @@
 <template>
   <Row :gutter="16" style="background:#eee; padding:20px">
-    <Col v-for="(value, name, index) in series" :key="index" class="col-item" span="24">
+    <Col
+      v-for="(value, name, index) in series"
+      :key="index"
+      :xs="24"
+      :sm="24"
+      :md="24"
+      :lg="24"
+      :xl="24"
+      :xxl="12"
+      class="col-item"
+      span="24"
+    >
       <Card :bordered="false">
         <p slot="title" style="font-size: 18px">{{ name.toLowerCase() }} throughtout compare</p>
         <v-chart :options="getOptions(name)" />
