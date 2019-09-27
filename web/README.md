@@ -1,4 +1,9 @@
-# incubator-shardingsphere-benchmark-ui-frontend"
+# incubator-shardingsphere-benchmark-ui-frontend
+
+## Requirements
+
+- node >= 6.0.0
+- npm >= 3.0.0
 
 ## Build Setup
 
