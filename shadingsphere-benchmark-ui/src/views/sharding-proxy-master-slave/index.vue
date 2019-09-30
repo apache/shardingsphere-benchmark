@@ -33,7 +33,7 @@ import 'echarts/lib/chart/line'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
-import { shardingProxyMasterSlave } from '../../utils/utils'
+import apis from '../../utils/utils'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
@@ -43,10 +43,10 @@ export default {
     'v-chart': ECharts
   },
   mixins: [mountedMixin],
-  data() {
-    return {
-      data: shardingProxyMasterSlave
-    }
+  mounted() {
+    apis.getShardingProxyMasterSlaveData().then(res => {
+      this.formatData(res)
+    })
   },
   methods: {
     getOptions(name) {

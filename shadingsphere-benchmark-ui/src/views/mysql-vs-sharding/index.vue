@@ -32,7 +32,7 @@ import 'echarts/lib/chart/line'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
-import { mysqlVsShardingproxy } from '../../utils/utils'
+import apis from '../../utils/utils'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
@@ -44,8 +44,13 @@ export default {
   mixins: [mountedMixin],
   data() {
     return {
-      data: mysqlVsShardingproxy
+      data: []
     }
+  },
+  mounted() {
+    apis.getMysqlVsShardingData().then(res => {
+      this.formatData(res)
+    })
   },
   methods: {
     getOptions(name) {
