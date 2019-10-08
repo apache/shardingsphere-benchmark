@@ -24,6 +24,12 @@
         </Form>
       </Card>
     </Col>
+    <div v-show="loading" class="spin-container">
+      <Spin fix>
+        <Icon type="ios-loading" size="18" class="spin-icon-load"></Icon>
+        <div>Loading</div>
+      </Spin>
+    </div>
   </Row>
 </template>
 
@@ -33,7 +39,7 @@ import 'echarts/lib/chart/line'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
-import { shardingProxySingleDatabaseSingleTable } from '../../utils/utils'
+import apis from '../../utils/utils'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
@@ -43,10 +49,12 @@ export default {
     'v-chart': ECharts
   },
   mixins: [mountedMixin],
-  data() {
-    return {
-      data: shardingProxySingleDatabaseSingleTable
-    }
+  mounted() {
+    this.loading = true
+    apis.getShardingProxySingleDatabaseSingleTableData().then(res => {
+      this.formatData(res)
+      this.loading = false
+    })
   },
   methods: {
     getOptions(name) {

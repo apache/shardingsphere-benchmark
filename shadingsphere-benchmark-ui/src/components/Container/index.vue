@@ -8,6 +8,7 @@
         class="layout-sider"
         hide-trigger
         collapsible
+        width="300"
       >
         <div class="i-layout-sider-logo i-layout-sider-logo-dark">
           <a href="/" target="_self" class="i-link i-link-color">
@@ -18,35 +19,27 @@
         <Menu :class="menuitemClasses" active-name="1-2" theme="dark" width="auto">
           <router-link to="mysql-vs-sharding">
             <MenuItem name="1-2">
-              <Tooltip content="mysqlVsSharding" placement="right">
-                <span>mysqlVsSharding</span>
-              </Tooltip>
+              <span>mysqlVsSharding</span>
             </MenuItem>
           </router-link>
           <router-link to="sharding-proxy-master-slave">
             <MenuItem name="1-3">
-              <Tooltip content="shardingProxyMasterSlave" placement="right">
-                <span>shardingProxyMasterSlave</span>
-              </Tooltip>
+              <span>shardingProxyMasterSlave</span>
             </MenuItem>
           </router-link>
           <router-link to="sharding-proxy-master-slave-sharding">
             <MenuItem name="1-4">
-              <Tooltip content="shardingProxyMasterSlaveSharding" placement="right">
-                <span>shardingProxyMasterSlaveSharding</span>
-              </Tooltip>
+              <span>shardingProxyMasterSlaveSharding</span>
             </MenuItem>
           </router-link>
           <router-link to="sharding-proxy-single-database-single-table">
             <MenuItem name="1-5">
-              <Tooltip content="shardingProxySingleDatabaseSingleTable" placement="right">
-                <span>shardingProxySingleDatabaseSingleTable</span>
-              </Tooltip>
+              <span>shardingProxySingleDatabaseSingleTable</span>
             </MenuItem>
           </router-link>
         </Menu>
       </Sider>
-      <Layout style="margin-left: 200px;">
+      <Layout style="margin-left: 300px;">
         <Header :style="{padding: 0}" class="layout-header-bar">
           <!-- <Icon
             :class="rotateIcon"
@@ -122,7 +115,6 @@ a {
 }
 .menu-item span {
   display: inline-block;
-  width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -156,7 +148,7 @@ a {
   background: #1d1e23;
 }
 .i-layout-sider-logo img {
-  height: 54%;
+  height: 74%;
   vertical-align: middle;
 }
 .layout-header-bar {
@@ -181,5 +173,9 @@ a {
 }
 .collapse-logo {
   display: none;
+}
+.ivu-menu-item-selected {
+  background: #fff !important;
+  color: #777 !important;
 }
 </style>
