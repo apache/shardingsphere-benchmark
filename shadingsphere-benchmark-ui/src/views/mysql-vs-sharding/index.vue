@@ -41,13 +41,11 @@ import 'echarts/lib/component/title'
 import apis from '../../utils/utils'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
-import SpinLoading from '../../components/Spin/index.vue'
 
 export default {
   name: 'Home',
   components: {
-    'v-chart': ECharts,
-    SpinLoading
+    'v-chart': ECharts
   },
   mixins: [mountedMixin],
   data() {

@@ -16,39 +16,41 @@
             <img class="collapse-logo" src="../../assets/logo.png" alt="logo" />
           </a>
         </div>
-        <Menu :class="menuitemClasses" active-name="1-2" theme="dark" width="auto">
+        <Menu
+          :class="menuitemClasses"
+          :active-name="$store.state.global.activeName"
+          theme="dark"
+          width="auto"
+        >
+          <router-link to="overview">
+            <MenuItem name="overview">
+              <span>overview</span>
+            </MenuItem>
+          </router-link>
           <router-link to="mysql-vs-sharding">
-            <MenuItem name="1-2">
+            <MenuItem name="mysql-vs-sharding">
               <span>mysqlVsSharding</span>
             </MenuItem>
           </router-link>
           <router-link to="sharding-proxy-master-slave">
-            <MenuItem name="1-3">
+            <MenuItem name="sharding-proxy-master-slave">
               <span>shardingProxyMasterSlave</span>
             </MenuItem>
           </router-link>
           <router-link to="sharding-proxy-master-slave-sharding">
-            <MenuItem name="1-4">
+            <MenuItem name="sharding-proxy-master-slave-sharding">
               <span>shardingProxyMasterSlaveSharding</span>
             </MenuItem>
           </router-link>
           <router-link to="sharding-proxy-single-database-single-table">
-            <MenuItem name="1-5">
+            <MenuItem name="sharding-proxy-single-database-single-table">
               <span>shardingProxySingleDatabaseSingleTable</span>
             </MenuItem>
           </router-link>
         </Menu>
       </Sider>
       <Layout style="margin-left: 300px;">
-        <Header :style="{padding: 0}" class="layout-header-bar">
-          <!-- <Icon
-            :class="rotateIcon"
-            :style="{margin: '0 20px', color: '#f6ca9d', cursor: 'pointer'}"
-            size="24"
-            type="md-menu"
-            @click.native="collapsedSider"
-          />-->
-        </Header>
+        <Header :style="{padding: 0}" class="layout-header-bar" />
         <Content>
           <slot />
         </Content>
@@ -58,6 +60,8 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+
 import Footer from '../Footer/index.vue'
 export default {
   name: 'Container',
@@ -70,16 +74,19 @@ export default {
     }
   },
   computed: {
-    rotateIcon() {
-      return ['menu-icon', this.isCollapsed ? 'rotate-icon' : '']
-    },
     menuitemClasses() {
       return ['menu-item', this.isCollapsed ? 'collapsed-menu' : '']
     }
   },
+  watch: {
+    $route(to, from) {
+      this.checkoutMenu(to.path)
+    }
+  },
   methods: {
-    collapsedSider() {
-      // this.$refs.side1.toggleCollapse()
+    ...mapActions(['setMenu']),
+    checkoutMenu(path) {
+      this.setMenu(path.split('/')[1])
     }
   }
 }
