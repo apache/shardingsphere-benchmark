@@ -24,6 +24,12 @@
         </Form>
       </Card>
     </Col>
+    <div class="spin-container">
+      <Spin v-show="loading" fix>
+        <Icon type="ios-loading" size="18" class="spin-icon-load"></Icon>
+        <div>Loading</div>
+      </Spin>
+    </div>
   </Row>
 </template>
 
@@ -44,8 +50,10 @@ export default {
   },
   mixins: [mountedMixin],
   mounted() {
+    this.loading = true
     apis.getShardingProxyMasterSlaveData().then(res => {
       this.formatData(res)
+      this.loading = false
     })
   },
   methods: {

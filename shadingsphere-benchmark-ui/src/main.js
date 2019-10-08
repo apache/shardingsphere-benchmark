@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import './assets/css/css.css'
 
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'

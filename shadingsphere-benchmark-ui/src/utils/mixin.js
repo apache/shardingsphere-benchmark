@@ -4,7 +4,8 @@ const mountedMixin = {
       legend: {},
       series: {},
       desc: {},
-      xAxis: {}
+      xAxis: {},
+      loading: false
     }
   },
   methods: {

@@ -23,6 +23,12 @@
         </Form>
       </Card>
     </Col>
+    <div class="spin-container">
+      <Spin v-show="loading" fix>
+        <Icon type="ios-loading" size="18" class="spin-icon-load"></Icon>
+        <div>Loading</div>
+      </Spin>
+    </div>
   </Row>
 </template>
 
@@ -35,11 +41,13 @@ import 'echarts/lib/component/title'
 import apis from '../../utils/utils'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
+import SpinLoading from '../../components/Spin/index.vue'
 
 export default {
   name: 'Home',
   components: {
-    'v-chart': ECharts
+    'v-chart': ECharts,
+    SpinLoading
   },
   mixins: [mountedMixin],
   data() {
@@ -48,8 +56,10 @@ export default {
     }
   },
   mounted() {
+    this.loading = true
     apis.getMysqlVsShardingData().then(res => {
       this.formatData(res)
+      this.loading = false
     })
   },
   methods: {
