@@ -24,8 +24,8 @@
         </Form>
       </Card>
     </Col>
-    <div class="spin-container">
-      <Spin v-show="loading" fix>
+    <div v-show="loading" class="spin-container">
+      <Spin fix>
         <Icon type="ios-loading" size="18" class="spin-icon-load"></Icon>
         <div>Loading</div>
       </Spin>
