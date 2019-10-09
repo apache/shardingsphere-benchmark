@@ -63,7 +63,7 @@
             <BreadcrumbItem to="/">
               <Icon type="ios-home-outline" />&nbsp;Home
             </BreadcrumbItem>
-            <BreadcrumbItem>{{ $store.state.global.activeName }}</BreadcrumbItem>
+            <BreadcrumbItem>{{ $store.state.global.activeName.split('-').join(' ') }}</BreadcrumbItem>
           </Breadcrumb>
           <slot />
         </Content>
