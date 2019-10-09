@@ -1,7 +1,7 @@
 <template>
   <Card class="card-wrap">
     <p slot="title">
-      <Icon type="ios-analytics" />Overview
+      <Icon type="ios-analytics" />&nbsp;Overview
     </p>
     <Row :gutter="16">
       <Col span="6">

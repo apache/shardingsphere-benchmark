@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <Layout>
-      <Sider
+      <!-- <Sider
         ref="side1"
         v-model="isCollapsed"
         :collapsed-width="78"
@@ -48,10 +48,23 @@
             </MenuItem>
           </router-link>
         </Menu>
-      </Sider>
-      <Layout style="margin-left: 300px;">
-        <Header :style="{padding: 0}" class="layout-header-bar" />
+      </Sider>-->
+      <Layout>
+        <Header :style="{padding: 0}" class="layout-header-bar">
+          <div class="i-layout-sider-logo i-layout-sider-logo-dark">
+            <a href="/" target="_self" class="i-link i-link-color">
+              <img class="logo" src="../../assets/logo_top.png" />
+              <img class="collapse-logo" src="../../assets/logo.png" alt="logo" />
+            </a>
+          </div>
+        </Header>
         <Content>
+          <Breadcrumb class="bread-wrap">
+            <BreadcrumbItem to="/">
+              <Icon type="ios-home-outline" />&nbsp;Home
+            </BreadcrumbItem>
+            <BreadcrumbItem>{{ $store.state.global.activeName }}</BreadcrumbItem>
+          </Breadcrumb>
           <slot />
         </Content>
         <v-footer />
@@ -92,6 +105,9 @@ export default {
 }
 </script>
 <style scoped>
+.bread-wrap {
+  margin: 20px;
+}
 .layout {
   background: #f5f7f9;
   position: relative;
@@ -147,8 +163,9 @@ a {
 .i-layout-sider-logo {
   height: 63px;
   line-height: 63px;
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid #f8f8f9;
+  margin-left: 10px;
 }
 .i-layout-sider-logo-dark {
   border-bottom: 1px solid #101117;

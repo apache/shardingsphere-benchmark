@@ -12,7 +12,7 @@
       class="col-item"
     >
       <Card :bordered="false">
-        <p slot="title" style="font-size: 18px">{{ name.toLowerCase() }} throughtout compare</p>
+        <p slot="title" style="font-size: 18px">{{ name.toLowerCase() }}</p>
         <v-chart :options="getOptions(name)" />
         <Form :label-width="140">
           <FormItem
@@ -25,7 +25,7 @@
     </Col>
     <div v-show="loading" class="spin-container">
       <Spin fix>
-        <Icon type="ios-loading" size="18" class="spin-icon-load"></Icon>
+        <Icon type="ios-loading" size="18" class="spin-icon-load" />
         <div>Loading</div>
       </Spin>
     </div>
