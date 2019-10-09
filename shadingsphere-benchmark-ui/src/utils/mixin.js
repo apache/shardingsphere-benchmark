@@ -10,6 +10,8 @@ const mountedMixin = {
   },
   methods: {
     formatData(sourceData) {
+      const hash = location.hash
+      const showType = hash.split('?showType=')[1]
       const map = []
       const legend = {}
       const series = {}
@@ -39,25 +41,33 @@ const mountedMixin = {
                 value: mm.data[mmm].Throughout
               })
             }
-            series[m].push({
-              name: mm.type,
-              type: 'line',
-              data
-            })
+
+            // showType === 3.0 show 3.0version
+            if (showType === '3.0') {
+              series[m].push({
+                name: mm.type,
+                type: 'line',
+                data
+              })
+            } else {
+              if (mm.type.includes('3.0')) {
+                continue
+              }
+              series[m].push({
+                name: mm.type,
+                type: 'line',
+                data
+              })
+            }
           }
         } else {
           for (const k of map) {
             if (k !== m) {
               desc[k] = {
                 mysqlVerison: sourceData[m]['mysqlVerison'],
-                // 'ShardingSphere-proxy': sourceData[m]['ShardingSphere-proxy'],
                 tableNumber: sourceData[m]['tableNumber'],
-                // DataVolume: sourceData[m]['DataVolume'],
-                // X: sourceData[m]['X'],
-                // Y: sourceData[m]['Y'],
                 sceneDescription: sourceData[m]['sceneDescription'],
                 sqlExample: sourceData[m][k].SqlExample
-                // ComparativeType: sourceData[m][k].ComparativeType
               }
             }
           }
