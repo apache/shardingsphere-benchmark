@@ -11,7 +11,7 @@ const mountedMixin = {
   methods: {
     formatData(sourceData) {
       const hash = location.hash
-      const showType = hash.split('?showType=')[1]
+      const showVersion = hash.split('?showVersion=')[1] || ''
       const map = []
       const legend = {}
       const series = {}
@@ -42,15 +42,15 @@ const mountedMixin = {
               })
             }
 
-            // showType === 3.0 show 3.0version
-            if (showType === '3.0') {
+            // showVersion.includes('3.') show 3.X version
+            if (showVersion.includes('3.')) {
               series[m].push({
                 name: mm.type,
                 type: 'line',
                 data
               })
             } else {
-              if (mm.type.includes('3.0')) {
+              if (mm.type.includes('3.')) {
                 continue
               }
               series[m].push({
