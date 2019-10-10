@@ -43,7 +43,7 @@ import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
 export default {
-  name: 'Home',
+  name: 'MysqlVsSharding',
   components: {
     'v-chart': ECharts
   },

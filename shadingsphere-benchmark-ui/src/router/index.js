@@ -33,6 +33,18 @@ export const constantRouterMap = [
     component: () =>
       import('@/views/sharding-proxy-single-database-single-table/index'),
     hidden: true
+  },
+  {
+    path: '/shardingjdbc-vs-shardingproxy-encrypt',
+    component: () =>
+      import('@/views/shardingjdbc-vs-shardingproxy-encrypt/index'),
+    hidden: true
+  },
+  {
+    path: '/shardingjdbc-vs-shardingproxy-sharding-encrypt',
+    component: () =>
+      import('@/views/shardingjdbc-vs-shardingproxy-sharding-encrypt/index'),
+    hidden: true
   }
 ]
 

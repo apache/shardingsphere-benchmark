@@ -10,7 +10,6 @@
       :xl="24"
       :xxl="12"
       class="col-item"
-      span="24"
     >
       <Card :bordered="false">
         <p slot="title" style="font-size: 18px">{{ name.toLowerCase() }}</p>
@@ -44,14 +43,19 @@ import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
 export default {
-  name: 'ShardingProxyMasterSlaveSharding',
+  name: 'ShardingjdbcVsShardingproxyEncrypt',
   components: {
     'v-chart': ECharts
   },
   mixins: [mountedMixin],
+  data() {
+    return {
+      data: []
+    }
+  },
   mounted() {
     this.loading = true
-    apis.getShardingProxyMasterSlaveShardingData().then(res => {
+    apis.getShardingjdbcVsShardingproxyEncrypt().then(res => {
       this.formatData(res)
       this.loading = false
     })

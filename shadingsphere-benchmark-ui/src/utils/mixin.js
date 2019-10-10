@@ -33,7 +33,7 @@ const mountedMixin = {
             legend[m].push(mm.type)
             const data = []
             for (const mmm of Object.keys(mm.data)) {
-              if (xAxis[m].length !== mm.data.length) {
+              if (xAxis[m].length < mm.data.length) {
                 xAxis[m].push(mmm)
               }
               data.push({
