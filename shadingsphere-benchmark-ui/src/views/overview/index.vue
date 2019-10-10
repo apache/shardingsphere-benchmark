@@ -36,6 +36,22 @@
           </router-link>
         </Card>
       </Col>
+      <Col span="6">
+        <Card class="card-item">
+          <router-link to="shardingjdbc-vs-shardingproxy-encrypt">
+            <h3>shardingjdbc vs shardingproxy encrypt</h3>
+            <span class="card-span">detail</span>
+          </router-link>
+        </Card>
+      </Col>
+      <Col span="6">
+        <Card class="card-item">
+          <router-link to="shardingjdbc-vs-shardingproxy-sharding-encrypt">
+            <h3>shardingjdbc vs shardingproxy sharding encrypt</h3>
+            <span class="card-span">detail</span>
+          </router-link>
+        </Card>
+      </Col>
     </Row>
   </Card>
 </template>
@@ -52,6 +68,7 @@ export default {
 .card-item {
   min-height: 150px;
   position: relative;
+  margin-bottom: 15px;
 }
 h3 {
   color: #333;

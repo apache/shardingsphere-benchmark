@@ -44,7 +44,7 @@ import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
 export default {
-  name: 'Home',
+  name: 'ShardingProxySingleDatabaseSingleTable',
   components: {
     'v-chart': ECharts
   },
