@@ -12,7 +12,7 @@
       class="col-item"
     >
       <Card :bordered="false">
-        <p slot="title" style="font-size: 18px">{{ name.toLowerCase() }} throughtout compare</p>
+        <p slot="title" style="font-size: 18px">{{ name.toLowerCase() }}</p>
         <v-chart :options="getOptions(name)" />
         <Form :label-width="140">
           <FormItem
@@ -25,7 +25,7 @@
     </Col>
     <div v-show="loading" class="spin-container">
       <Spin fix>
-        <Icon type="ios-loading" size="18" class="spin-icon-load"></Icon>
+        <Icon type="ios-loading" size="18" class="spin-icon-load" />
         <div>Loading</div>
       </Spin>
     </div>
@@ -41,13 +41,11 @@ import 'echarts/lib/component/title'
 import apis from '../../utils/utils'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
-import SpinLoading from '../../components/Spin/index.vue'
 
 export default {
   name: 'Home',
   components: {
-    'v-chart': ECharts,
-    SpinLoading
+    'v-chart': ECharts
   },
   mixins: [mountedMixin],
   data() {

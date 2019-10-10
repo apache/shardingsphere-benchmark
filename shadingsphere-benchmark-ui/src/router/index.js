@@ -5,7 +5,12 @@ Vue.use(Router)
 export const constantRouterMap = [
   {
     path: '*',
-    redirect: '/mysql-vs-sharding'
+    redirect: '/overview'
+  },
+  {
+    path: '/overview',
+    component: () => import('@/views/overview/index'),
+    hidden: true
   },
   {
     path: '/mysql-vs-sharding',
