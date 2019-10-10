@@ -37,7 +37,7 @@ public class SJEncryptDelete extends AbstractJavaSamplerClient {
     
     private static SJPerfService sjPerfService;
     
-    private static DataSource dataSource;
+    private DataSource dataSource;
     
     static {
         try {
