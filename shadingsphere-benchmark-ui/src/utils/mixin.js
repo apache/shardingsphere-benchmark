@@ -5,7 +5,25 @@ const mountedMixin = {
       series: {},
       desc: {},
       xAxis: {},
-      loading: false
+      loading: false,
+      columns: [
+        {
+          title: 'mysql verison',
+          key: 'mysqlVerison'
+        },
+        {
+          title: 'table number',
+          key: 'tableNumber'
+        },
+        {
+          title: 'scene description',
+          key: 'sceneDescription'
+        },
+        {
+          title: 'sql example',
+          key: 'sqlExample'
+        }
+      ]
     }
   },
   methods: {
@@ -33,7 +51,7 @@ const mountedMixin = {
             legend[m].push(mm.type)
             const data = []
             for (const mmm of Object.keys(mm.data)) {
-              if (xAxis[m].length < mm.data.length) {
+              if (xAxis[m].length < mm.data.length && mmm > xAxis[m].length) {
                 xAxis[m].push(mmm)
               }
               data.push({

@@ -15,13 +15,13 @@
       <Card :bordered="false">
         <p slot="title" style="font-size: 18px">{{ name.toLowerCase() }}</p>
         <v-chart :options="getOptions(name)" />
-        <Form :label-width="140">
-          <FormItem
-            v-for="(value, name,indx) in desc[name]"
-            :label="`${name}:`"
-            :key="indx"
-          >{{ value }}</FormItem>
-        </Form>
+        <Table
+          :columns="columns"
+          :data="[desc[name]]"
+          size="large"
+          style="margin-top: 20px;"
+          border
+        />
       </Card>
     </Col>
     <div v-show="loading" class="spin-container">

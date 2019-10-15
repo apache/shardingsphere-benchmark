@@ -84,8 +84,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
-      favicon: resolve('favicon.png'),
-      title: 'sharding-ui'
+      favicon: resolve('static/favicon.png'),
+      title: 'Sharding Performance monitoring'
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
