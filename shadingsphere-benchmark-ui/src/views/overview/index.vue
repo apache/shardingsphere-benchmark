@@ -7,6 +7,7 @@
       <Col span="6">
         <Card class="card-item">
           <router-link to="mysql-vs-sharding">
+            <div class="card-item-left left01">01</div>
             <h3>mysql vs sharding</h3>
             <span class="card-span">detail</span>
           </router-link>
@@ -15,6 +16,7 @@
       <Col span="6">
         <Card class="card-item">
           <router-link to="sharding-proxy-master-slave">
+            <div class="card-item-left left02">02</div>
             <h3>sharding proxy master slave</h3>
             <span class="card-span">detail</span>
           </router-link>
@@ -23,6 +25,7 @@
       <Col span="6">
         <Card class="card-item">
           <router-link to="sharding-proxy-master-slave-sharding">
+            <div class="card-item-left left03">03</div>
             <h3>sharding proxy master slave sharding</h3>
             <span class="card-span">detail</span>
           </router-link>
@@ -31,6 +34,7 @@
       <Col span="6">
         <Card class="card-item">
           <router-link to="sharding-proxy-single-database-single-table">
+            <div class="card-item-left left04">04</div>
             <h3>sharding proxy single database single table</h3>
             <span class="card-span">detail</span>
           </router-link>
@@ -39,6 +43,7 @@
       <Col span="6">
         <Card class="card-item">
           <router-link to="shardingjdbc-vs-shardingproxy-encrypt">
+            <div class="card-item-left left05">05</div>
             <h3>shardingjdbc vs shardingproxy encrypt</h3>
             <span class="card-span">detail</span>
           </router-link>
@@ -47,6 +52,7 @@
       <Col span="6">
         <Card class="card-item">
           <router-link to="shardingjdbc-vs-shardingproxy-sharding-encrypt">
+            <div class="card-item-left left06">06</div>
             <h3>shardingjdbc vs shardingproxy sharding encrypt</h3>
             <span class="card-span">detail</span>
           </router-link>
@@ -77,5 +83,35 @@ h3 {
   position: absolute;
   right: 10px;
   bottom: 10px;
+}
+.card-item-left {
+  width: 50px;
+  height: 50px;
+  float: left;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50px;
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+.left01 {
+  background: #1ba3f7;
+}
+.left02 {
+  background: #d08553;
+}
+.left03 {
+  background: #fd9927;
+}
+.left04 {
+  background: #a177ca;
+}
+.left05 {
+  background: #00b0cf;
+}
+.left06 {
+  background: #8fa6ee;
 }
 </style>
