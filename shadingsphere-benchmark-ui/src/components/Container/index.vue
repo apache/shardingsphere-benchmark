@@ -1,58 +1,10 @@
 <template>
   <div class="layout">
     <Layout>
-      <!-- <Sider
-        ref="side1"
-        v-model="isCollapsed"
-        :collapsed-width="78"
-        class="layout-sider"
-        hide-trigger
-        collapsible
-        width="300"
-      >
-        <div class="i-layout-sider-logo i-layout-sider-logo-dark">
-          <a href="/" target="_self" class="i-link i-link-color">
-            <img class="logo" src="../../assets/logo_top.png" />
-            <img class="collapse-logo" src="../../assets/logo.png" alt="logo" />
-          </a>
-        </div>
-        <Menu
-          :class="menuitemClasses"
-          :active-name="$store.state.global.activeName"
-          theme="dark"
-          width="auto"
-        >
-          <router-link to="overview">
-            <MenuItem name="overview">
-              <span>overview</span>
-            </MenuItem>
-          </router-link>
-          <router-link to="mysql-vs-sharding">
-            <MenuItem name="mysql-vs-sharding">
-              <span>mysqlVsSharding</span>
-            </MenuItem>
-          </router-link>
-          <router-link to="sharding-proxy-master-slave">
-            <MenuItem name="sharding-proxy-master-slave">
-              <span>shardingProxyMasterSlave</span>
-            </MenuItem>
-          </router-link>
-          <router-link to="sharding-proxy-master-slave-sharding">
-            <MenuItem name="sharding-proxy-master-slave-sharding">
-              <span>shardingProxyMasterSlaveSharding</span>
-            </MenuItem>
-          </router-link>
-          <router-link to="sharding-proxy-single-database-single-table">
-            <MenuItem name="sharding-proxy-single-database-single-table">
-              <span>shardingProxySingleDatabaseSingleTable</span>
-            </MenuItem>
-          </router-link>
-        </Menu>
-      </Sider>-->
       <Layout>
         <Header :style="{padding: 0}" class="layout-header-bar">
           <div class="i-layout-sider-logo i-layout-sider-logo-dark">
-            <a href="/" target="_self" class="i-link i-link-color">
+            <a href="/benchmark" target="_self" class="i-link i-link-color">
               <img class="logo" src="../../assets/logo_top.png" />
               <img class="collapse-logo" src="../../assets/logo.png" alt="logo" />
             </a>
