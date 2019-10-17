@@ -1,7 +1,7 @@
 import $ from 'jquery'
 
 const HOST =
-  'https://raw.githubusercontent.com/apache/incubator-shardingsphere-benchmark/master/report/'
+  'https://raw.githubusercontent.com/apache/incubator-shardingsphere-benchmark/master/report'
 
 function ajax(url, type) {
   return new Promise((resolve, reject) => {

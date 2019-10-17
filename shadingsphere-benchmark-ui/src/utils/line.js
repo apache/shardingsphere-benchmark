@@ -25,12 +25,14 @@ const getLineOptions = (name, xAxis, legend, series) => {
         </div>`
         }
         return html
+      },
+      position(pos, params, dom, rect, size) {
+        if (size.viewSize[0] > 300 && size.viewSize[0] < 510) {
+          const obj = { top: 60 }
+          obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5
+          return obj
+        }
       }
-      // position(pos, params, dom, rect, size) {
-      //   const obj = { top: 60 }
-      //   obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5
-      //   return obj
-      // }
     },
     xAxis: {
       name: '(TEST TIMES)/DAY',
