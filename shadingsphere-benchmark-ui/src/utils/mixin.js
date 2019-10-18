@@ -1,3 +1,4 @@
+import moment from 'moment'
 const mountedMixin = {
   data() {
     return {
@@ -51,8 +52,8 @@ const mountedMixin = {
             legend[m].push(mm.type)
             const data = []
             for (const mmm of Object.keys(mm.data)) {
-              if (xAxis[m].length < mm.data.length && mmm > xAxis[m].length) {
-                xAxis[m].push(mmm)
+              if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
+                xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD'))
               }
               data.push({
                 ...mm.data[mmm],

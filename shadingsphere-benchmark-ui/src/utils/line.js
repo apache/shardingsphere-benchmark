@@ -1,3 +1,4 @@
+import moment from 'moment'
 const color = ['#2D8CF0', '#9A66E4', '#19BE6B', '#FF9900', '#E46CBB']
 const getLineOptions = (name, xAxis, legend, series) => {
   return {
@@ -11,6 +12,9 @@ const getLineOptions = (name, xAxis, legend, series) => {
     tooltip: {
       trigger: 'axis',
       formatter(d) {
+        const date = `<div>日期：${moment(d[0].data.Date).format(
+          'YYYY-MM-DD'
+        )}</div>`
         let html = ``
         for (const v of d) {
           html += `<div style="display:inline-block;margin: 10px;font-size: 14px;">
@@ -24,7 +28,7 @@ const getLineOptions = (name, xAxis, legend, series) => {
           <p>Min: ${v.data.Min}</p>
         </div>`
         }
-        return html
+        return `${date}${html}`
       },
       position(pos, params, dom, rect, size) {
         if (size.viewSize[0] > 300 && size.viewSize[0] < 510) {
@@ -37,9 +41,12 @@ const getLineOptions = (name, xAxis, legend, series) => {
     xAxis: {
       name: '(TEST TIMES)/DAY',
       nameLocation: 'middle',
-      nameGap: 30,
       type: 'category',
       boundaryGap: false,
+      axisLabel: {
+        rotate: 20
+      },
+      nameGap: 40,
       data: xAxis[name]
     },
     yAxis: {
