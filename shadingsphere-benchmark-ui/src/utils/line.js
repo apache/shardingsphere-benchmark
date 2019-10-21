@@ -21,11 +21,12 @@ const getLineOptions = (name, xAxis, legend, series) => {
           <p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
             v.color
           };"></span>${v.seriesName}</p> 
-          <p>Throughtput: ${v.data.Throughout}</p>
           <p>Samples: ${v.data.Samples}</p>
-          <p>Err: ${v.data.Err}</p>
-          <p>Max: ${v.data.Max}</p>
+          <p>Throughtput: ${v.data.Throughout}</p>
+          <p>Avg: ${v.data.Avg}</p>
           <p>Min: ${v.data.Min}</p>
+          <p>Max: ${v.data.Max}</p>
+          <p>Err: ${v.data.Err}</p>
         </div>`
         }
         return `${date}${html}`
