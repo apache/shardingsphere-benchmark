@@ -4,7 +4,7 @@
       <Icon type="ios-analytics" />&nbsp;Overview
     </p>
     <Row :gutter="16">
-      <Col span="6">
+      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <Card class="card-item">
           <router-link to="mysql-vs-sharding">
             <div class="card-item-left left01">01</div>
@@ -13,7 +13,7 @@
           </router-link>
         </Card>
       </Col>
-      <Col span="6">
+      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <Card class="card-item">
           <router-link to="sharding-proxy-master-slave">
             <div class="card-item-left left02">02</div>
@@ -22,7 +22,7 @@
           </router-link>
         </Card>
       </Col>
-      <Col span="6">
+      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <Card class="card-item">
           <router-link to="sharding-proxy-master-slave-sharding">
             <div class="card-item-left left03">03</div>
@@ -31,7 +31,7 @@
           </router-link>
         </Card>
       </Col>
-      <Col span="6">
+      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <Card class="card-item">
           <router-link to="sharding-proxy-single-database-single-table">
             <div class="card-item-left left04">04</div>
@@ -40,7 +40,7 @@
           </router-link>
         </Card>
       </Col>
-      <Col span="6">
+      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <Card class="card-item">
           <router-link to="shardingjdbc-vs-shardingproxy-encrypt">
             <div class="card-item-left left05">05</div>
@@ -49,7 +49,7 @@
           </router-link>
         </Card>
       </Col>
-      <Col span="6">
+      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
         <Card class="card-item">
           <router-link to="shardingjdbc-vs-shardingproxy-sharding-encrypt">
             <div class="card-item-left left06">06</div>
@@ -69,7 +69,6 @@ export default {
 <style scoped>
 .card-wrap {
   margin: 20px;
-  height: calc(100vh - 165px);
 }
 .card-item {
   min-height: 150px;
