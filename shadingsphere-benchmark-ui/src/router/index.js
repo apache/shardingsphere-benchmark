@@ -13,42 +13,40 @@ export const constantRouterMap = [
     hidden: true
   },
   {
-    path: '/mysql-vs-sharding',
-    component: () => import('@/views/mysql-vs-sharding/index'),
+    path: '/encrypt_sharding_test',
+    component: () => import('@/views/encrypt_sharding_test/index'),
     hidden: true
   },
   {
-    path: '/sharding-proxy-master-slave',
-    component: () => import('@/views/sharding-proxy-master-slave/index'),
+    path: '/encrypt_test',
+    component: () => import('@/views/encrypt_test/index'),
     hidden: true
   },
   {
-    path: '/sharding-proxy-master-slave-sharding',
-    component: () =>
-      import('@/views/sharding-proxy-master-slave-sharding/index'),
+    path: '/loss_test',
+    component: () => import('@/views/loss_test/index'),
     hidden: true
   },
   {
-    path: '/sharding-proxy-single-database-single-table',
-    component: () =>
-      import('@/views/sharding-proxy-single-database-single-table/index'),
+    path: '/master_slave_sharding_test',
+    component: () => import('@/views/master_slave_sharding_test/index'),
     hidden: true
   },
   {
-    path: '/shardingjdbc-vs-shardingproxy-encrypt',
-    component: () =>
-      import('@/views/shardingjdbc-vs-shardingproxy-encrypt/index'),
+    path: '/master_slave_test',
+    component: () => import('@/views/master_slave_test/index'),
     hidden: true
   },
   {
-    path: '/shardingjdbc-vs-shardingproxy-sharding-encrypt',
-    component: () =>
-      import('@/views/shardingjdbc-vs-shardingproxy-sharding-encrypt/index'),
+    path: '/sharding_test',
+    component: () => import('@/views/sharding_test/index'),
     hidden: true
   }
 ]
 
-export default new Router({
+const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
+
+export default router
