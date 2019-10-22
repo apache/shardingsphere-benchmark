@@ -4,3 +4,4 @@ const makeAction = type => {
   return ({ commit }, ...args) => commit(type, ...args)
 }
 export const setMenu = makeAction(types.SET_MENU)
+export const setFileData = makeAction(types.SET_FILE_DATA)

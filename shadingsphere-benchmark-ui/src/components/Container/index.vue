@@ -26,6 +26,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import apis from '../../utils/utils'
 
 import Footer from '../Footer/index.vue'
 export default {
@@ -48,8 +49,14 @@ export default {
       this.checkoutMenu(to.path)
     }
   },
+  mounted() {
+    apis.getFileList().then(res => {
+      const { fileName } = res
+      this.setFileData(fileName)
+    })
+  },
   methods: {
-    ...mapActions(['setMenu']),
+    ...mapActions(['setMenu', 'setFileData']),
     checkoutMenu(path) {
       this.setMenu(path.split('/')[1])
     }

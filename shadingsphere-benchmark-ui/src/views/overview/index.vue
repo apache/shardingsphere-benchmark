@@ -4,56 +4,19 @@
       <Icon type="ios-analytics" />&nbsp;Overview
     </p>
     <Row :gutter="16">
-      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+      <Col
+        v-for="(item, index) in $store.state.global.fileData"
+        :key="index"
+        :xs="24"
+        :sm="12"
+        :md="12"
+        :lg="6"
+        :xl="6"
+      >
         <Card class="card-item">
-          <router-link to="mysql-vs-sharding">
-            <div class="card-item-left left01">01</div>
-            <h3>mysql vs sharding</h3>
-            <span class="card-span">detail</span>
-          </router-link>
-        </Card>
-      </Col>
-      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <Card class="card-item">
-          <router-link to="sharding-proxy-master-slave">
-            <div class="card-item-left left02">02</div>
-            <h3>sharding proxy master slave</h3>
-            <span class="card-span">detail</span>
-          </router-link>
-        </Card>
-      </Col>
-      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <Card class="card-item">
-          <router-link to="sharding-proxy-master-slave-sharding">
-            <div class="card-item-left left03">03</div>
-            <h3>sharding proxy master slave sharding</h3>
-            <span class="card-span">detail</span>
-          </router-link>
-        </Card>
-      </Col>
-      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <Card class="card-item">
-          <router-link to="sharding-proxy-single-database-single-table">
-            <div class="card-item-left left04">04</div>
-            <h3>sharding proxy single database single table</h3>
-            <span class="card-span">detail</span>
-          </router-link>
-        </Card>
-      </Col>
-      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <Card class="card-item">
-          <router-link to="shardingjdbc-vs-shardingproxy-encrypt">
-            <div class="card-item-left left05">05</div>
-            <h3>shardingjdbc vs shardingproxy encrypt</h3>
-            <span class="card-span">detail</span>
-          </router-link>
-        </Card>
-      </Col>
-      <Col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
-        <Card class="card-item">
-          <router-link to="shardingjdbc-vs-shardingproxy-sharding-encrypt">
-            <div class="card-item-left left06">06</div>
-            <h3>shardingjdbc vs shardingproxy sharding encrypt</h3>
+          <router-link :to="item">
+            <div :class="'card-item-left left0' + index">0{{ index + 1 }}</div>
+            <h3>{{ item.split('_').join(' ') }}</h3>
             <span class="card-span">detail</span>
           </router-link>
         </Card>
@@ -95,22 +58,22 @@ h3 {
   font-weight: bold;
   color: #fff;
 }
-.left01 {
+.left00 {
   background: #1ba3f7;
 }
-.left02 {
+.left01 {
   background: #d08553;
 }
-.left03 {
+.left02 {
   background: #fd9927;
 }
-.left04 {
+.left03 {
   background: #a177ca;
 }
-.left05 {
+.left04 {
   background: #00b0cf;
 }
-.left06 {
+.left05 {
   background: #8fa6ee;
 }
 </style>
