@@ -44,14 +44,14 @@ import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
 export default {
-  name: 'ShardingProxyMasterSlave',
+  name: 'LossTest',
   components: {
     'v-chart': ECharts
   },
   mixins: [mountedMixin],
   mounted() {
     this.loading = true
-    apis.getShardingProxyMasterSlaveData().then(res => {
+    apis.getLossTestData().then(res => {
       this.formatData(res)
       this.loading = false
     })

@@ -43,7 +43,7 @@ import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
 export default {
-  name: 'MysqlVsSharding',
+  name: 'MasterSlaveTest',
   components: {
     'v-chart': ECharts
   },
@@ -55,7 +55,7 @@ export default {
   },
   mounted() {
     this.loading = true
-    apis.getMysqlVsShardingData().then(res => {
+    apis.getMasterSlaveTest().then(res => {
       this.formatData(res)
       this.loading = false
     })
