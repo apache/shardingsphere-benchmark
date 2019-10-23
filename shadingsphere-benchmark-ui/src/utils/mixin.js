@@ -9,7 +9,7 @@ const mountedMixin = {
       loading: false,
       columns: [
         {
-          title: 'mysql verison',
+          title: 'MySQL verison',
           key: 'mysqlVerison'
         },
         {
