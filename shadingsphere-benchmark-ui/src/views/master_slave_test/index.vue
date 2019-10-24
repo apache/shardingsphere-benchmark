@@ -38,7 +38,7 @@ import 'echarts/lib/chart/line'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/legend'
 import 'echarts/lib/component/title'
-import apis from '../../utils/utils'
+import apis from '../../utils/page-apis'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 

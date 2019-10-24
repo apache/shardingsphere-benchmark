@@ -26,7 +26,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import apis from '../../utils/utils'
+import apis from '../../utils/page-apis'
 
 import Footer from '../Footer/index.vue'
 export default {
