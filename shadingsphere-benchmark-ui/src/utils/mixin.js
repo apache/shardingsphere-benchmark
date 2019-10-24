@@ -36,11 +36,15 @@ const mountedMixin = {
       const series = {}
       const desc = {}
       const xAxis = {}
+      const _xAxis = {}
+      const _series = {}
+
       for (const v in sourceData) {
         map.push(v)
         if (v !== 'DESC') {
           legend[v] = []
           series[v] = []
+          _series[v] = []
           xAxis[v] = []
         }
       }
@@ -52,12 +56,22 @@ const mountedMixin = {
             legend[m].push(mm.type)
             const data = []
             for (const mmm of Object.keys(mm.data)) {
-              if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
-                xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD'))
-              }
+              xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD'))
+              // if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
+              //   xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD'))
+              // }
+              xAxis[m].sort((a, b) => {
+                return moment(a) > moment(b) ? 1 : -1
+              })
+              _xAxis[m] = xAxis[m].filter((el, index, self) => {
+                return self.indexOf(el) === index
+              })
+
               data.push({
                 ...mm.data[mmm],
-                value: mm.data[mmm].Throughout
+                showTip: true,
+                value: mm.data[mmm].Throughout,
+                Date: moment(mm.data[mmm].Date).format('YYYY-MM-DD')
               })
             }
 
@@ -79,6 +93,22 @@ const mountedMixin = {
               })
             }
           }
+
+          // Complement logic
+          // Complement data at the beginning
+          for (const d of series[m]) {
+            for (const dd of _xAxis[m]) {
+              if (d.data.length < _xAxis[m].length) {
+                for (let i = 0; i < _xAxis[m].length - d.data.length; i++) {
+                  d.data.unshift({
+                    showTip: false,
+                    value: null,
+                    Date: dd
+                  })
+                }
+              }
+            }
+          }
         } else {
           for (const k of map) {
             if (k !== m) {
@@ -95,7 +125,7 @@ const mountedMixin = {
       this.legend = legend
       this.series = series
       this.desc = desc
-      this.xAxis = xAxis
+      this.xAxis = _xAxis
     }
   }
 }

@@ -1,4 +1,3 @@
-import moment from 'moment'
 const color = ['#2D8CF0', '#9A66E4', '#19BE6B', '#FF9900', '#E46CBB']
 const getLineOptions = (name, xAxis, legend, series) => {
   return {
@@ -12,22 +11,22 @@ const getLineOptions = (name, xAxis, legend, series) => {
     tooltip: {
       trigger: 'axis',
       formatter(d) {
-        const date = `<div>日期：${moment(d[0].data.Date).format(
-          'YYYY-MM-DD'
-        )}</div>`
+        const date = `<div>日期：${d[0].data.Date}</div>`
         let html = ``
         for (const v of d) {
-          html += `<div style="display:inline-block;margin: 10px;font-size: 14px;">
-          <p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
-            v.color
-          };"></span>${v.seriesName}</p> 
-          <p>Samples: ${v.data.Samples}</p>
-          <p>Throughtput: ${v.data.Throughout}</p>
-          <p>Avg: ${v.data.Avg}</p>
-          <p>Min: ${v.data.Min}</p>
-          <p>Max: ${v.data.Max}</p>
-          <p>Err: ${v.data.Err}</p>
-        </div>`
+          if (v.data.showTip) {
+            html += `<div style="display:inline-block;margin: 10px;font-size: 14px;">
+            <p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
+              v.color
+            };"></span>${v.seriesName}</p> 
+            <p>Samples: ${v.data.Samples}</p>
+            <p>Throughtput: ${v.data.Throughout}</p>
+            <p>Avg: ${v.data.Avg}</p>
+            <p>Min: ${v.data.Min}</p>
+            <p>Max: ${v.data.Max}</p>
+            <p>Err: ${v.data.Err}</p>
+          </div>`
+          }
         }
         return `${date}${html}`
       },
