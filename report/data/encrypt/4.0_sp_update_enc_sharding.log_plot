@@ -11,3 +11,4 @@ summary = 200000 in 00:00:09 = 21951.5/s Avg:     0 Min:     0 Max:   137 Err:  
 summary = 200000 in 00:00:09 = 22160.7/s Avg:     0 Min:     0 Max:    53 Err:     0 (0.00%)
 summary = 2000000 in 00:01:30 = 22309.0/s Avg:     0 Min:     0 Max:   173 Err:     0 (0.00%)
 summary = 2000000 in 00:01:29 = 22465.9/s Avg:     0 Min:     0 Max:   126 Err:     0 (0.00%)
+summary = 2000000 in 00:01:29 = 22400.7/s Avg:     0 Min:     0 Max:   165 Err:     0 (0.00%)
