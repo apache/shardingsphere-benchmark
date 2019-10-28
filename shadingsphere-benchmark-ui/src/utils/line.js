@@ -16,14 +16,15 @@ const getLineOptions = (name, xAxis, legend, series) => {
     tooltip: {
       trigger: 'axis',
       formatter(d) {
-        const date = `<div>日期：${d[0].data.Date}</div>`
+        // const date = `<div>日期：${d[0].data.Date}</div>`
         let html = ``
         for (const v of d) {
-          if (v.data.showTip) {
-            html += `<div style="display:inline-block;margin: 10px;font-size: 14px;">
+          // if (v.data.showTip) {
+          html += `<div style="display:inline-block;margin: 10px;font-size: 14px;">
             <p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
               v.color
-            };"></span>${v.seriesName}</p> 
+            };"></span>${v.data.Date}</p> 
+            <p>${v.seriesName}</p>
             <p>Samples: ${v.data.Samples}</p>
             <p>Throughtput: ${v.data.Throughout}</p>
             <p>Avg: ${v.data.Avg}</p>
@@ -34,9 +35,9 @@ const getLineOptions = (name, xAxis, legend, series) => {
             <p>Max: ${v.data.Max}</p>
             <p>Err: ${v.data.Err}</p>
           </div>`
-          }
+          // }
         }
-        return html ? `${date}${html}` : ''
+        return html ? `${html}` : ''
       },
       position(pos, params, dom, rect, size) {
         if (size.viewSize[0] > 300 && size.viewSize[0] < 510) {
@@ -47,14 +48,10 @@ const getLineOptions = (name, xAxis, legend, series) => {
       }
     },
     xAxis: {
-      name: '(TEST TIMES)/DAY',
+      name: 'Construction times',
       nameLocation: 'middle',
       type: 'category',
       boundaryGap: false,
-      axisLabel: {
-        rotate: 90
-      },
-      nameGap: 60,
       data: _xAxis
     },
     yAxis: {
