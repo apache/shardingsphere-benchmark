@@ -59,7 +59,7 @@ const mountedMixin = {
               //   moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss')
               // )
               if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
-                xAxis[m].push(mmm)
+                xAxis[m].push(Number(mmm) + 1)
               }
               // xAxis[m].sort((a, b) => {
               //   return moment(a) > moment(b) ? 1 : -1
