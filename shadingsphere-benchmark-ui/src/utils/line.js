@@ -1,5 +1,10 @@
 const color = ['#2D8CF0', '#9A66E4', '#19BE6B', '#FF9900', '#E46CBB']
 const getLineOptions = (name, xAxis, legend, series) => {
+  let _xAxis = xAxis[name]
+  const len = xAxis[name].length
+  if (len > 30) {
+    _xAxis = xAxis[name].slice(len - 30, len)
+  }
   return {
     color,
     grid: {
@@ -50,7 +55,7 @@ const getLineOptions = (name, xAxis, legend, series) => {
         rotate: 90
       },
       nameGap: 60,
-      data: xAxis[name]
+      data: _xAxis
     },
     yAxis: {
       name: 'TPS',

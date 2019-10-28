@@ -56,7 +56,9 @@ const mountedMixin = {
             legend[m].push(mm.type)
             const data = []
             for (const mmm of Object.keys(mm.data)) {
-              xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss'))
+              xAxis[m].push(
+                moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss')
+              )
               // if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
               //   xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD'))
               // }
@@ -97,17 +99,22 @@ const mountedMixin = {
           // Complement logic
           // Complement data at the beginning
           for (const d of series[m]) {
+            const _tem = []
+            for (const ddd of d.data) {
+              _tem.push(ddd.Date)
+            }
             for (const dd of _xAxis[m]) {
-              if (d.data.length < _xAxis[m].length) {
-                for (let i = 0; i < _xAxis[m].length - d.data.length; i++) {
-                  d.data.unshift({
-                    showTip: false,
-                    value: null,
-                    Date: dd
-                  })
-                }
+              if (!_tem.includes(dd)) {
+                d.data.unshift({
+                  showTip: false,
+                  value: null,
+                  Date: dd
+                })
               }
             }
+            d.data.sort((a, b) => {
+              return moment(a.Date) > moment(b.Date) ? 1 : -1
+            })
           }
         } else {
           for (const k of map) {
