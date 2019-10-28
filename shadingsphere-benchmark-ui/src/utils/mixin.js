@@ -56,7 +56,7 @@ const mountedMixin = {
             legend[m].push(mm.type)
             const data = []
             for (const mmm of Object.keys(mm.data)) {
-              xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD'))
+              xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss'))
               // if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
               //   xAxis[m].push(moment(mm.data[mmm].Date).format('YYYY-MM-DD'))
               // }
@@ -71,7 +71,7 @@ const mountedMixin = {
                 ...mm.data[mmm],
                 showTip: true,
                 value: mm.data[mmm].Throughout,
-                Date: moment(mm.data[mmm].Date).format('YYYY-MM-DD')
+                Date: moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss')
               })
             }
 

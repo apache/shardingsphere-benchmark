@@ -28,7 +28,7 @@ const getLineOptions = (name, xAxis, legend, series) => {
           </div>`
           }
         }
-        return `${date}${html}`
+        return html ? `${date}${html}` : ''
       },
       position(pos, params, dom, rect, size) {
         if (size.viewSize[0] > 300 && size.viewSize[0] < 510) {
@@ -44,9 +44,9 @@ const getLineOptions = (name, xAxis, legend, series) => {
       type: 'category',
       boundaryGap: false,
       axisLabel: {
-        rotate: 20
+        rotate: 90
       },
-      nameGap: 40,
+      nameGap: 60,
       data: xAxis[name]
     },
     yAxis: {
