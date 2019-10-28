@@ -22,6 +22,9 @@ const getLineOptions = (name, xAxis, legend, series) => {
             <p>Samples: ${v.data.Samples}</p>
             <p>Throughtput: ${v.data.Throughout}</p>
             <p>Avg: ${v.data.Avg}</p>
+            <p>90th: ${v.data['90th']}</p>
+            <p>95th: ${v.data['95th']}</p>
+            <p>99th: ${v.data['99th']}</p>
             <p>Min: ${v.data.Min}</p>
             <p>Max: ${v.data.Max}</p>
             <p>Err: ${v.data.Err}</p>
