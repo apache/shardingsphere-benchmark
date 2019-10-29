@@ -16,26 +16,21 @@ const getLineOptions = (name, xAxis, legend, series) => {
     tooltip: {
       trigger: 'axis',
       formatter(d) {
-        // const date = `<div>日期：${d[0].data.Date}</div>`
         let html = ``
         for (const v of d) {
-          // if (v.data.showTip) {
+          let p = ``
+          for (const vv in v.data) {
+            if (vv !== 'value' && vv !== 'Date') {
+              p += `<p>${vv}: ${v.data[vv]}</p>`
+            }
+          }
           html += `<div style="display:inline-block;margin: 10px;font-size: 14px;">
             <p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
               v.color
             };"></span>${v.data.Date}</p> 
             <p>${v.seriesName}</p>
-            <p>Samples: ${v.data.Samples}</p>
-            <p>Throughtput: ${v.data.Throughout}</p>
-            <p>Avg: ${v.data.Avg}</p>
-            <p>90th: ${v.data['90th']}</p>
-            <p>95th: ${v.data['95th']}</p>
-            <p>99th: ${v.data['99th']}</p>
-            <p>Min: ${v.data.Min}</p>
-            <p>Max: ${v.data.Max}</p>
-            <p>Err: ${v.data.Err}</p>
+            ${p}
           </div>`
-          // }
         }
         return html ? `${html}` : ''
       },

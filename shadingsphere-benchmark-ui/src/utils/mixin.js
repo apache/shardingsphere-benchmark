@@ -36,14 +36,12 @@ const mountedMixin = {
       const series = {}
       const desc = {}
       const xAxis = {}
-      const _series = {}
 
       for (const v in sourceData) {
         map.push(v)
         if (v !== 'DESC') {
           legend[v] = []
           series[v] = []
-          _series[v] = []
           xAxis[v] = []
         }
       }
@@ -55,24 +53,11 @@ const mountedMixin = {
             legend[m].push(mm.type)
             const data = []
             for (const mmm of Object.keys(mm.data)) {
-              // xAxis[m].push(
-              //   moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss')
-              // )
               if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
                 xAxis[m].push(Number(mmm) + 1)
               }
-              // xAxis[m].sort((a, b) => {
-              //   return moment(a) > moment(b) ? 1 : -1
-              // })
-              // _xAxis[m] = xAxis[m].filter((el, index, self) => {
-              //   return self.indexOf(el) === index
-              // })
-
-              // __xAxis[m] = []
-
               data.push({
                 ...mm.data[mmm],
-                showTip: true,
                 value: mm.data[mmm].Throughout,
                 Date: moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss')
               })
@@ -96,34 +81,6 @@ const mountedMixin = {
               })
             }
           }
-
-          // Complement logic
-          // Complement data at the beginning
-          // for (const d of series[m]) {
-          //   const _tem = []
-          //   for (const ddd of d.data) {
-          //     _tem.push(ddd.Date)
-          //   }
-          //   for (const dd of _xAxis[m]) {
-          //     if (!_tem.includes(dd)) {
-          //       d.data.unshift({
-          //         showTip: false,
-          //         value: null,
-          //         Date: dd
-          //       })
-          //     }
-          //   }
-          //   d.data.sort((a, b) => {
-          //     return moment(a.Date) > moment(b.Date) ? 1 : -1
-          //   })
-          // }
-
-          // for (let i = 0; i < _xAxis[m].length; i++) {
-          //   __xAxis[m].push({
-          //     value: i + 1,
-          //     date: _xAxis[m][i]
-          //   })
-          // }
         } else {
           for (const k of map) {
             if (k !== m) {
