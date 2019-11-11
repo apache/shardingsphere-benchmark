@@ -35,6 +35,7 @@
             <artifactId>sharding-jdbc-core</artifactId>
             <version>[4.0.0-RC2-SNAPSHOT,)</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>io.shardingsphere</groupId>
             <artifactId>sharding-core</artifactId>
@@ -45,6 +46,7 @@
             <artifactId>sharding-jdbc-core</artifactId>
             <version>3.1.0</version>
         </dependency>
+        -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
