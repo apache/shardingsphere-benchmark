@@ -21,8 +21,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 import perfstmt.ShardingPerfStmt;
-import service.api.service.SJPerfService;
-import service.util.config.lastversion.SJDataSourceOp;
+import service.util.config.lastversion.SJDataSourceFactory;
 import service.util.config.SJDataSourceUtil;
 
 import javax.sql.DataSource;
@@ -35,25 +34,15 @@ import java.sql.SQLException;
 public class SJMasterSlaveDelete extends AbstractJavaSamplerClient {
     private static final String DELETE_SQL_MASTER_SLAVE = ShardingPerfStmt.DELETE_STMT.getValue();
     
-    private static SJPerfService sjPerfService;
-    
-    private DataSource dataSource;
+    private static DataSource dataSource;
     
     static {
         try {
-            sjPerfService = new SJPerfService(SJDataSourceOp.createMSDataSource());
+            dataSource = SJDataSourceFactory.createMSDataSource();
         } catch (final SQLException ignore) {
         }
     }
     
-    /**
-     * setup prepare.
-     * @param context context
-     */
-    @Override
-    public void setupTest(JavaSamplerContext context) {
-        dataSource = sjPerfService.getDataSource();
-    }
     
     /**
      * run test.

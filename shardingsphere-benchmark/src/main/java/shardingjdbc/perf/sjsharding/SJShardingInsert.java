@@ -21,8 +21,7 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 import perfstmt.ShardingPerfStmt;
-import service.api.service.SJPerfService;
-import service.util.config.SJDataSourceOp;
+import service.util.config.SJDataSourceFactory;
 import service.util.config.SJDataSourceUtil;
 
 import javax.sql.DataSource;
@@ -35,24 +34,13 @@ import java.sql.SQLException;
 public class SJShardingInsert extends AbstractJavaSamplerClient {
     private static final String INSERT_SHARDING = ShardingPerfStmt.INSERT_STMT.getValue();
     
-    private static SJPerfService sjPerfService;
-    
-    private DataSource dataSource;
+    private static DataSource dataSource;
     
     static {
         try {
-            sjPerfService = new SJPerfService(SJDataSourceOp.createEncryptDataSource());
+            dataSource = SJDataSourceFactory.createEncryptDataSource();
         } catch (final SQLException ignore) {
         }
-    }
-    
-    /**
-     * prepare setup.
-     * @param context context
-     */
-    @Override
-    public void setupTest(JavaSamplerContext context) {
-        dataSource = sjPerfService.getDataSource();
     }
     
     /**

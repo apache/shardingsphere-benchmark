@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * create datasource for sharding jdbc version 3.1.0.
  * @author nancyzrh
  */
-public class SJDataSourceOp {
+public class SJDataSourceFactory {
     
     /**
      * create sharding datasource.
