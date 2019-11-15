@@ -45,7 +45,7 @@ import java.util.Arrays;
  * create datasource operation for sharding jdbc.
  * @author nancyzrh
  */
-public class SJDataSourceOp {
+public class SJDataSourceFactory {
     
     /**
      * create datasource for master slave.
