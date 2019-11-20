@@ -13,38 +13,8 @@ export const constantRouterMap = [
     hidden: true
   },
   {
-    path: '/encrypt_sharding_test',
-    component: () => import('@/views/encrypt_sharding_test'),
-    hidden: true
-  },
-  {
-    path: '/encrypt_test',
-    component: () => import('@/views/encrypt_test'),
-    hidden: true
-  },
-  {
-    path: '/loss_test',
-    component: () => import('@/views/loss_test'),
-    hidden: true
-  },
-  {
-    path: '/master_slave_sharding_test',
-    component: () => import('@/views/master_slave_sharding_test'),
-    hidden: true
-  },
-  {
-    path: '/master_slave_test',
-    component: () => import('@/views/master_slave_test'),
-    hidden: true
-  },
-  {
-    path: '/sharding_test',
-    component: () => import('@/views/sharding_test'),
-    hidden: true
-  },
-  {
-    path: '/promotion_test',
-    component: () => import('@/views/promotion_test'),
+    path: '/overview_detail/:id',
+    component: () => import('@/views/overview_detail'),
     hidden: true
   }
 ]

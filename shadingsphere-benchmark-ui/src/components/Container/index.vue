@@ -15,7 +15,7 @@
             <BreadcrumbItem to="/">
               <Icon type="ios-home-outline" />&nbsp;Home
             </BreadcrumbItem>
-            <BreadcrumbItem>{{ $store.state.global.activeName.split('-').join(' ') }}</BreadcrumbItem>
+            <BreadcrumbItem>{{ breadcrumbName }}</BreadcrumbItem>
           </Breadcrumb>
           <slot />
         </Content>
@@ -36,7 +36,8 @@ export default {
   },
   data() {
     return {
-      isCollapsed: false
+      isCollapsed: false,
+      breadcrumbName: ''
     }
   },
   computed: {
@@ -47,6 +48,23 @@ export default {
   watch: {
     $route(to, from) {
       this.checkoutMenu(to.path)
+      if (to.path === '/overview') {
+        this.breadcrumbName = ''
+      } else {
+        const res = this.$store.state.global.fileData[to.path.split(`/overview_detail/`)[1]]
+        if (res) {
+          this.breadcrumbName = res.split('-').join(' ')
+        }
+      }
+    },
+    '$store.state.global.fileData': {
+      handler(val) {
+        const res = val[location.hash.split(`#/overview_detail/`)[1]]
+        if (res) {
+          this.breadcrumbName = res.split('-').join(' ')
+        }
+      },
+      deep: true
     }
   },
   mounted() {
