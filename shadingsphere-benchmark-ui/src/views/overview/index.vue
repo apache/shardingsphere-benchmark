@@ -14,7 +14,7 @@
         :xl="6"
       >
         <Card class="card-item">
-          <router-link :to="item">
+          <router-link :to="'/overview_detail/' + index">
             <div :class="'card-item-left left0' + index">0{{ index + 1 }}</div>
             <h3>{{ item.split('_').join(' ') }}</h3>
             <span class="card-span">detail</span>
