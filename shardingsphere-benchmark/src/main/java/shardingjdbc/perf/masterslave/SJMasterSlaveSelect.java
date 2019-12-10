@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjsharding;
+package shardingjdbc.perf.masterslave;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,34 +28,34 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc insert performance with ss dev branch.
+ * for shardingjdbc master slave select performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJShardingInsert extends AbstractJavaSamplerClient {
-    private static final String INSERT_SHARDING = ShardingPerfStmt.INSERT_STMT.getValue();
+public class SJMasterSlaveSelect extends AbstractJavaSamplerClient {
+    private static final String SELECT_SQL_MASTER_SLAVE = ShardingPerfStmt.SELECT_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createMSDataSource();
         } catch (final SQLException ignore) {
         }
     }
     
     /**
      * run test.
-     * @param javaSamplerContext context
-     * @return res
+     * @param javaSamplerContext
+     * @return
      */
     @Override
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJShardingInsert");
+        results.setSampleLabel("SJMasterSlaveSelect");
         results.sampleStart();
         try {
-            SJDataSourceUtil.insert(INSERT_SHARDING, dataSource);
+            SJDataSourceUtil.getSelect(SELECT_SQL_MASTER_SLAVE, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;
@@ -66,4 +66,5 @@ public class SJShardingInsert extends AbstractJavaSamplerClient {
         return results;
     }
 }
+
 

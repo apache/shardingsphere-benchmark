@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjmasterslave;
+package shardingjdbc.perf.sharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,20 +28,21 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc master slave delete performance with ss dev branch.
+ * for shardingjdbc update performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJMasterSlaveDelete extends AbstractJavaSamplerClient {
-    private static final String DELETE_SQL_MASTER_SLAVE = ShardingPerfStmt.DELETE_STMT.getValue();
+public class SJShardingUpdate extends AbstractJavaSamplerClient {
+    private static final String UPDATE_SHARDING = ShardingPerfStmt.UPDATE_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createShardingDataSource();
         } catch (final SQLException ignore) {
         }
     }
+    
     
     /**
      * run test.
@@ -52,10 +53,10 @@ public class SJMasterSlaveDelete extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJMasterSlaveDelete");
+        results.setSampleLabel("SJShardingUpdate");
         results.sampleStart();
         try {
-            SJDataSourceUtil.delete(DELETE_SQL_MASTER_SLAVE, dataSource);
+            SJDataSourceUtil.updateStmt(UPDATE_SHARDING, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

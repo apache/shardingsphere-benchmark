@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjmasterslave;
+package shardingjdbc.perf.msencryptsharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,21 +28,20 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc master slave update performance with ss dev branch.
+ * for shardingjdbc encrypt update performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJMasterSlaveUpdate extends AbstractJavaSamplerClient {
-    private static final String UPDATE_SQL_MASTER_SLAVE = ShardingPerfStmt.UPDATE_STMT.getValue();
+public class SJMsEncryptShardingUpdate extends AbstractJavaSamplerClient {
+    private static final String UPDATE_ENC_STMT = ShardingPerfStmt.UPDATE_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createMSEncShardingDataSource();
         } catch (final SQLException ignore) {
         }
     }
-    
     
     /**
      * run test.
@@ -53,10 +52,10 @@ public class SJMasterSlaveUpdate extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJMasterSlaveUpdate");
+        results.setSampleLabel("SJEncryptUpdate");
         results.sampleStart();
         try {
-            SJDataSourceUtil.updateStmt(UPDATE_SQL_MASTER_SLAVE, dataSource);
+            SJDataSourceUtil.updateStmt(UPDATE_ENC_STMT, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

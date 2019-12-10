@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjsharding;
+package shardingjdbc.perf.msencryptsharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,17 +28,16 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc delete performance with ss dev branch.
- * @author nancyzrh
+ * for shardingjdbc encrypt insert performance with ss dev branch.
  */
-public class SJShardingDelete extends AbstractJavaSamplerClient {
-    private static final String DELETE_SHARDING = ShardingPerfStmt.DELETE_STMT.getValue();
+public class SJMsEncryptShardingInsert extends AbstractJavaSamplerClient {
+    private static final String INSERT_ENC_STMT = ShardingPerfStmt.INSERT_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createMSEncShardingDataSource();
         } catch (final SQLException ignore) {
         }
     }
@@ -52,10 +51,10 @@ public class SJShardingDelete extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJShardingDelete");
+        results.setSampleLabel("SJEncryptInsert");
         results.sampleStart();
         try {
-            SJDataSourceUtil.delete(DELETE_SHARDING, dataSource);
+            SJDataSourceUtil.insert(INSERT_ENC_STMT, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

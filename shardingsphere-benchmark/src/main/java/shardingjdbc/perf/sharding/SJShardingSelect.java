@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjencrypt;
+package shardingjdbc.perf.sharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,16 +28,17 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc encrypt insert performance with ss dev branch.
+ * for shardingjdbc select performance with ss dev branch.
+ * @author nancyzrh
  */
-public class SJEncryptInsert extends AbstractJavaSamplerClient {
-    private static final String INSERT_ENC_STMT = ShardingPerfStmt.INSERT_STMT.getValue();
+public class SJShardingSelect extends AbstractJavaSamplerClient {
+    private static final String SELECT_SHARDING = ShardingPerfStmt.SELECT_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createShardingDataSource();
         } catch (final SQLException ignore) {
         }
     }
@@ -51,10 +52,10 @@ public class SJEncryptInsert extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJEncryptInsert");
+        results.setSampleLabel("SJShardingSelect");
         results.sampleStart();
         try {
-            SJDataSourceUtil.insert(INSERT_ENC_STMT, dataSource);
+            SJDataSourceUtil.getSelect(SELECT_SHARDING, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

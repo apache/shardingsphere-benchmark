@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjmasterslave;
+package shardingjdbc.perf.masterslave;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,20 +28,21 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc Master Slave insert performance with ss dev branch.
+ * for shardingjdbc master slave update performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJMasterSlaveInsert extends AbstractJavaSamplerClient {
-    private static final String INSERT_SQL_MASTER_SLAVE = ShardingPerfStmt.INSERT_STMT.getValue();
+public class SJMasterSlaveUpdate extends AbstractJavaSamplerClient {
+    private static final String UPDATE_SQL_MASTER_SLAVE = ShardingPerfStmt.UPDATE_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createMSDataSource();
         } catch (final SQLException ignore) {
         }
     }
+    
     
     /**
      * run test.
@@ -52,10 +53,10 @@ public class SJMasterSlaveInsert extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJMasterSlaveInsert");
+        results.setSampleLabel("SJMasterSlaveUpdate");
         results.sampleStart();
         try {
-            SJDataSourceUtil.insert(INSERT_SQL_MASTER_SLAVE, dataSource);
+            SJDataSourceUtil.updateStmt(UPDATE_SQL_MASTER_SLAVE, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

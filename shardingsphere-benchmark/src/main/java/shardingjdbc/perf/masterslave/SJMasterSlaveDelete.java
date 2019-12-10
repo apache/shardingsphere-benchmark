@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjencrypt;
+package shardingjdbc.perf.masterslave;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,17 +28,17 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc encrypt update performance with ss dev branch.
+ * for shardingjdbc master slave delete performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJEncryptUpdate extends AbstractJavaSamplerClient {
-    private static final String UPDATE_ENC_STMT = ShardingPerfStmt.UPDATE_STMT.getValue();
+public class SJMasterSlaveDelete extends AbstractJavaSamplerClient {
+    private static final String DELETE_SQL_MASTER_SLAVE = ShardingPerfStmt.DELETE_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createMSDataSource();
         } catch (final SQLException ignore) {
         }
     }
@@ -52,10 +52,10 @@ public class SJEncryptUpdate extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJEncryptUpdate");
+        results.setSampleLabel("SJMasterSlaveDelete");
         results.sampleStart();
         try {
-            SJDataSourceUtil.updateStmt(UPDATE_ENC_STMT, dataSource);
+            SJDataSourceUtil.delete(DELETE_SQL_MASTER_SLAVE, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

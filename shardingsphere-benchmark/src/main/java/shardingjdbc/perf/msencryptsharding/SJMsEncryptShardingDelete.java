@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjmasterslave;
+package shardingjdbc.perf.msencryptsharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,34 +28,34 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc master slave select performance with ss dev branch.
+ * for shardingjdbc encrypt delete performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJMasterSlaveSelect extends AbstractJavaSamplerClient {
-    private static final String SELECT_SQL_MASTER_SLAVE = ShardingPerfStmt.SELECT_STMT.getValue();
+public class SJMsEncryptShardingDelete extends AbstractJavaSamplerClient {
+    private static final String DELETE_ENC_STMT = ShardingPerfStmt.DELETE_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createMSEncShardingDataSource();
         } catch (final SQLException ignore) {
         }
     }
     
     /**
      * run test.
-     * @param javaSamplerContext
-     * @return
+     * @param javaSamplerContext context
+     * @return res
      */
     @Override
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJMasterSlaveSelect");
+        results.setSampleLabel("SJEncryptDelete");
         results.sampleStart();
         try {
-            SJDataSourceUtil.getSelect(SELECT_SQL_MASTER_SLAVE, dataSource);
+            SJDataSourceUtil.delete(DELETE_ENC_STMT, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;
@@ -66,5 +66,4 @@ public class SJMasterSlaveSelect extends AbstractJavaSamplerClient {
         return results;
     }
 }
-
 

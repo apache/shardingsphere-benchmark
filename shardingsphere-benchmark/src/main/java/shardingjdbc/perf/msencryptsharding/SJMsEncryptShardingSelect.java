@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjsharding;
+package shardingjdbc.perf.msencryptsharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,21 +28,20 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc update performance with ss dev branch.
+ * for shardingjdbc encrypt select performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJShardingUpdate extends AbstractJavaSamplerClient {
-    private static final String UPDATE_SHARDING = ShardingPerfStmt.UPDATE_STMT.getValue();
+public class SJMsEncryptShardingSelect extends AbstractJavaSamplerClient {
+    private static final String SELECT_ENC_STMT = ShardingPerfStmt.SELECT_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createMSEncShardingDataSource();
         } catch (final SQLException ignore) {
         }
     }
-    
     
     /**
      * run test.
@@ -53,10 +52,10 @@ public class SJShardingUpdate extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJShardingUpdate");
+        results.setSampleLabel("SJEncryptSelect");
         results.sampleStart();
         try {
-            SJDataSourceUtil.updateStmt(UPDATE_SHARDING, dataSource);
+            SJDataSourceUtil.getSelect(SELECT_ENC_STMT, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;
@@ -67,5 +66,4 @@ public class SJShardingUpdate extends AbstractJavaSamplerClient {
         return results;
     }
 }
-
 

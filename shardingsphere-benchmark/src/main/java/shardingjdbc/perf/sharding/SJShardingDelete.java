@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.sjsharding;
+package shardingjdbc.perf.sharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,17 +28,17 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc select performance with ss dev branch.
+ * for shardingjdbc delete performance with ss dev branch.
  * @author nancyzrh
  */
-public class SJShardingSelect extends AbstractJavaSamplerClient {
-    private static final String SELECT_SHARDING = ShardingPerfStmt.SELECT_STMT.getValue();
+public class SJShardingDelete extends AbstractJavaSamplerClient {
+    private static final String DELETE_SHARDING = ShardingPerfStmt.DELETE_STMT.getValue();
     
     private static DataSource dataSource;
     
     static {
         try {
-            dataSource = SJDataSourceFactory.createEncryptDataSource();
+            dataSource = SJDataSourceFactory.createShardingDataSource();
         } catch (final SQLException ignore) {
         }
     }
@@ -52,10 +52,10 @@ public class SJShardingSelect extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJShardingSelect");
+        results.setSampleLabel("SJShardingDelete");
         results.sampleStart();
         try {
-            SJDataSourceUtil.getSelect(SELECT_SHARDING, dataSource);
+            SJDataSourceUtil.delete(DELETE_SHARDING, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;
