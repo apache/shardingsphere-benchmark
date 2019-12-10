@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.lastversion.sjmasterslave;
+package shardingjdbc.perf.lastversion.masterslave;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc master slave update performance with version3.1.0.
+ * Sharding-Jdbc master slave update performance with version3.1.0.
  * @author nancyzrh
  */
 public class SJMasterSlaveUpdate extends AbstractJavaSamplerClient {

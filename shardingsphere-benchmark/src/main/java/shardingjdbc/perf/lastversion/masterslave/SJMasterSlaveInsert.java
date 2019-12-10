@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.lastversion.sjmasterslave;
+package shardingjdbc.perf.lastversion.masterslave;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,11 +28,11 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc master slave select performance with version3.1.0.
+ * Sharding-Jdbc master slave insert performance with version3.1.0.
  * @author nancyzrh
  */
-public class SJMasterSlaveSelect extends AbstractJavaSamplerClient {
-    private static final String SELECT_SQL_MASTER_SLAVE = ShardingPerfStmt.SELECT_STMT.getValue();
+public class SJMasterSlaveInsert extends AbstractJavaSamplerClient {
+    private static final String INSERT_SQL_MASTER_SLAVE = ShardingPerfStmt.INSERT_STMT.getValue();
     
     private static DataSource dataSource;
     
@@ -53,10 +53,10 @@ public class SJMasterSlaveSelect extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJPerformanceMSDelete");
+        results.setSampleLabel("SJMasterSlaveInsert");
         results.sampleStart();
         try {
-            SJDataSourceUtil.getSelect(SELECT_SQL_MASTER_SLAVE, dataSource);
+            SJDataSourceUtil.insert(INSERT_SQL_MASTER_SLAVE, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

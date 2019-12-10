@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingjdbc.perf.lastversion.sjsharding;
+package shardingjdbc.perf.lastversion.sharding;
 
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -28,11 +28,11 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc insert performance with version3.1.0.
+ * Sharding-Jdbc update performance with version3.1.0.
  * @author nancyzrh
  */
-public class SJShardingInsert extends AbstractJavaSamplerClient {
-    private static final String INSERT_SHARDING_STMT = ShardingPerfStmt.INSERT_STMT.getValue();
+public class SJShardingUpdate extends AbstractJavaSamplerClient {
+    private static final String UPDATE_STMT = ShardingPerfStmt.UPDATE_STMT.getValue();
     
     private static DataSource dataSource;
     
@@ -52,10 +52,10 @@ public class SJShardingInsert extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SJShardingInsert");
+        results.setSampleLabel("SJShardingUpdate");
         results.sampleStart();
         try {
-            SJDataSourceUtil.insert(INSERT_SHARDING_STMT, dataSource);
+            SJDataSourceUtil.delete(UPDATE_STMT, dataSource);
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;
