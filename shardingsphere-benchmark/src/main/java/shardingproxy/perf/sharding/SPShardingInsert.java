@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingproxy.perf.spencrypt;
+package shardingproxy.perf.sharding;
 
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
@@ -27,10 +27,10 @@ import service.util.config.SPDataSourceUtil;
 import java.sql.SQLException;
 
 /**
- * encrypt insert for sharding proxy.
+ *  insert performance for Sharding-Proxy according to different yaml configuration.
  * @author nancyzrh
  */
-public class SPEncryptInsert extends AbstractJavaSamplerClient {
+public class SPShardingInsert extends AbstractJavaSamplerClient {
     private static final String INSERT_STMT = ShardingPerfStmt.INSERT_STMT.getValue();
     
     static {
@@ -62,7 +62,7 @@ public class SPEncryptInsert extends AbstractJavaSamplerClient {
     @Override
     public SampleResult runTest(JavaSamplerContext context) {
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SPEncryptInsert");
+        results.setSampleLabel("SPShardingInsert");
         results.sampleStart();
         try {
             SPDataSourceUtil.insertIou(INSERT_STMT, "sharding_db");

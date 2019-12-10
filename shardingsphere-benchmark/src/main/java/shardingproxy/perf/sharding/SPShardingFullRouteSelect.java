@@ -1,21 +1,4 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package shardingproxy.perf.spencrypt;
+package shardingproxy.perf.sharding;
 
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
@@ -27,11 +10,11 @@ import service.util.config.SPDataSourceUtil;
 import java.sql.SQLException;
 
 /**
- * encrypt select performance for sharding proxy.
+ *  full route select performance for Sharding-Proxy according to different yaml configuration.
  * @author nancyzrh
  */
-public class SPEncryptSelect extends AbstractJavaSamplerClient {
-    private static final String SELECT_STMT = ShardingPerfStmt.SELECT_STMT.getValue();
+public class SPShardingFullRouteSelect extends AbstractJavaSamplerClient {
+    private static final String FULL_ROUTE_SELECT_STMT = ShardingPerfStmt.FULL_ROUTE_SELECT.getValue();
     
     static {
         SPDataSourceUtil.createDataSource("###", "sharding_db", "###", 3307, "###");
@@ -62,10 +45,10 @@ public class SPEncryptSelect extends AbstractJavaSamplerClient {
     @Override
     public SampleResult runTest(JavaSamplerContext context) {
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SPEncryptSelect");
+        results.setSampleLabel("SPShardingFullRouteSelect");
         results.sampleStart();
         try {
-            SPDataSourceUtil.getIou(SELECT_STMT, "sharding_db");
+            SPDataSourceUtil.getIou(FULL_ROUTE_SELECT_STMT, "sharding_db");
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

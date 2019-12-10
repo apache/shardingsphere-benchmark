@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import perfstmt.ShardingPerfStmt;
 import service.api.entity.Iou;
 
 /**
@@ -133,6 +134,43 @@ public class SPDataSourceUtil {
         return result;
     }
     
+    /**
+     * Insert+Update+Delete as one operation
+     * @param datasource
+     * @throws SQLException
+     */
+    public static void  writeOp(final String datasource) throws SQLException {
+        String sqlStmt = ShardingPerfStmt.INSERT_SQL_STMT.getValue();
+        Long id = Long.MIN_VALUE;
+        try (Connection connection = getDataSource(datasource).getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "##-####");
+            preparedStatement.setString(3, "##-####");
+            preparedStatement.executeUpdate();
+            ResultSet result = preparedStatement.getGeneratedKeys();
+            result.next();
+            id = result.getLong(1);
+        }catch (final SQLException ex) {
+            ex.printStackTrace();
+        }
+        sqlStmt = ShardingPerfStmt.UPDATE_SQL_STMT.getValue();
+        try (Connection connection = getDataSource(datasource).getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt)) {
+            preparedStatement.setString(1,"##-#####");
+            preparedStatement.setString(2,"##-#####");
+            preparedStatement.setLong(3, id);
+            preparedStatement.setInt(4,1);
+            preparedStatement.executeUpdate();
+        }
+        sqlStmt = ShardingPerfStmt.DELETE_SQL_STMT.getValue();
+        try (Connection connection = getDataSource(datasource).getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt)) {
+            preparedStatement.setInt(1,1);
+            preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+        }
+    }
     /**
      * update stmt.
      * @param sql input stmt

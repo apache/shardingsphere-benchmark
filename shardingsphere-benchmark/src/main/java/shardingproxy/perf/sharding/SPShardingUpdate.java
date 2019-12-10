@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package shardingproxy.perf.spencrypt;
+package shardingproxy.perf.sharding;
 
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
@@ -27,11 +27,10 @@ import service.util.config.SPDataSourceUtil;
 import java.sql.SQLException;
 
 /**
- * sharding proxy update for encrypt.
+ *  update performance for Sharding-Proxy according to different yaml configuration.
  * @author nancyzrh
- *
  */
-public class SPEncryptUpdate extends AbstractJavaSamplerClient {
+public class SPShardingUpdate extends AbstractJavaSamplerClient {
     private static final String UPDATE_STMT = ShardingPerfStmt.UPDATE_STMT.getValue();
     
     static {
@@ -63,7 +62,7 @@ public class SPEncryptUpdate extends AbstractJavaSamplerClient {
     @Override
     public SampleResult runTest(JavaSamplerContext context) {
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SPEncryptUpdate");
+        results.setSampleLabel("SPShardingUpdate");
         results.sampleStart();
         try {
             SPDataSourceUtil.updateStmt(UPDATE_STMT, "sharding_db");

@@ -1,21 +1,4 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package shardingproxy.perf.spencrypt;
+package shardingproxy.perf.sharding;
 
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
@@ -27,11 +10,10 @@ import service.util.config.SPDataSourceUtil;
 import java.sql.SQLException;
 
 /**
- * encrypt delete performance for sharding proxy.
- * @author nancyzrh
+ *  single route select performance for Sharding-Proxy according to different yaml configuration.
  */
-public class SPEncryptDelete extends AbstractJavaSamplerClient {
-    private static final String DELETE_STMT = ShardingPerfStmt.DELETE_STMT.getValue();
+public class SPShardingSingleRouteSelect extends AbstractJavaSamplerClient {
+    private static final String SINGLE_ROUTE_SELECT_STMT = ShardingPerfStmt.SINGLE_ROUTE_SELECT.getValue();
     
     static {
         SPDataSourceUtil.createDataSource("###", "sharding_db", "###", 3307, "###");
@@ -62,10 +44,10 @@ public class SPEncryptDelete extends AbstractJavaSamplerClient {
     @Override
     public SampleResult runTest(JavaSamplerContext context) {
         SampleResult results = new SampleResult();
-        results.setSampleLabel("SPEncryptDelete");
+        results.setSampleLabel("SPShardingSingleRouteSelect");
         results.sampleStart();
         try {
-            SPDataSourceUtil.deleteIou(DELETE_STMT, "sharding_db");
+            SPDataSourceUtil.getIou(SINGLE_ROUTE_SELECT_STMT, "sharding_db");
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;
