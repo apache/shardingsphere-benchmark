@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * create datasource for sharding jdbc version 3.1.0.
+ * create datasource for Sharding-Jdbc version 3.1.0.
  * @author nancyzrh
  */
 public class SJDataSourceFactory {

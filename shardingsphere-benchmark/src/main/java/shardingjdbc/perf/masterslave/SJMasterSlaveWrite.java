@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- *  Sharding-Jdbc Insert+Update+Delete Operation performance test for master slave
+ * Sharding-Jdbc Insert+Update+Delete Operation performance test for master slave.
  */
 public class SJMasterSlaveWrite extends AbstractJavaSamplerClient {
     

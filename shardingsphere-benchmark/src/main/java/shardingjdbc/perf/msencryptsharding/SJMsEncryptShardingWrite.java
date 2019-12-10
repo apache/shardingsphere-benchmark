@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Sharding-Jdbc Insert+Update+Delete operation performance test for master slave & encrypt & sharding
+ * Sharding-Jdbc Insert+Update+Delete operation performance test for master slave & encrypt & sharding.
  */
 public class SJMsEncryptShardingWrite extends AbstractJavaSamplerClient {
     

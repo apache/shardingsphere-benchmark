@@ -45,8 +45,8 @@ public class SJMasterSlaveSelect extends AbstractJavaSamplerClient {
     
     /**
      * run test.
-     * @param javaSamplerContext
-     * @return
+     * @param javaSamplerContext javaSamplerContext
+     * @return res
      */
     @Override
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {

@@ -29,16 +29,20 @@ import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
 
-import org.apache.shardingsphere.shardingjdbc.api.EncryptDataSourceFactory;
 import org.apache.shardingsphere.shardingjdbc.api.MasterSlaveDataSourceFactory;
 import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Properties;
+import java.util.Arrays;
+import java.util.List;
+import java.util.LinkedHashMap;
 
 /**
- * create datasource operation for sharding jdbc.
+ * create datasource operation for Sharding-Jdbc.
  * @author nancyzrh
  */
 public class SJDataSourceFactory {
@@ -92,7 +96,7 @@ public class SJDataSourceFactory {
     }
     
     /**
-     * create datasource for master slave & encrypt & sharding scene
+     * create datasource for master slave & encrypt & sharding scene.
      * @return datasource
      * @throws SQLException sqlexception
      */
@@ -113,37 +117,37 @@ public class SJDataSourceFactory {
     }
     
     /**
-     * get master slave configurations for master slave & encrypt & sharding
+     * * get master slave configurations for master slave & encrypt & sharding.
      * @return master slave rule configuration
      */
     private static List<MasterSlaveRuleConfiguration> getMSEncRuleConfigurations() {
-        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new LoadBalanceStrategyConfiguration("ROUND_ROBIN");
-        MasterSlaveRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveRuleConfiguration("ms_ds_0", "master_0", Arrays.asList("master_0_slave_0"),loadBalanceStrategyConfiguration);
-        MasterSlaveRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveRuleConfiguration("ms_ds_1", "master_1", Arrays.asList("master_1_slave_1"),loadBalanceStrategyConfiguration);
-        MasterSlaveRuleConfiguration masterSlaveRuleConfig3 = new MasterSlaveRuleConfiguration("ms_ds_2", "master_2", Arrays.asList("master_2_slave_2"),loadBalanceStrategyConfiguration);
-        MasterSlaveRuleConfiguration masterSlaveRuleConfig4 = new MasterSlaveRuleConfiguration("ms_ds_3", "master_3", Arrays.asList("master_3_slave_3"),loadBalanceStrategyConfiguration);
+        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration = new LoadBalanceStrategyConfiguration("ROUND_ROBIN");
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveRuleConfiguration("ms_ds_0", "master_0", Arrays.asList("master_0_slave_0"), loadBalanceStrategyConfiguration);
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveRuleConfiguration("ms_ds_1", "master_1", Arrays.asList("master_1_slave_1"), loadBalanceStrategyConfiguration);
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig3 = new MasterSlaveRuleConfiguration("ms_ds_2", "master_2", Arrays.asList("master_2_slave_2"), loadBalanceStrategyConfiguration);
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig4 = new MasterSlaveRuleConfiguration("ms_ds_3", "master_3", Arrays.asList("master_3_slave_3"), loadBalanceStrategyConfiguration);
         return Lists.newArrayList(masterSlaveRuleConfig1, masterSlaveRuleConfig2, masterSlaveRuleConfig3, masterSlaveRuleConfig4);
     }
     
     /**
-     * create datasourceMap for master slave & encrypt & sharding
+     * create datasourceMap for master slave & encrypt & sharding.
      * @return datasource map
      */
     private static Map<String, DataSource> createMSEncDataSourceMap() {
         final Map<String, DataSource> result = new HashMap<>();
-        result.put("master_0", SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
-        result.put("master_0_slave_0",  SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
-        result.put("master_1",SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
-        result.put("master_1_slave_1", SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
-        result.put("master_2", SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
-        result.put("master_2_slave_2",  SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
-        result.put("master_3",SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
-        result.put("master_3_slave_3", SJDataSourceUtil.createDataSource("###","sharding_db","####",3306,""));
+        result.put("master_0", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
+        result.put("master_0_slave_0", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
+        result.put("master_1", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
+        result.put("master_1_slave_1", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
+        result.put("master_2", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
+        result.put("master_2_slave_2", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
+        result.put("master_3", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
+        result.put("master_3_slave_3", SJDataSourceUtil.createDataSource("###", "sharding_db", "####", 3306, ""));
         return result;
     }
     
     /**
-     * get encrypt configuration for master slave & encrypt & sharding
+     * get encrypt configuration for master slave & encrypt & sharding.
      * @return encryptRuleConfiguration
      */
     private static EncryptRuleConfiguration getMsEncRuleConfiguration() {
@@ -152,10 +156,10 @@ public class SJDataSourceFactory {
         Map<String, EncryptColumnRuleConfiguration> columns = new LinkedHashMap<>();
         EncryptorRuleConfiguration encryptorConfig = new EncryptorRuleConfiguration("AES", props);
         EncryptColumnRuleConfiguration columnConfig = new EncryptColumnRuleConfiguration("c_plain", "c", "", "aes");
-        columns.put("c",columnConfig);
-        EncryptorRuleConfiguration encryptorConfigMd5 = new EncryptorRuleConfiguration("md5",new Properties());
+        columns.put("c", columnConfig);
+        EncryptorRuleConfiguration encryptorConfigMd5 = new EncryptorRuleConfiguration("md5", new Properties());
         EncryptColumnRuleConfiguration columnConfigMd5 = new EncryptColumnRuleConfiguration("", "pad", "", "md5");
-        columns.put("pad",columnConfigMd5);
+        columns.put("pad", columnConfigMd5);
         EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration(columns);
         EncryptRuleConfiguration encryptRuleConfig = new EncryptRuleConfiguration();
         encryptRuleConfig.getEncryptors().put("aes", encryptorConfig);

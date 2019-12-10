@@ -23,12 +23,16 @@ import perfstmt.ShardingPerfStmt;
 import service.api.entity.Iou;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * datasource utils for sharding jdbc.
+ * datasource utils for Sharding-Jdbc.
  * @author nancyzrh
  */
 public class SJDataSourceUtil {
@@ -141,11 +145,11 @@ public class SJDataSourceUtil {
     }
     
     /**
-     * Insert+Update+Delete as one operation
-     * @param datasource
-     * @throws SQLException
+     * * Insert+Update+Delete as one operation.
+     * @param datasource datasource
+     * @throws SQLException ex
      */
-    public static void  writeOp(final DataSource datasource) throws SQLException {
+    public static void writeOp(final DataSource datasource) throws SQLException {
         String sqlStmt = ShardingPerfStmt.INSERT_SQL_STMT.getValue();
         Long id = Long.MIN_VALUE;
         try (Connection connection = datasource.getConnection();
@@ -157,22 +161,22 @@ public class SJDataSourceUtil {
             ResultSet result = preparedStatement.getGeneratedKeys();
             result.next();
             id = result.getLong(1);
-        }catch (final SQLException ex) {
+        } catch (final SQLException ex) {
             ex.printStackTrace();
         }
         sqlStmt = ShardingPerfStmt.UPDATE_SQL_STMT.getValue();
         try (Connection connection = datasource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt)) {
-            preparedStatement.setString(1,"##-#####");
-            preparedStatement.setString(2,"##-#####");
+            preparedStatement.setString(1, "##-#####");
+            preparedStatement.setString(2, "##-#####");
             preparedStatement.setLong(3, id);
-            preparedStatement.setInt(4,1);
+            preparedStatement.setInt(4, 1);
             preparedStatement.executeUpdate();
         }
         sqlStmt = ShardingPerfStmt.DELETE_SQL_STMT.getValue();
         try (Connection connection = datasource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt)) {
-            preparedStatement.setInt(1,1);
+            preparedStatement.setInt(1, 1);
             preparedStatement.setLong(2, id);
             preparedStatement.executeUpdate();
         }
