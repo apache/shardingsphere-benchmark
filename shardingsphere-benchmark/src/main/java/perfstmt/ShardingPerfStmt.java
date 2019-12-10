@@ -42,7 +42,17 @@ public enum ShardingPerfStmt {
     
     SELECT_STMT("SELECT id,k from ssperf where id=1 and k=1"),
     
-    UPDATE_STMT("update ssperf set c=?,pad=? where id=? and k=?");
+    UPDATE_STMT("update ssperf set c=?,pad=? where id=? and k=?"),
+    
+    INSERT_SQL_STMT("INSERT INTO ssperf(k,c,pad) VALUES (?,?,?)"),
+    
+    UPDATE_SQL_STMT("update ssperf set c=?,pad =? where id=? and k=?"),
+    
+    DELETE_SQL_STMT("delete from ssperf where k=? and id=?"),
+    
+    SINGLE_ROUTE_SELECT("SELECT id,k from ssperf where id=1 and k=1"),
+    
+    FULL_ROUTE_SELECT("SELECT max(id) from ssperf where id%4=1");
     
     private final String value;
     

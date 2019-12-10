@@ -98,10 +98,10 @@ public class SJDataSourceFactory {
      */
     public static DataSource createMSEncShardingDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration("test", "ms_ds_${0..3}.test${0..1023}");
+        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration("ssperf", "ms_ds_${0..3}.test${0..1023}");
         tableRuleConfiguration.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
         shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfiguration);
-        shardingRuleConfig.getBindingTableGroups().add("test");
+        shardingRuleConfig.getBindingTableGroups().add("ssperf");
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "ms_ds_${id % 2}"));
         shardingRuleConfig.setDefaultTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "test${k % 1024}"));
         shardingRuleConfig.setMasterSlaveRuleConfigs(getMSEncRuleConfigurations());

@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc update performance with ss dev branch.
+ * Sharding-Jdbc sharding update performance with ss dev branch.
  * @author nancyzrh
  */
 public class SJShardingUpdate extends AbstractJavaSamplerClient {

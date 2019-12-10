@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc encrypt select performance with ss dev branch.
+ * Sharding-Jdbc master slave & encrypt & sharding select performance with ss dev branch.
  * @author nancyzrh
  */
 public class SJMsEncryptShardingSelect extends AbstractJavaSamplerClient {

@@ -19,13 +19,11 @@ package service.util.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import perfstmt.ShardingPerfStmt;
 import service.api.entity.Iou;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -138,6 +136,44 @@ public class SJDataSourceUtil {
     public static void clean(final String sql, final DataSource datasource) throws SQLException {
         try (Connection connection = datasource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.executeUpdate();
+        }
+    }
+    
+    /**
+     * Insert+Update+Delete as one operation
+     * @param datasource
+     * @throws SQLException
+     */
+    public static void  writeOp(final DataSource datasource) throws SQLException {
+        String sqlStmt = ShardingPerfStmt.INSERT_SQL_STMT.getValue();
+        Long id = Long.MIN_VALUE;
+        try (Connection connection = datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, "##-####");
+            preparedStatement.setString(3, "##-####");
+            preparedStatement.executeUpdate();
+            ResultSet result = preparedStatement.getGeneratedKeys();
+            result.next();
+            id = result.getLong(1);
+        }catch (final SQLException ex) {
+            ex.printStackTrace();
+        }
+        sqlStmt = ShardingPerfStmt.UPDATE_SQL_STMT.getValue();
+        try (Connection connection = datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt)) {
+            preparedStatement.setString(1,"##-#####");
+            preparedStatement.setString(2,"##-#####");
+            preparedStatement.setLong(3, id);
+            preparedStatement.setInt(4,1);
+            preparedStatement.executeUpdate();
+        }
+        sqlStmt = ShardingPerfStmt.DELETE_SQL_STMT.getValue();
+        try (Connection connection = datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStmt)) {
+            preparedStatement.setInt(1,1);
+            preparedStatement.setLong(2, id);
             preparedStatement.executeUpdate();
         }
     }

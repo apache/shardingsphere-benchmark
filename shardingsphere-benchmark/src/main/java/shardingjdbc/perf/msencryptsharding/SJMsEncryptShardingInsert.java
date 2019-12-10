@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc encrypt insert performance with ss dev branch.
+ *  Sharding-Jdbc master slave & encrypt & sharding insert performance with ss dev branch.
  */
 public class SJMsEncryptShardingInsert extends AbstractJavaSamplerClient {
     private static final String INSERT_ENC_STMT = ShardingPerfStmt.INSERT_STMT.getValue();

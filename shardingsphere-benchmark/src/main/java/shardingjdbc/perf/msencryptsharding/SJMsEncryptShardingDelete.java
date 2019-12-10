@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * for shardingjdbc encrypt delete performance with ss dev branch.
+ * Sharding-Jdbc master slave & encrypt & sharding delete performance with ss dev branch.
  * @author nancyzrh
  */
 public class SJMsEncryptShardingDelete extends AbstractJavaSamplerClient {
