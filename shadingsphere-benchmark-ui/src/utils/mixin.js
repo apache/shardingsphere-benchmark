@@ -30,16 +30,32 @@ const mountedMixin = {
           key: 'mysqlVerison'
         },
         {
-          title: 'table number',
-          key: 'tableNumber'
+          title: 'table description',
+          key: 'tableDescription'
         },
         {
           title: 'scene description',
-          key: 'sceneDescription'
+          key: 'sceneDescription',
+          render: (h, params) => {
+            const rows = params.row.sceneDescription.split('\n')
+            const html = []
+            for (const v of rows) {
+              html.push(h('div', v))
+            }
+            return h('div', html)
+          }
         },
         {
           title: 'sql example',
-          key: 'sqlExample'
+          key: 'sqlExample',
+          render: (h, params) => {
+            const rows = params.row.sqlExample.split('\n')
+            const html = []
+            for (const v of rows) {
+              html.push(h('div', v))
+            }
+            return h('div', html)
+          }
         }
       ]
     }
@@ -103,7 +119,7 @@ const mountedMixin = {
             if (k !== m) {
               desc[k] = {
                 mysqlVerison: sourceData[m]['mysqlVerison'],
-                tableNumber: sourceData[m]['tableNumber'],
+                tableDescription: sourceData[m]['tableDescription'],
                 sceneDescription: sourceData[m]['sceneDescription'],
                 sqlExample: sourceData[m][k].SqlExample
               }
