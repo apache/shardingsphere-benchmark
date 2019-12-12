@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Sharding-Jdbc sharding Insert+Update+Delete Operation performance with ss dev branch.
+ * Sharding-JDBC sharding Insert+Update+Delete Operation performance with ss dev branch.
  */
 public class SJShardingWrite extends AbstractJavaSamplerClient {
     

@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Sharding-Jdbc Master Slave insert performance with ss dev branch.
+ * Sharding-JDBC Master Slave insert performance with ss dev branch.
  * @author nancyzrh
  */
 public class SJMasterSlaveInsert extends AbstractJavaSamplerClient {

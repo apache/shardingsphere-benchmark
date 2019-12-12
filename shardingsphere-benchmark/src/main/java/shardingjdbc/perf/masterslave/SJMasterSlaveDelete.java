@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- *  Sharding-Jdbc delete performance test for master slave with ss dev branch.
+ *  Sharding-JDBC delete performance test for master slave with ss dev branch.
  * @author nancyzrh
  */
 public class SJMasterSlaveDelete extends AbstractJavaSamplerClient {

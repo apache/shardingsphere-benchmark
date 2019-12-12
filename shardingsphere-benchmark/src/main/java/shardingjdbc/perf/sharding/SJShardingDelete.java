@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Sharding-Jdbc sharding delete performance with ss dev branch.
+ * Sharding-JDBC sharding delete performance with ss dev branch.
  * @author nancyzrh
  */
 public class SJShardingDelete extends AbstractJavaSamplerClient {

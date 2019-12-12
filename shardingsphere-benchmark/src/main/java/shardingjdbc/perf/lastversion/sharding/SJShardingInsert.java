@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Sharding-Jdbc insert performance with version3.1.0.
+ * Sharding-JDBC insert performance with version3.1.0.
  * @author nancyzrh
  */
 public class SJShardingInsert extends AbstractJavaSamplerClient {

@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Sharding-Jdbc select performance with version3.1.0.
+ * Sharding-JDBC select performance with version3.1.0.
  * @author nancyzrh
  */
 public class SJShardingSelect extends AbstractJavaSamplerClient {

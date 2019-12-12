@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
- * Sharding-Jdbc sharding single route select performance with ss dev branch.
+ * Sharding-JDBC sharding single route select performance with ss dev branch.
  */
 public class SJShardingSingleRouteSelect extends AbstractJavaSamplerClient {
     private static final String SINGLE_ROUTE_SELECT_SHARDING = ShardingPerfStmt.SINGLE_ROUTE_SELECT.getValue();
