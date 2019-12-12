@@ -65,6 +65,7 @@ const getLineOptions = (name, xAxis, legend, series) => {
       name: 'Construction times',
       nameLocation: 'middle',
       type: 'category',
+      nameGap: 20,
       boundaryGap: false,
       data: _xAxis
     },
