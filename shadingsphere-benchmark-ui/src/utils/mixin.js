@@ -34,10 +34,34 @@ const mountedMixin = {
           key: 'tableDescription'
         },
         {
-          title: 'scene description',
-          key: 'sceneDescription',
+          title: 'encrypt rule',
+          key: 'encryptRule',
           render: (h, params) => {
-            const rows = params.row.sceneDescription.split('\n')
+            const rows = params.row.encryptRule.split('\n')
+            const html = []
+            for (const v of rows) {
+              html.push(h('div', v))
+            }
+            return h('div', html)
+          }
+        },
+        {
+          title: 'master slaveRule',
+          key: 'masterSlaveRule',
+          render: (h, params) => {
+            const rows = params.row.masterSlaveRule.split('\n')
+            const html = []
+            for (const v of rows) {
+              html.push(h('div', v))
+            }
+            return h('div', html)
+          }
+        },
+        {
+          title: 'sharding rule',
+          key: 'shardingRule',
+          render: (h, params) => {
+            const rows = params.row.shardingRule.split('\n')
             const html = []
             for (const v of rows) {
               html.push(h('div', v))
@@ -119,8 +143,10 @@ const mountedMixin = {
             if (k !== m) {
               desc[k] = {
                 mysqlVerison: sourceData[m]['mysqlVerison'],
+                encryptRule: sourceData[m]['encryptRule'],
+                masterSlaveRule: sourceData[m]['masterSlaveRule'],
+                shardingRule: sourceData[m]['shardingRule'],
                 tableDescription: sourceData[m]['tableDescription'],
-                sceneDescription: sourceData[m]['sceneDescription'],
                 sqlExample: sourceData[m][k].SqlExample
               }
             }
