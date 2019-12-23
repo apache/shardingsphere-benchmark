@@ -31,7 +31,15 @@ const mountedMixin = {
         },
         {
           title: 'table description',
-          key: 'tableDescription'
+          key: 'tableDescription',
+          render: (h, params) => {
+            const rows = params.row.tableDescription.split('\n')
+            const html = []
+            for (const v of rows) {
+              html.push(h('div', v))
+            }
+            return h('div', html)
+          }
         },
         {
           title: 'encrypt rule',
