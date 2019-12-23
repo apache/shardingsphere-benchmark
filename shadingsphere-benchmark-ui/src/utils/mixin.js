@@ -30,7 +30,7 @@ const mountedMixin = {
           key: 'mysqlVerison'
         },
         {
-          title: 'table description',
+          title: 'Table description',
           key: 'tableDescription',
           render: (h, params) => {
             const rows = params.row.tableDescription.split('\n')
@@ -54,7 +54,7 @@ const mountedMixin = {
           }
         },
         {
-          title: 'master slaveRule',
+          title: 'Master-slave Rule',
           key: 'masterSlaveRule',
           render: (h, params) => {
             const rows = params.row.masterSlaveRule.split('\n')
@@ -78,7 +78,7 @@ const mountedMixin = {
           }
         },
         {
-          title: 'sql example',
+          title: 'SQL example',
           key: 'sqlExample',
           render: (h, params) => {
             const rows = params.row.sqlExample.split('\n')
