@@ -26,11 +26,11 @@ const mountedMixin = {
       loading: false,
       columns: [
         {
-          title: 'MySQL verison',
+          title: 'MySQL Verison',
           key: 'mysqlVerison'
         },
         {
-          title: 'Table description',
+          title: 'Table Description',
           key: 'tableDescription',
           render: (h, params) => {
             const rows = params.row.tableDescription.split('\n')
@@ -42,7 +42,7 @@ const mountedMixin = {
           }
         },
         {
-          title: 'encrypt rule',
+          title: 'Encrypt Rule',
           key: 'encryptRule',
           render: (h, params) => {
             const rows = params.row.encryptRule.split('\n')
@@ -66,7 +66,7 @@ const mountedMixin = {
           }
         },
         {
-          title: 'sharding rule',
+          title: 'Sharding Rule',
           key: 'shardingRule',
           render: (h, params) => {
             const rows = params.row.shardingRule.split('\n')
@@ -78,7 +78,7 @@ const mountedMixin = {
           }
         },
         {
-          title: 'SQL example',
+          title: 'SQL Example',
           key: 'sqlExample',
           render: (h, params) => {
             const rows = params.row.sqlExample.split('\n')
