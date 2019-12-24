@@ -16,9 +16,13 @@
  */
 
 import moment from 'moment'
+
 const mountedMixin = {
   data() {
     return {
+      modal: false,
+      rules: '',
+      titleRule: '',
       legend: {},
       series: {},
       desc: {},
@@ -27,6 +31,7 @@ const mountedMixin = {
       columns: [
         {
           title: 'MySQL Verison',
+          align: 'center',
           key: 'mysqlVerison'
         },
         {
@@ -43,38 +48,98 @@ const mountedMixin = {
         },
         {
           title: 'Encrypt Rule',
+          align: 'center',
           key: 'encryptRule',
           render: (h, params) => {
-            const rows = params.row.encryptRule.split('\n')
-            const html = []
+            const rows = params.row.encryptRule.split('↵')
+            let html = ``
             for (const v of rows) {
-              html.push(h('div', v))
+              html += v + '\n'
             }
-            return h('div', html)
+            // const _html = `${JSON.stringify(yaml.safeLoad(html), null, '\t')}`
+            return h('div', [
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.modal = true
+                      this.rules = html
+                      this.titleRule = 'Encrypt Rule'
+                    }
+                  }
+                },
+                'view rules'
+              )
+            ])
           }
         },
         {
           title: 'Master-slave Rule',
+          align: 'center',
           key: 'masterSlaveRule',
           render: (h, params) => {
-            const rows = params.row.masterSlaveRule.split('\n')
-            const html = []
+            const rows = params.row.masterSlaveRule.split('↵')
+            let html = ``
             for (const v of rows) {
-              html.push(h('div', v))
+              html += v + '\n'
             }
-            return h('div', html)
+            // const _html = `${JSON.stringify(yaml.safeLoad(html), null, '\t')}`
+            return h('div', [
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.modal = true
+                      this.rules = html
+                      this.titleRule = 'Master-slave Rule'
+                    }
+                  }
+                },
+                'view rules'
+              )
+            ])
           }
         },
         {
           title: 'Sharding Rule',
+          align: 'center',
           key: 'shardingRule',
           render: (h, params) => {
-            const rows = params.row.shardingRule.split('\n')
-            const html = []
+            const rows = params.row.shardingRule.split('↵')
+            let html = ``
             for (const v of rows) {
-              html.push(h('div', v))
+              html += v + '\n'
             }
-            return h('div', html)
+            // const _html = `${JSON.stringify(yaml.safeLoad(html), null, '\t')}`
+            return h('div', [
+              h(
+                'Button',
+                {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.modal = true
+                      this.rules = html
+                      this.titleRule = 'Sharding Rule'
+                    }
+                  }
+                },
+                'view rules'
+              )
+            ])
           }
         },
         {
