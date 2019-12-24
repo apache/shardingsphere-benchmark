@@ -45,6 +45,10 @@
         <div>Loading</div>
       </Spin>
     </div>
+    <Modal :title="titleRule" v-model="modal" width="600">
+      <Input :rows="20" v-model="rules" type="textarea" readonly />
+      <div slot="footer"></div>
+    </Modal>
   </Row>
 </template>
 
