@@ -38,6 +38,7 @@ const mountedMixin = {
           title: 'Table Description',
           key: 'tableDescription',
           render: (h, params) => {
+            if (params.row.tableDescription === 'None') return h('div', '-')
             const rows = params.row.tableDescription.split('\n')
             const html = []
             for (const v of rows) {
@@ -51,6 +52,7 @@ const mountedMixin = {
           align: 'center',
           key: 'encryptRule',
           render: (h, params) => {
+            if (params.row.encryptRule === 'None') return h('div', '-')
             const rows = params.row.encryptRule.split('↵')
             let html = ``
             for (const v of rows) {
@@ -83,6 +85,7 @@ const mountedMixin = {
           align: 'center',
           key: 'masterSlaveRule',
           render: (h, params) => {
+            if (params.row.masterSlaveRule === 'None') return h('div', '-')
             const rows = params.row.masterSlaveRule.split('↵')
             let html = ``
             for (const v of rows) {
@@ -115,6 +118,7 @@ const mountedMixin = {
           align: 'center',
           key: 'shardingRule',
           render: (h, params) => {
+            if (params.row.shardingRule === 'None') return h('div', '-')
             const rows = params.row.shardingRule.split('↵')
             let html = ``
             for (const v of rows) {
@@ -146,6 +150,7 @@ const mountedMixin = {
           title: 'SQL Example',
           key: 'sqlExample',
           render: (h, params) => {
+            if (params.row.sqlExample === 'None') return h('div', '-')
             const rows = params.row.sqlExample.split('\n')
             const html = []
             for (const v of rows) {
