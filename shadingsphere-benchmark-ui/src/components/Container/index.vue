@@ -41,10 +41,19 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import { mapActions } from 'vuex'
 import apis from '../../utils/page-apis'
-
 import Footer from '../Footer/index.vue'
+
+import { Layout, Header, Content, Breadcrumb, BreadcrumbItem, Icon } from 'iview'
+Vue.component('Layout', Layout)
+Vue.component('Header', Header)
+Vue.component('Content', Content)
+Vue.component('Breadcrumb', Breadcrumb)
+Vue.component('BreadcrumbItem', BreadcrumbItem)
+Vue.component('Icon', Icon)
+
 export default {
   name: 'Container',
   components: {

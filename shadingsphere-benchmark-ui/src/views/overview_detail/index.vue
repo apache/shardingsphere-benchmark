@@ -62,6 +62,15 @@ import apis from '../../utils/page-apis'
 import { mountedMixin } from '../../utils/mixin'
 import { getLineOptions } from '../../utils/line'
 
+import Vue from 'vue'
+import { Modal, Spin, Col, Icon, Card, Row } from 'iview'
+Vue.component('Modal', Modal)
+Vue.component('Spin', Spin)
+Vue.component('Col', Col)
+Vue.component('Icon', Icon)
+Vue.component('Card', Card)
+Vue.component('Row', Row)
+
 export default {
   name: 'OverviewDetailTest',
   components: {
