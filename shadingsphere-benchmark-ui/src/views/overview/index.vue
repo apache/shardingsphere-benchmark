@@ -41,6 +41,12 @@
   </Card>
 </template>
 <script>
+import Vue from 'vue'
+import { Card, Row, Col, Icon } from 'iview'
+Vue.component('Card', Card)
+Vue.component('Row', Row)
+Vue.component('Col', Col)
+Vue.component('Icon', Icon)
 export default {
   name: 'Overview'
 }

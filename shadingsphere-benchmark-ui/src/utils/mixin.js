@@ -194,7 +194,7 @@ const mountedMixin = {
               data.push({
                 ...mm.data[mmm],
                 value: mm.data[mmm].Throughout,
-                Date: moment(mm.data[mmm].Date).format('YYYY-MM-DD HH:mm:ss')
+                Date: moment(new Date(mm.data[mmm].Date)).format('YYYY-MM-DD HH:mm:ss')
               })
             }
 
