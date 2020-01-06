@@ -191,11 +191,22 @@ const mountedMixin = {
               if (xAxis[m].length <= mm.data.length && mmm >= xAxis[m].length) {
                 xAxis[m].push(Number(mmm) + 1)
               }
-              data.push({
-                ...mm.data[mmm],
-                value: mm.data[mmm].Throughout,
-                Date: moment(new Date(mm.data[mmm].Date)).format('YYYY-MM-DD HH:mm:ss')
-              })
+              // data.push({
+              //   ...mm.data[mmm],
+              //   value: mm.data[mmm].Throughout,
+              //   Date: moment(new Date(mm.data[mmm].Date)).format('YYYY-MM-DD HH:mm:ss')
+              // })
+            }
+
+            const len = mm.data.length - 1
+            if (len) {
+              for (let i = len; len > 30 ? i >= len - 30 : i >= 0; i--) {
+                data.unshift({
+                  ...mm.data[i],
+                  value: mm.data[i].Throughout,
+                  Date: moment(new Date(mm.data[i].Date)).format('YYYY-MM-DD HH:mm:ss')
+                })
+              }
             }
 
             // showVersion.includes('3.') show 3.X version
