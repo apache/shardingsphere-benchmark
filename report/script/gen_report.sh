@@ -21,5 +21,5 @@ else
 fi
 
 #parse history jtl data to json data to ui, such as the following examples
-python gen_jtl_data.py output/select.jtl output/insert.jtl output/update.jtl output/delete.jtl jtl_json_test/test.json
+python gen_jtl_data.py output jtl_json_test/test.json
 

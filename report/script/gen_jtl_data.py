@@ -3,75 +3,80 @@ import os,sys
 import json
 import time
 from datetime import datetime
-
+from collections import OrderedDict
 def gen_desc(res_json):
     """
     replace your scene description as following examples. 
     """
     desc_json={
        "mysqlVerison":"5.7.24",
-       "tableNumber":"single table(e.g:t_test)",
-       "sceneDescription":"This is a model for connecting directly to a database through a proxy.We used id, k, c, pad fields in the table.Including a database and a table",
+       "tableDescription":"id  bigint(20)  primary key,\nk int(11),\nc char(120),\npad  char(60)\n",
+       "shardingRule":"tables:\n  tbl:\n    actualDataNodes: ds_${0..3}.tbl${0..1023}\n    tableStrategy:\n      inline:\n        shardingColumn: k\n        algorithmExpression: tbl${k % 1024}\n    keyGenerator:\n        type: SNOWFLAKE\n        column: id\ndefaultDatabaseStrategy:\n  inline:\n    shardingColumn: id\n    algorithmExpression: ds_${id % 4}",
+       "masterSlaveRule":"None",
+       "encryptRule":"None",
+       "INSERT+UPDATE+DELETE":{
+           "SqlExample":"INSERT INTO tbl(k, c, pad) VALUES(1, '###-###-###', '###-###');\nUPDATE tbl SET c='####-####-####', pad='####-####' WHERE id=?;\nDELETE FROM tbl WHERE id=?",
+           "ComparativeType": "INSERT+UPDATE+DELETE"
+       },
        "SELECT":{
-           "SqlExample":"SELECT id,k FROM t_test WHERE id = # AND k = #",
+           "SqlExample":"SELECT id,k FROM tbl ignore index(`PRIMARY`) WHERE id=? AND k=?",
            "ComparativeType": "SELECT"
        },
-       "INSERT":{
-           "SqlExample":"INSERT INTO t_test(k,c,pad) VALUES(#,#,#)",
-           "ComparativeType": "INSERT"
-       },
-       "DELETE":{
-           "SqlExample":"DELETE FROM t_test WHERE id = # AND k = #",
-           "ComparativeType": "DELETE"
-       },
-       "UPDATE":{
-           "SqlExample":"UPDATE t_test SET k = # WHERE id = # AND k = #",
-           "ComparativeType": "UPDATE"
-       }
     }
     res_json['DESC']=desc_json
     return res_json
-
-def gen_insert(insert_file_name,res_json):
-    if not os.path.exists(insert_file_name):
-        os.system(r"touch {}".format(insert_file_name))
-    with open(insert_file_name) as f:
-        for line in f:
-            line = line.strip("\n")
-            if line != "":
-                res_json['INSERT'][0]['data'].append(json.loads(line))
     
-def gen_select(select_file_name,res_json):
-    if not os.path.exists(select_file_name):
-        os.system(r"touch {}".format(select_file_name))
-    with open(select_file_name) as f:
+def gen_select(input_file_name,res_json):
+    #if not os.path.exists(select_file_name):
+    #    os.system(r"touch {}".format(select_file_name))
+    mysql_file_name = '{}/{}'.format(input_file_name, "mysql_select.jtl")
+    sharding_proxy_file_name = '{}/{}'.format(input_file_name, "sharding-proxy_select.jtl")
+    sharding_jdbc_file_name = '{}/{}'.format(input_file_name, "sharding-jdbc_select.jtl")
+    with open(sharding_proxy_file_name) as f:
         for line in f:
             line = line.strip("\n")
             if line != "":
                 res_json['SELECT'][0]['data'].append(json.loads(line))
-def gen_update(update_file_name,res_json):
-    if not os.path.exists(update_file_name):
-        os.system(r"touch {}".format(update_file_name))
-    with open(update_file_name) as f:
+    with open(sharding_jdbc_file_name) as f:
         for line in f:
             line = line.strip("\n")
             if line != "":
-                res_json['UPDATE'][0]['data'].append(json.loads(line))
-def gen_delete(delete_file_name,res_json):
-    if not os.path.exists(delete_file_name):
-        os.system(r"touch {}".format(delete_file_name))
-    with open(delete_file_name) as f:
+                res_json['SELECT'][1]['data'].append(json.loads(line))
+    with open(mysql_file_name) as f:
         for line in f:
             line = line.strip("\n")
             if line != "":
-                res_json['DELETE'][0]['data'].append(json.loads(line))
+                res_json['SELECT'][2]['data'].append(json.loads(line))
+
+def gen_all(input_file_name,res_json):
+    mysql_file_name = '{}/{}'.format(input_file_name, "mysql_all.jtl")
+    sharding_proxy_file_name = '{}/{}'.format(input_file_name, "sharding-proxy_all.jtl")
+    sharding_jdbc_file_name = '{}/{}'.format(input_file_name, "sharding-jdbc_all.jtl")
+    with open(sharding_proxy_file_name) as f:
+        for line in f:
+            line = line.strip("\n")
+            if line != "":
+                res_json['INSERT+UPDATE+DELETE'][0]['data'].append(json.loads(line))
+    with open(sharding_jdbc_file_name) as f:
+        for line in f:
+            line = line.strip("\n")
+            if line != "":
+                res_json['INSERT+UPDATE+DELETE'][1]['data'].append(json.loads(line))
+    with open(mysql_file_name) as f:
+        for line in f:
+            line = line.strip("\n")
+            if line != "":
+                res_json['INSERT+UPDATE+DELETE'][2]['data'].append(json.loads(line))
+
 def cur_file_dir():
     path = sys.path[0]
     if os.path.isdir(path):
         return path
     elif os.path.isfile(path):
         return os.path.dirname(path)
-def gen_json(select_file_name, insert_file_name, update_file_name, delete_file_name, out_name):
+
+def gen_json(input_file_name, out_name):
+    res_json = OrderedDict()
     res_json = {
         "SELECT":[
              {"type":"Sharding-Proxy",
@@ -84,7 +89,7 @@ def gen_json(select_file_name, insert_file_name, update_file_name, delete_file_n
              "data":[]
              }
         ],
-        "INSERT":[
+        "INSERT+UPDATE+DELETE":[
              {"type":"Sharding-Proxy",
               "data":[]
              },
@@ -95,36 +100,12 @@ def gen_json(select_file_name, insert_file_name, update_file_name, delete_file_n
              "data":[]
              }
          ],
-        "UPDATE":[
-             {"type":"Sharding-Proxy",
-              "data":[]
-             },
-             {"type":"Sharding-JDBC",
-             "data":[]
-             },
-             {"type":"MySQL", 
-             "data":[]
-             }
-        ],
-        "DELETE":[
-             {"type":"Sharding-Proxy",
-              "data":[]
-             },
-             {"type":"Sharding-JDBC",
-             "data":[]
-             },
-             {"type":"MySQL", 
-             "data":[]
-             }
-        ],
         "DESC":{
          }
     }
     res_json=gen_desc(res_json)
-    gen_insert(insert_file_name,res_json)
-    gen_select(select_file_name,res_json)
-    gen_update(update_file_name,res_json)
-    gen_delete(delete_file_name,res_json)
+    gen_select(input_file_name,res_json)
+    gen_all(input_file_name,res_json)
     save_dir = cur_file_dir()
     newfile='%s/%s'%(save_dir,out_name)
     with open(newfile,'w') as f:
@@ -132,10 +113,7 @@ def gen_json(select_file_name, insert_file_name, update_file_name, delete_file_n
 
      
 if __name__ == '__main__':
-    select_file_name = sys.argv[1]
-    insert_file_name = sys.argv[2]
-    update_file_name = sys.argv[3]
-    delete_file_name = sys.argv[4]
-    out_name = sys.argv[5]
-    gen_json(select_file_name, insert_file_name, update_file_name, delete_file_name, out_name)
+    input_file_name = sys.argv[1]
+    out_name = sys.argv[2]
+    gen_json(input_file_name, out_name)
    
