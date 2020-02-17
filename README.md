@@ -11,6 +11,7 @@ shadingsphere-benchmark-ui/README.md
 ```bash
 
 step 1: build shardingsphere-benchmark
+# Notes: this tool depend on the master of incubator-shardingsphere, you should compile the master of incubator-shardingsphere first if the version of master has not been released.
 # mvn clean install
 
 step 2: copy target jar to jmeter lib/ext
