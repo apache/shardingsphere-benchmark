@@ -18,6 +18,8 @@ step 2: copy target jar to jmeter lib/ext
 # cp shardingsphere-benchmark-1.0-SNAPSHOT-jar-with-dependencies.jar  apache-jmeter-**/lib/ext
 
 step 3: run jmeter test plan with target class
-
+# jmeter –n –t test_plan/test.jmx
+# test.jmx example:https://github.com/apache/incubator-shardingsphere-benchmark/tree/master/report/script/test_plan/test.jmx
+# Notes: test.jmx is just an example, you should change the name of class according to your  performance code, and the ip/port in shardingsphere-benchmark should be modified to real machine.
 
 ```
