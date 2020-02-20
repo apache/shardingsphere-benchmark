@@ -24,4 +24,4 @@ step 3: run jmeter test plan with target class
 
 ```
 ## sharding-proxy-conf
-The Configurations for sharding proxy with four scenes in benchmark are given here.
+The configurations for Sharding-Proxy with four scenes in benchmark are given here.
