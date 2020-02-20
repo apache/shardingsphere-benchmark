@@ -23,3 +23,5 @@ step 3: run jmeter test plan with target class
 # Notes: test.jmx is just an example, you should change the name of class according to your  performance code, and the ip/port in shardingsphere-benchmark should be modified to real machine.
 
 ```
+## sharding-proxy-conf
+The Configurations for sharding proxy with four scenes in benchmark are given here.
