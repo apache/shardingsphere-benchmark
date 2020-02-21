@@ -111,6 +111,11 @@ public class DataSourceUtil {
         }
     }
     
+    /**
+     * for mysql compare without master slave scene
+     * @param datasource
+     * @throws SQLException
+     */
     public static void  writeOp(final String datasource) throws SQLException {
         String sql = "INSERT INTO ssperf (k,c,pad) VALUES (?,?,?)";
         Connection connection = null;
@@ -142,7 +147,19 @@ public class DataSourceUtil {
         } finally {
             connection.close();
         }
-        
+    }
+    
+    /**
+     * for select
+     * @param sql sql stmt
+     * @param datasource dataSource name
+     * @throws SQLException
+     */
+    public static void getSelectRes(final String sql, String datasource) throws SQLException {
+        try (Connection connection = getDataSource(datasource).getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+        }
     }
     
 }

@@ -17,5 +17,59 @@
 
 package jdbc.perf;
 
-public class JdbcSelect {
+import org.apache.jmeter.config.Arguments;
+import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
+import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
+import org.apache.jmeter.samplers.SampleResult;
+import perfstmt.ShardingPerfStmt;
+import service.util.config.DataSourceUtil;
+
+import java.sql.SQLException;
+
+public class JdbcSelect extends AbstractJavaSamplerClient {
+    private static final String SELECT_STMT = ShardingPerfStmt.SELECT_STMT.getValue();
+    
+    static {
+        DataSourceUtil.createDataSource("###", "sharding_db", "###", 3306, "###");
+    }
+    
+    /**
+     * get default params.
+     * @return null
+     */
+    @Override
+    public Arguments getDefaultParameters() {
+        return null;
+    }
+    
+    /**
+     * setup.
+     * @param context context
+     */
+    @Override
+    public void setupTest(JavaSamplerContext context) {
+    }
+    
+    /**
+     * run test.
+     * @param context context
+     * @return sample res
+     */
+    @Override
+    public SampleResult runTest(JavaSamplerContext context) {
+        SampleResult results = new SampleResult();
+        results.setSampleLabel("JdbcSelect");
+        results.sampleStart();
+        try {
+            DataSourceUtil.getSelectRes(SELECT_STMT, "sharding_db");
+        } catch (SQLException ex) {
+            results.setSuccessful(false);
+            return results;
+        } finally {
+            results.sampleEnd();
+        }
+        results.setSuccessful(true);
+        return results;
+    }
 }
+
