@@ -27,4 +27,7 @@ step 3: run jmeter test plan with target class
 ```bash
 The configurations for Sharding-Proxy with four scenes in benchmark are given here.
 
+# machines info
+Please read report/machine_description file.
+
 ```

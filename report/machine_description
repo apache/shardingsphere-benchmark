@@ -1,0 +1,21 @@
+single route test machine:
+mem(131814228 kB), cpu(32 logic cpu)
+
+full route test machines:
+mem(131814228 kB), cpu(32 logic cpu)
+mem(131986504 kB), cpu(32 logic cpu)
+mem(65919892 kB), cpu(32 logic cpu)
+mem(132110092 kB), cpu(32 logic cpu)
+
+master slave test machines:
+mem(131986504 kB), cpu(32 logic cpu)
+mem(65919892 kB), cpu(32 logic cpu)
+
+master slave encrypt sharding test:
+mem(131814228 kB), cpu(32 logic cpu)
+mem(131986504 kB), cpu(32 logic cpu)
+mem(65919892 kB), cpu(32 logic cpu)
+mem(132110092 kB), cpu(32 logic cpu)
+
+jmeter machine:
+mem(65758072 kB), cpu(32 logic cpu)
