@@ -103,7 +103,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                    <resource>META-INF/services/org.apache.shardingsphere.sql.parser.spi.SQLParserEntry</resource>
+                                    <resource>META-INF/services/org.apache.shardingsphere.sql.parser.spi.SQLParserConfiguration</resource>
                                 </transformer>
                             </transformers>
                         </configuration>
