@@ -21,3 +21,4 @@ jmeter machine:
 mem(65758072 kB), cpu(32 logic cpu)
 
 mysql machine:
+mem(131814228 kB), cpu(32 logic cpu)
