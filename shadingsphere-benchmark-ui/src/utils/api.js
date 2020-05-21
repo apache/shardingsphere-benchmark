@@ -17,8 +17,12 @@
 
 import axios from 'axios'
 import { Notice } from 'iview'
+
 const HOST =
-  'https://raw.githubusercontent.com/apache/incubator-shardingsphere-benchmark/master/report'
+  'https://gitbox.apache.org/repos/asf?p=shardingsphere-benchmark.git;a=blob_plain;f=report'
+
+const TAIL =
+  ';hb=HEAD'
 
 axios.defaults.retry = 3
 axios.defaults.retryDelay = 2000
@@ -50,7 +54,7 @@ function ajax(url, type, options) {
   return new Promise((resolve, reject) => {
     axios({
       method: type,
-      url: HOST + url,
+      url: HOST + url + TAIL,
       timeout: 3000,
       responseType: 'json'
     })
