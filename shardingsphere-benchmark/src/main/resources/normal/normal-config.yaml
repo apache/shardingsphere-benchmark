@@ -1,0 +1,26 @@
+#
+# Create mysql database without master-slave rule.
+# Sharding rule is based on  full table route.
+#
+dataSources:
+  ds0: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.222.16.156:3306/baitiao_test
+    username: root
+    password:
+
+rules:
+  - !SHARDING
+    tables:
+      sbtest:
+        actualDataNodes: baitiao_test.sbtest99
+        databaseStrategy:
+          inline:
+            shardingColumn: k
+            algorithmExpression: baitiao_test
+        tableStrategy:
+          inline:
+            shardingColumn: id
+            algorithmExpression: sbtest99
+      bindingTables:
+        - sbtest
