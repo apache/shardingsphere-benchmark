@@ -1,50 +1,44 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package service.api.entity;
-
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
 /**
- * Iou entity.
- * @author nancyzrh
+ * operation object for jmeter performance
  */
-@Setter
-@Getter
 public class Iou implements Serializable {
-    private static final long serialVersionUID = -4245146895898370269L;
-    
+    private static final long serialVersionUID = 5377660875939152645L;
+
     private int k;
-    
     private String c;
-    
     private String pad;
-    
-    /**
-     *  impliment to string.
-     * @return result string
-     */
+
+    public int getK() {
+        return k;
+    }
+
+    public void setK(int k) {
+        this.k = k;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public void setC(String c) {
+        this.c = c;
+    }
+
+    public String getPad() {
+        return pad;
+    }
+
+    public void setPad(String pad) {
+        this.pad = pad;
+    }
+
     @Override
     public String toString() {
         return String.format("k: %s, c: %s, pad: %s", k, c, pad);
     }
-    
-}
 
+}
