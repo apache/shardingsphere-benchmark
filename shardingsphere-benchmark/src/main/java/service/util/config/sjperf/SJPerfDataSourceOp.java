@@ -108,7 +108,7 @@ public class SJPerfDataSourceOp {
      * @throws SQLException
      */
     public static DataSource CreateEncryptDataSource() throws SQLException {
-        DataSource dataSource = SJPerfDataSourceUtil.createDataSource("baitiao_test","localhost",3306,"");
+        DataSource dataSource = SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,"");
         Properties props = new Properties();
         props.setProperty("aes.key.value", "123456");
         EncryptorRuleConfiguration encryptorConfig = new EncryptorRuleConfiguration("aes", props);
@@ -120,7 +120,6 @@ public class SJPerfDataSourceOp {
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        properties.setProperty("sql.show", "true");
         DataSource encryptDatasource = EncryptDataSourceFactory.createDataSource(dataSource, encryptRuleConfig,properties);
         return encryptDatasource;
     }
