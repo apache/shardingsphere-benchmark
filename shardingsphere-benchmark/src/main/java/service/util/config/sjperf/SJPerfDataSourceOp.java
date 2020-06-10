@@ -4,10 +4,11 @@ import org.apache.shardingsphere.encrypt.api.config.EncryptRuleConfiguration;
 import org.apache.shardingsphere.encrypt.api.config.rule.EncryptColumnRuleConfiguration;
 import org.apache.shardingsphere.encrypt.api.config.rule.EncryptTableRuleConfiguration;
 import org.apache.shardingsphere.encrypt.api.config.strategy.EncryptStrategyConfiguration;
+import org.apache.shardingsphere.encrypt.api.config.strategy.impl.SPIEncryptStrategyConfiguration;
 import org.apache.shardingsphere.masterslave.api.config.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.masterslave.api.config.rule.MasterSlaveDataSourceRuleConfiguration;
 import org.apache.shardingsphere.masterslave.api.config.strategy.LoadBalanceStrategyConfiguration;
-import org.apache.shardingsphere.masterslave.rule.MasterSlaveRule;
+import org.apache.shardingsphere.masterslave.api.config.strategy.impl.SPILoadBalanceStrategyConfiguration;
 import org.apache.shardingsphere.sharding.api.config.KeyGeneratorConfiguration;
 import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.ShardingTableRuleConfiguration;
@@ -68,7 +69,7 @@ public class SJPerfDataSourceOp {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
         dataSourceMap.put("ds_master", SJPerfDataSourceUtil.createDataSource("baitiao_test", "10.222.16.144", 3306, ""));
         dataSourceMap.put("ds_slave0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
-        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new LoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
+        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new SPILoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
         MasterSlaveDataSourceRuleConfiguration dataSourceConfiguration = new MasterSlaveDataSourceRuleConfiguration(
             "ds_master_slave", "ds_master", Arrays.asList("ds_slave0"),"");
         
@@ -92,7 +93,7 @@ public class SJPerfDataSourceOp {
         EncryptColumnRuleConfiguration columnConfigAes = new EncryptColumnRuleConfiguration("", "c", "",  "","aes");
         EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest99", Arrays.asList(columnConfigAes));
         Collection<EncryptStrategyConfiguration> encryptStrategyConfigurations = new LinkedList<>();
-        encryptStrategyConfigurations.add(new EncryptStrategyConfiguration("aes", "aes", properties));
+        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("aes", "aes", properties));
         EncryptRuleConfiguration encryptRuleConfiguration = new EncryptRuleConfiguration(encryptStrategyConfigurations, Collections.singleton(tableConfig));
         Properties properties1 = new Properties();
         properties1.setProperty("max.connections.size.per.query", "200");
@@ -119,7 +120,7 @@ public class SJPerfDataSourceOp {
     }
     
     private static MasterSlaveRuleConfiguration getMSEncRuleConfigurations() {
-        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new LoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
+        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new SPILoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_0", "ds_0", Arrays.asList("ds_0_slave_0"),loadBalanceStrategyConfiguration.getName());
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_1"),loadBalanceStrategyConfiguration.getName());
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig3 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_2", "ds_2", Arrays.asList("ds_2_slave_2"),loadBalanceStrategyConfiguration.getName());
@@ -170,7 +171,7 @@ public class SJPerfDataSourceOp {
     private static MasterSlaveRuleConfiguration getMasterSlaveRuleConfigurations() {
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_0", "ds_0", Arrays.asList("ds_0_slave_0"), null);
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_0"), null);
-        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new LoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
+        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new SPILoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
 
         return new MasterSlaveRuleConfiguration(Collections.singleton(loadBalanceStrategyConfiguration), Arrays.asList(masterSlaveRuleConfig1, masterSlaveRuleConfig2));
     }
@@ -319,7 +320,7 @@ public class SJPerfDataSourceOp {
         Map<String, EncryptColumnRuleConfiguration> columns = new HashMap<>();
         EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest", Arrays.asList(columnConfigAes));
         Collection<EncryptStrategyConfiguration> encryptStrategyConfigurations = new LinkedList<>();
-        encryptStrategyConfigurations.add(new EncryptStrategyConfiguration("c_encrypt_strategy", "aes", properties));
+        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("c_encrypt_strategy", "aes", properties));
         return new EncryptRuleConfiguration(encryptStrategyConfigurations, Collections.singleton(tableConfig));
 
     }
@@ -331,8 +332,8 @@ public class SJPerfDataSourceOp {
         EncryptColumnRuleConfiguration columnConfigMd5 = new EncryptColumnRuleConfiguration("pad", "pad", "", "pad","md5");
         EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest", Arrays.asList(columnConfigMd5, columnConfigAes));
         Collection<EncryptStrategyConfiguration> encryptStrategyConfigurations = new LinkedList<>();
-        encryptStrategyConfigurations.add(new EncryptStrategyConfiguration("aes", "aes", properties));
-        encryptStrategyConfigurations.add(new EncryptStrategyConfiguration("md5", "md5", properties));
+        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("aes", "aes", properties));
+        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("md5", "md5", properties));
         return new EncryptRuleConfiguration(encryptStrategyConfigurations, Collections.singleton(tableConfig));
 
     }
