@@ -1,17 +1,16 @@
 package service.config;
 
-import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
-import org.apache.shardingsphere.sharding.api.config.ShardingTableRuleConfiguration;
-import org.apache.shardingsphere.sharding.api.config.strategy.StandardShardingStrategyConfiguration;
-import org.apache.shardingsphere.sharding.strategy.algorithm.sharding.inline.InlineShardingAlgorithm;
-import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
-import org.apache.shardingsphere.infra.config.RuleConfiguration;
+import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
+import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
+import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
+import org.apache.shardingsphere.api.config.sharding.strategy.StandardShardingStrategyConfiguration;
+import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
+import service.util.algorithm.PreciseModuleShardingDatabaseAlgorithm;
 import service.util.config.DataSourceUtil;
 import service.util.config.ExampleConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -23,37 +22,29 @@ public class ShardingDatabasesAndTablesConfigurationPrecise implements ExampleCo
     @Override
     public DataSource createDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        shardingRuleConfig.getTables().add(getOrderTableRuleConfiguration());
-        shardingRuleConfig.getTables().add(getOrderItemTableRuleConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(getOrderTableRuleConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(getOrderItemTableRuleConfiguration());
         shardingRuleConfig.getBindingTableGroups().add("t_order, t_order_item");
-    
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "p_ds_${user_id % 2}");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "t_order_${order_id % 2}");
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("user_id", shardingAlgorithm1));
-        shardingRuleConfig.setDefaultTableShardingStrategy(new StandardShardingStrategyConfiguration("order_id", shardingAlgorithm2));
-        
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("user_id", "p_ds_${user_id % 2}"));
+        shardingRuleConfig.setDefaultTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new PreciseModuleShardingDatabaseAlgorithm()));
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        dataSource = ShardingSphereDataSourceFactory.createDataSource(createDataSourceMap(), Arrays.<RuleConfiguration>asList(shardingRuleConfig), properties);
+        dataSource = ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, properties);
         return dataSource;
     }
-
-
     @Override
     public DataSource getDataSource() {
         return dataSource;
     }
 
-    private static ShardingTableRuleConfiguration getOrderTableRuleConfiguration() {
-        ShardingTableRuleConfiguration result = new ShardingTableRuleConfiguration("t_order", "p_ds_${0..1}.t_order_${[0, 1]}");
+    private static TableRuleConfiguration getOrderTableRuleConfiguration() {
+        TableRuleConfiguration result = new TableRuleConfiguration("t_order", "p_ds_${0..1}.t_order_${[0, 1]}");
         return result;
     }
 
-    private static ShardingTableRuleConfiguration getOrderItemTableRuleConfiguration() {
-        ShardingTableRuleConfiguration result = new ShardingTableRuleConfiguration("t_order_item", "p_ds_${0..1}.t_order_item_${[0, 1]}");
+    private static TableRuleConfiguration getOrderItemTableRuleConfiguration() {
+        TableRuleConfiguration result = new TableRuleConfiguration("t_order_item", "p_ds_${0..1}.t_order_item_${[0, 1]}");
         return result;
     }
 

@@ -1,29 +1,24 @@
 package service.util.config.sjperf;
 
-import org.apache.shardingsphere.encrypt.api.config.EncryptRuleConfiguration;
-import org.apache.shardingsphere.encrypt.api.config.rule.EncryptColumnRuleConfiguration;
-import org.apache.shardingsphere.encrypt.api.config.rule.EncryptTableRuleConfiguration;
-import org.apache.shardingsphere.encrypt.api.config.strategy.EncryptStrategyConfiguration;
-import org.apache.shardingsphere.encrypt.api.config.strategy.impl.SPIEncryptStrategyConfiguration;
-import org.apache.shardingsphere.masterslave.api.config.MasterSlaveRuleConfiguration;
-import org.apache.shardingsphere.masterslave.api.config.rule.MasterSlaveDataSourceRuleConfiguration;
-import org.apache.shardingsphere.masterslave.api.config.strategy.LoadBalanceStrategyConfiguration;
-import org.apache.shardingsphere.masterslave.api.config.strategy.impl.SPILoadBalanceStrategyConfiguration;
-import org.apache.shardingsphere.sharding.api.config.KeyGeneratorConfiguration;
-import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
-import org.apache.shardingsphere.sharding.api.config.ShardingTableRuleConfiguration;
-import org.apache.shardingsphere.sharding.api.config.strategy.StandardShardingStrategyConfiguration;
-import org.apache.shardingsphere.sharding.spi.keygen.KeyGenerateAlgorithm;
-import org.apache.shardingsphere.sharding.strategy.algorithm.keygen.SnowflakeKeyGenerateAlgorithm;
-import org.apache.shardingsphere.sharding.strategy.algorithm.sharding.inline.InlineShardingAlgorithm;
-import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
-import org.apache.shardingsphere.infra.config.RuleConfiguration;
+import com.google.common.collect.Lists;
+import org.apache.shardingsphere.encrypt.api.EncryptColumnRuleConfiguration;
+import org.apache.shardingsphere.encrypt.api.EncryptRuleConfiguration;
+import org.apache.shardingsphere.encrypt.api.EncryptTableRuleConfiguration;
+import org.apache.shardingsphere.encrypt.api.EncryptorRuleConfiguration;
+import org.apache.shardingsphere.api.config.masterslave.LoadBalanceStrategyConfiguration;
+import org.apache.shardingsphere.api.config.masterslave.MasterSlaveRuleConfiguration;
+import org.apache.shardingsphere.api.config.sharding.KeyGeneratorConfiguration;
+import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
+import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
+import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
+
+import org.apache.shardingsphere.shardingjdbc.api.EncryptDataSourceFactory;
+import org.apache.shardingsphere.shardingjdbc.api.MasterSlaveDataSourceFactory;
+import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.*;
-
-import static java.lang.System.getProperties;
 
 /**
  * for different sjperf dataSource
@@ -35,28 +30,40 @@ public class SJPerfDataSourceOp {
      * @return  data source
      * @throws SQLException
      */
+
     public static DataSource CreateDataSource() throws SQLException {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
         dataSourceMap.put("baitiao_test", SJPerfDataSourceUtil.createDataSource("baitiao_test", "10.222.16.156", 3306, ""));
-       // dataSourceMap.put("db1", SJPerfDataSourceUtil.createDataSource("db1", "####", 3306, "####"));
-        ShardingTableRuleConfiguration tableRuleConfiguration = new ShardingTableRuleConfiguration("sbtest", "baitiao_test.sbtest99");
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "baitiao_test");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "sbtest99");
-        tableRuleConfiguration.setTableShardingStrategy(new StandardShardingStrategyConfiguration("id", shardingAlgorithm2));
-        //tableRuleConfiguration.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("id", shardingAlgorithm2));
+        // dataSourceMap.put("db1", SJPerfDataSourceUtil.createDataSource("db1", "####", 3306, "####"));
+        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration("sbtest", "baitiao_test.sbtest99");
+        tableRuleConfiguration.setDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "baitiao_test"));
+        tableRuleConfiguration.setTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "sbtest99"));
         //tableRuleConfiguration.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
-        properties.setProperty("executor.size", "200"); 
+        properties.setProperty("executor.size", "200");
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        shardingRuleConfig.getTables().add(tableRuleConfiguration);
-        //shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfiguration);
+        shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfiguration);
         shardingRuleConfig.getBindingTableGroups().add("sbtest");
-        shardingRuleConfig.setDefaultTableShardingStrategy(new StandardShardingStrategyConfiguration("k", shardingAlgorithm1));
-        //shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("k", shardingAlgorithm1));
-        DataSource dataSource = ShardingSphereDataSourceFactory.createDataSource(dataSourceMap, Collections.<RuleConfiguration>singleton(shardingRuleConfig), properties);
+        DataSource dataSource = ShardingDataSourceFactory.createDataSource(dataSourceMap,shardingRuleConfig,properties);
+        return dataSource;
+    }
+    public static DataSource createDataSourceTest() throws SQLException {
+        Map<String, DataSource> dataSourceMap = new HashMap<>();
+        dataSourceMap.put("baitiao_test", SJPerfDataSourceUtil.createDataSource("baitiao_test", "10.222.16.156", 3306, ""));
+        // dataSourceMap.put("db1", SJPerfDataSourceUtil.createDataSource("db1", "####", 3306, "####"));
+        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration("sbtest", "baitiao_test.sbtest1");
+        tableRuleConfiguration.setDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "baitiao_test"));
+        tableRuleConfiguration.setTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "sbtest1"));
+        //tableRuleConfiguration.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
+
+        ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
+        shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfiguration);
+        shardingRuleConfig.getBindingTableGroups().add("sbtest");
+        Properties properties = new Properties();
+        properties.setProperty("max.connections.size.per.query", "200");
+        properties.setProperty("executor.size", "200");
+        DataSource dataSource = ShardingDataSourceFactory.createDataSource(dataSourceMap,shardingRuleConfig,properties);
         return dataSource;
     }
 
@@ -67,18 +74,32 @@ public class SJPerfDataSourceOp {
      */
     public static DataSource CreateMSDataSource() throws SQLException {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
+        // dataSourceMap.put("ds_master", SJPerfDataSourceUtil.createDataSource("ds_master", "####", 3306, "###"));
         dataSourceMap.put("ds_master", SJPerfDataSourceUtil.createDataSource("baitiao_test", "10.222.16.144", 3306, ""));
         dataSourceMap.put("ds_slave0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
-        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new SPILoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
-        MasterSlaveDataSourceRuleConfiguration dataSourceConfiguration = new MasterSlaveDataSourceRuleConfiguration(
-            "ds_master_slave", "ds_master", Arrays.asList("ds_slave0"),"");
-        
-        MasterSlaveRuleConfiguration masterSlaveRuleConfig = new MasterSlaveRuleConfiguration(Collections.singleton(loadBalanceStrategyConfiguration), Collections.singleton(dataSourceConfiguration));
+        //dataSourceMap.put("ds_slave1", SJPerfDataSourceUtil.createDataSource("ds_slave1","####",3306,"###"));
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig = new MasterSlaveRuleConfiguration("ds_master_slave", "ds_master", Arrays.asList("ds_slave0"));
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        DataSource dataSource = ShardingSphereDataSourceFactory.createDataSource(dataSourceMap, Collections.<RuleConfiguration>singleton(masterSlaveRuleConfig), properties);
+        DataSource dataSource = MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, masterSlaveRuleConfig,properties);
         return dataSource;
+    }
+    public static DataSource CreateEncryptNewDataSource() throws SQLException {
+        DataSource dataSource = SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,"");
+        Properties props = new Properties();
+        props.setProperty("aes.key.value", "123456abc");
+        EncryptorRuleConfiguration encryptorConfig = new EncryptorRuleConfiguration("AES", props);
+        EncryptColumnRuleConfiguration columnConfig = new EncryptColumnRuleConfiguration("", "c", "", "aes");
+        EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration(Collections.singletonMap("c", columnConfig));
+        EncryptRuleConfiguration encryptRuleConfig = new EncryptRuleConfiguration();
+        encryptRuleConfig.getEncryptors().put("aes", encryptorConfig);
+        encryptRuleConfig.getTables().put("sbtest3", tableConfig);
+        Properties properties = new Properties();
+        properties.setProperty("max.connections.size.per.query", "200");
+        properties.setProperty("executor.size", "200");
+        DataSource encryptDatasource = EncryptDataSourceFactory.createDataSource(dataSource, encryptRuleConfig,properties);
+        return encryptDatasource;
     }
 
     /**
@@ -87,47 +108,66 @@ public class SJPerfDataSourceOp {
      * @throws SQLException
      */
     public static DataSource CreateEncryptDataSource() throws SQLException {
-        DataSource dataSource = SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,"");
-        Properties properties = new Properties();
-        properties.setProperty("aes.key.value", "123456");
-        EncryptColumnRuleConfiguration columnConfigAes = new EncryptColumnRuleConfiguration("", "c", "",  "","aes");
-        EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest99", Arrays.asList(columnConfigAes));
-        Collection<EncryptStrategyConfiguration> encryptStrategyConfigurations = new LinkedList<>();
-        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("aes", "aes", properties));
-        EncryptRuleConfiguration encryptRuleConfiguration = new EncryptRuleConfiguration(encryptStrategyConfigurations, Collections.singleton(tableConfig));
-        Properties properties1 = new Properties();
-        properties1.setProperty("max.connections.size.per.query", "200");
-        properties1.setProperty("executor.size", "200");
-        return ShardingSphereDataSourceFactory.createDataSource(dataSource, Collections.<RuleConfiguration>singleton(encryptRuleConfiguration), properties1);
-    }
-    
-    public static DataSource CreateMSEncShardingDataSource() throws SQLException {
-        ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        ShardingTableRuleConfiguration tableRuleConfiguration = new ShardingTableRuleConfiguration("sbtest", "ms_ds_${0..3}.sbtest${0..1023}");
-        tableRuleConfiguration.setKeyGenerator(getKeyGeneratorConfiguration());
-        shardingRuleConfig.getTables().add(tableRuleConfiguration);
-        shardingRuleConfig.getBindingTableGroups().add("sbtest");
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "ms_ds_${id % 4}");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "sbtest${k % 1024}");
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("id", shardingAlgorithm1));
-        shardingRuleConfig.setDefaultTableShardingStrategy(new StandardShardingStrategyConfiguration("k", shardingAlgorithm2));
+        DataSource dataSource = SJPerfDataSourceUtil.createDataSource("baitiao_test","localhost",3306,"");
+        Properties props = new Properties();
+        props.setProperty("aes.key.value", "123456");
+        EncryptorRuleConfiguration encryptorConfig = new EncryptorRuleConfiguration("aes", props);
+        EncryptColumnRuleConfiguration columnConfig = new EncryptColumnRuleConfiguration("", "c", "", "aes");
+        EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration(Collections.singletonMap("c", columnConfig));
+        EncryptRuleConfiguration encryptRuleConfig = new EncryptRuleConfiguration();
+        encryptRuleConfig.getEncryptors().put("aes", encryptorConfig);
+        encryptRuleConfig.getTables().put("sbtest99", tableConfig);
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        return ShardingSphereDataSourceFactory.createDataSource(createMSEncDataSourceMap(), Arrays.asList(shardingRuleConfig, getMSEncRuleConfigurations(), getMsEncRuleConfiguration()), properties);
-    }
-    
-    private static MasterSlaveRuleConfiguration getMSEncRuleConfigurations() {
-        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new SPILoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
-        MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_0", "ds_0", Arrays.asList("ds_0_slave_0"),loadBalanceStrategyConfiguration.getName());
-        MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_1"),loadBalanceStrategyConfiguration.getName());
-        MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig3 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_2", "ds_2", Arrays.asList("ds_2_slave_2"),loadBalanceStrategyConfiguration.getName());
-        MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig4 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_3", "ds_3", Arrays.asList("ds_3_slave_3"),loadBalanceStrategyConfiguration.getName());
-        return new MasterSlaveRuleConfiguration(Collections.singleton(loadBalanceStrategyConfiguration), Arrays.asList(masterSlaveRuleConfig1, masterSlaveRuleConfig2, masterSlaveRuleConfig3, masterSlaveRuleConfig4));
+        properties.setProperty("sql.show", "true");
+        DataSource encryptDatasource = EncryptDataSourceFactory.createDataSource(dataSource, encryptRuleConfig,properties);
+        return encryptDatasource;
     }
 
+    public static DataSource CreateMSDataSourcebak() throws SQLException {
+        Map<String, DataSource> dataSourceMap = new HashMap<>();
+        ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
+        shardingRuleConfig.setMasterSlaveRuleConfigs(getMSRuleConfigurations());
+        Properties properties = new Properties();
+        properties.setProperty("max.connections.size.per.query", "200");
+        properties.setProperty("executor.size", "200");
+        return ShardingDataSourceFactory.createDataSource(createMSDataSourceMap(), shardingRuleConfig, properties);
+    }
+    private static List<MasterSlaveRuleConfiguration> getMSRuleConfigurations() {
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig = new MasterSlaveRuleConfiguration("ds_master_slave", "ds_master", Arrays.asList("ds_slave0"));
+        return Lists.newArrayList(masterSlaveRuleConfig);
+    }
+    private static Map<String, DataSource> createMSDataSourceMap() {
+        final Map<String, DataSource> result = new HashMap<>();
+        result.put("ds_master", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
+        result.put("ds_slave0",  SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
+        return result;
+    }
+    public static DataSource CreateMSEncShardingDataSource() throws SQLException {
+        ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
+        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration("sbtest", "ms_ds_${0..3}.sbtest${0..1023}");
+        tableRuleConfiguration.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfiguration);
+        shardingRuleConfig.getBindingTableGroups().add("sbtest");
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "ms_ds_${id % 4}"));
+        shardingRuleConfig.setDefaultTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "sbtest${k % 1024}"));
+        shardingRuleConfig.setMasterSlaveRuleConfigs(getMSEncRuleConfigurations());
+        shardingRuleConfig.setEncryptRuleConfig(getMsEncRuleConfiguration());
+        Properties properties = new Properties();
+        properties.setProperty("max.connections.size.per.query", "200");
+        properties.setProperty("executor.size", "200");
+        return ShardingDataSourceFactory.createDataSource(createMSEncDataSourceMap(), shardingRuleConfig, properties);
+    }
+
+    private static List<MasterSlaveRuleConfiguration> getMSEncRuleConfigurations() {
+        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new LoadBalanceStrategyConfiguration("ROUND_ROBIN");
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveRuleConfiguration("ms_ds_0", "ds_0", Arrays.asList("ds_0_slave_0"),loadBalanceStrategyConfiguration);
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_1"),loadBalanceStrategyConfiguration);
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig3 = new MasterSlaveRuleConfiguration("ms_ds_2", "ds_2", Arrays.asList("ds_2_slave_2"),loadBalanceStrategyConfiguration);
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig4 = new MasterSlaveRuleConfiguration("ms_ds_3", "ds_3", Arrays.asList("ds_3_slave_3"),loadBalanceStrategyConfiguration);
+        return Lists.newArrayList(masterSlaveRuleConfig1, masterSlaveRuleConfig2, masterSlaveRuleConfig3, masterSlaveRuleConfig4);
+    }
 
     private static Map<String, DataSource> createMSEncDataSourceMap() {
         final Map<String, DataSource> result = new HashMap<>();
@@ -141,6 +181,8 @@ public class SJPerfDataSourceOp {
         result.put("ds_3_slave_3", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
         return result;
     }
+
+
     /**
      * create ms sharding datasource
      * @return
@@ -148,40 +190,31 @@ public class SJPerfDataSourceOp {
     public static DataSource CreateMSShardingDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
 
-        ShardingTableRuleConfiguration tableRuleConfiguration = new ShardingTableRuleConfiguration("sbtest", "ds_${0..1}.sbtest${0..1023}");
-        tableRuleConfiguration.setKeyGenerator(getKeyGeneratorConfiguration());
-        shardingRuleConfig.getTables().add(tableRuleConfiguration);
-
+        TableRuleConfiguration tableRuleConfiguration = new TableRuleConfiguration("sbtest", "ms_ds_${0..1}.sbtest${0..1023}");
+        tableRuleConfiguration.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfiguration);
         shardingRuleConfig.getBindingTableGroups().add("sbtest");
         shardingRuleConfig.getBroadcastTables().add("t_config");
-    
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "ds_${id % 2}");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "sbtest${k % 1024}");
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("id", shardingAlgorithm1));
-        shardingRuleConfig.setDefaultTableShardingStrategy(new StandardShardingStrategyConfiguration("k", shardingAlgorithm2));
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "ms_ds_${id % 2}"));
+        shardingRuleConfig.setDefaultTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "sbtest${k % 1024}"));
+        shardingRuleConfig.setMasterSlaveRuleConfigs(getMasterSlaveRuleConfigurations());
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        properties.setProperty("sql.show","true");
-        return ShardingSphereDataSourceFactory.createDataSource(createMSsharingDataSourceMap(), Arrays.asList(shardingRuleConfig, getMasterSlaveRuleConfigurations()), properties);
+        return ShardingDataSourceFactory.createDataSource(createMSsharingDataSourceMap(), shardingRuleConfig,properties);
     }
-    
-    private static MasterSlaveRuleConfiguration getMasterSlaveRuleConfigurations() {
-        MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_0", "ds_0", Arrays.asList("ds_0_slave_0"), null);
-        MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_0"), null);
-        LoadBalanceStrategyConfiguration loadBalanceStrategyConfiguration= new SPILoadBalanceStrategyConfiguration("roundRobin", "ROUND_ROBIN", new Properties());
 
-        return new MasterSlaveRuleConfiguration(Collections.singleton(loadBalanceStrategyConfiguration), Arrays.asList(masterSlaveRuleConfig1, masterSlaveRuleConfig2));
+    private static List<MasterSlaveRuleConfiguration> getMasterSlaveRuleConfigurations() {
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveRuleConfiguration("ms_ds_0", "ds_0", Arrays.asList("ds_0_slave_0"));
+        MasterSlaveRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_0"));
+        return Lists.newArrayList(masterSlaveRuleConfig1, masterSlaveRuleConfig2);
     }
     private static Map<String, DataSource> createMSsharingDataSourceMap() {
         final Map<String, DataSource> result = new HashMap<>();
         result.put("ds_0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
-        result.put("ds_1",SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
+        result.put("ds_0_slave_0",  SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
+        result.put("ds_1",SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
         result.put("ds_1_slave_0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
-        result.put("ds_0_slave_0",  SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
-
         return result;
     }
     /**
@@ -191,24 +224,17 @@ public class SJPerfDataSourceOp {
      */
     public static DataSource CreateShardingAllDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        ShardingTableRuleConfiguration tableRuleConfig = new ShardingTableRuleConfiguration("sbtest","ds_${0..3}.sbtest3");
-    
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "ds_${id % 4}");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "sbtest3");
-        tableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("k", shardingAlgorithm2));
-
-        tableRuleConfig.setKeyGenerator(getKeyGeneratorConfiguration());
-        shardingRuleConfig.getTables().add(tableRuleConfig);
-    
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("id", shardingAlgorithm1));
+        TableRuleConfiguration tableRuleConfig = new TableRuleConfiguration("sbtest","ds_${0..3}.sbtest3");
+        tableRuleConfig.setDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "ds_${id % 4}"));
+        tableRuleConfig.setTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "sbtest3"));
+        tableRuleConfig.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfig);
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        return ShardingSphereDataSourceFactory.createDataSource(createShardingDataAllSourceMap(), Arrays.<RuleConfiguration>asList(shardingRuleConfig), properties);
-    } 
-    
+        return ShardingDataSourceFactory.createDataSource(createShardingDataAllSourceMap(),shardingRuleConfig,properties);
+    }
+
     private static Map<String, DataSource> createShardingDataAllSourceMap() {
         Map<String, DataSource> result = new HashMap<>();
         result.put("ds_0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
@@ -216,7 +242,7 @@ public class SJPerfDataSourceOp {
         result.put("ds_2", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
         result.put("ds_3", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
         return result;
-    } 
+    }
     /**
      * create sharding datasource
      * @return
@@ -224,23 +250,17 @@ public class SJPerfDataSourceOp {
      */
     public static DataSource CreateShardingNewDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        ShardingTableRuleConfiguration tableRuleConfig = new ShardingTableRuleConfiguration("sbtest","ds_${0..3}.sbtest4");
-
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "ds_${id % 4}");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "sbtest4");
-        tableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("k", shardingAlgorithm2));
-    
-        tableRuleConfig.setKeyGenerator(getKeyGeneratorConfiguration());
-        shardingRuleConfig.getTables().add(tableRuleConfig);
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("id", shardingAlgorithm1));
+        TableRuleConfiguration tableRuleConfig = new TableRuleConfiguration("sbtest","ds_${0..3}.sbtest4");
+        tableRuleConfig.setDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "ds_${id % 4}"));
+        tableRuleConfig.setTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "sbtest4"));
+        tableRuleConfig.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfig);
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        return ShardingSphereDataSourceFactory.createDataSource(createShardingNewDataSourceMap(), Arrays.<RuleConfiguration>asList(shardingRuleConfig), properties);
+        return ShardingDataSourceFactory.createDataSource(createShardingNewDataSourceMap(), shardingRuleConfig, properties);
     }
-    
+
     private static Map<String, DataSource> createShardingNewDataSourceMap() {
         Map<String, DataSource> result = new HashMap<>();
         result.put("ds_0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.86",3306,""));
@@ -252,33 +272,28 @@ public class SJPerfDataSourceOp {
 
     public static DataSource CreateShardingDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        ShardingTableRuleConfiguration tableRuleConfig = new ShardingTableRuleConfiguration("sbtest","ds_${0..3}.sbtest${0..1023}");
-    
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "ds_${id % 4}");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "sbtest${k % 1024}");
-        tableRuleConfig.setTableShardingStrategy(new StandardShardingStrategyConfiguration("k", shardingAlgorithm2));
-
-        tableRuleConfig.setKeyGenerator(getKeyGeneratorConfiguration());
-        shardingRuleConfig.getTables().add(tableRuleConfig);
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("id", shardingAlgorithm1));
+        TableRuleConfiguration tableRuleConfig = new TableRuleConfiguration("sbtest","ds_${0..3}.sbtest${0..1023}");
+        tableRuleConfig.setDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "ds_${id % 4}"));
+        tableRuleConfig.setTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "sbtest${k % 1024}"));
+        tableRuleConfig.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(tableRuleConfig);
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        return ShardingSphereDataSourceFactory.createDataSource(createShardingDataSourceMap(), Arrays.<RuleConfiguration>asList(shardingRuleConfig), properties);
-    }    
-          
+        //properties.setProperty("acceptor.size", "200");
+        return ShardingDataSourceFactory.createDataSource(createShardingDataSourceMap(), shardingRuleConfig, properties);
+    }
+
     private static Map<String, DataSource> createShardingDataSourceMap() {
         Map<String, DataSource> result = new HashMap<>();
         result.put("ds_0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
         result.put("ds_1", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
         result.put("ds_2", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
         result.put("ds_3", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
-       // result.put("ds_0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.86",3306,""));
-       // result.put("ds_1", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
-      //  result.put("ds_2", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.144",3306,""));
-      //  result.put("ds_3", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
+        // result.put("ds_0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.86",3306,""));
+        // result.put("ds_1", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
+        //  result.put("ds_2", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.144",3306,""));
+        //  result.put("ds_3", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
         return result;
     }
     /**
@@ -288,54 +303,55 @@ public class SJPerfDataSourceOp {
      */
     public static DataSource CreateEncryptShardingDataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        shardingRuleConfig.getTables().add(getTableRuleConfiguration());
+        shardingRuleConfig.getTableRuleConfigs().add(getTableRuleConfiguration());
         shardingRuleConfig.getBindingTableGroups().add("sbtest");
-    
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "ds_${id % 2}");
-        InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "sbtest${k % 1024}");
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("id", shardingAlgorithm1));
-        shardingRuleConfig.setDefaultTableShardingStrategy(new StandardShardingStrategyConfiguration("k", shardingAlgorithm2));
-        
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("id", "ds_${id % 2}"));
+        shardingRuleConfig.setDefaultTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("k", "sbtest${k % 1024}"));
+        shardingRuleConfig.setEncryptRuleConfig(getEncryptRuleConfiguration());
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
-        return ShardingSphereDataSourceFactory.createDataSource(createDataSourceMap(), Arrays.asList(shardingRuleConfig, getEncryptRuleConfiguration()), properties);
+        return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig,properties);
     }
-    private static ShardingTableRuleConfiguration getMSTableRuleConfiguration() {
-        ShardingTableRuleConfiguration result = new ShardingTableRuleConfiguration("sbtest", "ms_ds_${0..1}.sbtest${0..1023}");
-        result.setKeyGenerator(getKeyGeneratorConfiguration());
+    private static TableRuleConfiguration getMSTableRuleConfiguration() {
+        TableRuleConfiguration result = new TableRuleConfiguration("sbtest", "ms_ds_${0..1}.sbtest${0..1023}");
+        result.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
         return result;
     }
-    private static ShardingTableRuleConfiguration getTableRuleConfiguration() {
-        ShardingTableRuleConfiguration result = new ShardingTableRuleConfiguration("sbtest", "ds_${0..1}.sbtest${0..1023}");
-        result.setKeyGenerator(getKeyGeneratorConfiguration());
+    private static TableRuleConfiguration getTableRuleConfiguration() {
+        TableRuleConfiguration result = new TableRuleConfiguration("sbtest", "ds_${0..1}.sbtest${0..1023}");
+        result.setKeyGeneratorConfig(getKeyGeneratorConfiguration());
         return result;
     }
     private static EncryptRuleConfiguration getEncryptRuleConfiguration() {
-        Properties properties = new Properties();
-        properties.setProperty("aes.key.value", "123456abc");
-        EncryptColumnRuleConfiguration columnConfigAes = new EncryptColumnRuleConfiguration("", "c", "", "","aes");
-        Map<String, EncryptColumnRuleConfiguration> columns = new HashMap<>();
-        EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest", Arrays.asList(columnConfigAes));
-        Collection<EncryptStrategyConfiguration> encryptStrategyConfigurations = new LinkedList<>();
-        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("c_encrypt_strategy", "aes", properties));
-        return new EncryptRuleConfiguration(encryptStrategyConfigurations, Collections.singleton(tableConfig));
-
+        Properties props = new Properties();
+        props.setProperty("aes.key.value", "123456abc");
+        EncryptorRuleConfiguration encryptorConfig = new EncryptorRuleConfiguration("AES", props);
+        EncryptColumnRuleConfiguration columnConfig = new EncryptColumnRuleConfiguration("", "c", "", "aes");
+        EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration(Collections.singletonMap("c", columnConfig));
+        EncryptRuleConfiguration encryptRuleConfig = new EncryptRuleConfiguration();
+        encryptRuleConfig.getEncryptors().put("aes", encryptorConfig);
+        encryptRuleConfig.getTables().put("sbtest", tableConfig);
+        return encryptRuleConfig;
     }
     private static EncryptRuleConfiguration getMsEncRuleConfiguration() {
+        Properties props = new Properties();
+        props.setProperty("aes.key.value", "123456abc");
+        Map<String, EncryptColumnRuleConfiguration> columns = new LinkedHashMap<>();
+        EncryptorRuleConfiguration encryptorConfig = new EncryptorRuleConfiguration("AES", props);
+        EncryptColumnRuleConfiguration columnConfig = new EncryptColumnRuleConfiguration("", "c", "", "aes");
+        columns.put("c",columnConfig);
+        //   EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration(Collections.singletonMap("c", columnConfig));
 
-        Properties properties = new Properties();
-        properties.setProperty("aes.key.value", "123456abc");
-        EncryptColumnRuleConfiguration columnConfigAes = new EncryptColumnRuleConfiguration("c", "c", "", "c","aes");
-        EncryptColumnRuleConfiguration columnConfigMd5 = new EncryptColumnRuleConfiguration("pad", "pad", "", "pad","md5");
-        EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest", Arrays.asList(columnConfigMd5, columnConfigAes));
-        Collection<EncryptStrategyConfiguration> encryptStrategyConfigurations = new LinkedList<>();
-        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("aes", "aes", properties));
-        encryptStrategyConfigurations.add(new SPIEncryptStrategyConfiguration("md5", "md5", properties));
-        return new EncryptRuleConfiguration(encryptStrategyConfigurations, Collections.singleton(tableConfig));
-
+        EncryptorRuleConfiguration encryptorConfigMd5 = new EncryptorRuleConfiguration("md5",new Properties());
+        EncryptColumnRuleConfiguration columnConfigMd5 = new EncryptColumnRuleConfiguration("", "pad", "", "md5");
+        columns.put("pad",columnConfigMd5);
+        EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration(columns);
+        EncryptRuleConfiguration encryptRuleConfig = new EncryptRuleConfiguration();
+        encryptRuleConfig.getEncryptors().put("aes", encryptorConfig);
+        encryptRuleConfig.getEncryptors().put("md5", encryptorConfigMd5);
+        encryptRuleConfig.getTables().put("sbtest", tableConfig);
+        return encryptRuleConfig;
     }
     private static Map<String, DataSource> createDataSourceMap() {
         Map<String, DataSource> result = new HashMap<>();
@@ -343,10 +359,11 @@ public class SJPerfDataSourceOp {
         result.put("ds_1", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.97",3306,""));
         return result;
     }
+
     private static KeyGeneratorConfiguration getKeyGeneratorConfiguration() {
-        KeyGenerateAlgorithm keyGenerateAlgorithm = new SnowflakeKeyGenerateAlgorithm();
-        keyGenerateAlgorithm.setProperties(getProperties());
-        return new KeyGeneratorConfiguration("id", keyGenerateAlgorithm);
+        return new KeyGeneratorConfiguration("SNOWFLAKE", "id", new Properties());
+        //return new KeyGeneratorConfiguration("INCREMENT", "id", new Properties());
     }
+
 }
 

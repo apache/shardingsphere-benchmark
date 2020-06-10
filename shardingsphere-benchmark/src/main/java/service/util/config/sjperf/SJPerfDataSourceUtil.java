@@ -395,6 +395,7 @@ public class SJPerfDataSourceUtil {
                 //TODO add result iou.setK(resultSet.getInt(2));
                 // result.add(iou);
             }
+            connection.close();
         }
     }
 
