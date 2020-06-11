@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="shardingsphere-benchmark (1)" />
+        <module name="shardingsphere-benchmark" />
+        <module name="shardingsphere-benchmark (2)" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="shardingsphere-benchmark" target="1.7" />
+      <module name="shardingsphere-benchmark (1)" target="1.7" />
+      <module name="shardingsphere-benchmark (2)" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
