@@ -1,0 +1,67 @@
+dataSources:
+  ds0: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.222.16.156:3306/baitiao_test
+    username: root
+    password:
+
+
+rules:
+  - !ENCRYPT
+    encryptors:
+      aes_encryptor:
+        type: aes
+        props:
+          aes.key.value: 123456
+    tables:
+      t_encrypt:
+        columns:
+          pwd:
+            plainColumn: plain_pwd
+            cipherColumn: c
+            encryptor: aes
+      t_query_encrypt:
+        columns:
+          pwd:
+            cipherColumn: cipher_pwd
+            assistedQueryColumn: assist_pwd
+            encryptor: assistedTest
+      t_encrypt_contains_column:
+        columns:
+          plain_pwd:
+            plainColumn: plain_pwd
+            cipherColumn: cipher_pwd
+            encryptor: aes
+          plain_pwd2:
+            plainColumn: plain_pwd2
+            cipherColumn: cipher_pwd2
+            encryptor: test
+
+props:
+  sql.show: true
+  query.with.cipher.column: false
+
+
+
+shardingRule:
+  tables:
+    t_order:
+      actualDataNodes: ds${0..1}.t_order${0..1}
+      databaseStrategy:
+        inline:
+          shardingColumn: user_id
+          algorithmExpression: ds${user_id % 2}
+      tableStrategy:
+        inline:
+          shardingColumn: order_id
+          algorithmExpression: t_order${order_id % 2}
+    t_order_item:
+      actualDataNodes: ds${0..1}.t_order_item${0..1}
+      databaseStrategy:
+        inline:
+          shardingColumn: user_id
+          algorithmExpression: ds${user_id % 2}
+      tableStrategy:
+        inline:
+          shardingColumn: order_id
+          algorithmExpression: t_order_item${order_id % 2}
