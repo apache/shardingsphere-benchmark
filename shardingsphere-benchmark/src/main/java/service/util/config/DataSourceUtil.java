@@ -60,12 +60,19 @@ public class DataSourceUtil {
      * create default schema
      * @param dataSourceName
      */
-    public static void createSchema(final String dataSourceName) {
+    public static void createSchema(final String dataSourceName) throws SQLException {
         String sql = "CREATE DATABASE " + dataSourceName;
-        try (Connection connection = getDataSource(DEFAULT_SCHEMA).getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = null;
+        try {
+            connection = getDataSource(DEFAULT_SCHEMA).getConnection();
+            Statement statement = connection.createStatement();
             statement.execute(sql);
-        } catch (final SQLException ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(connection != null){
+                connection.close();
+            }
         }
     }
 
@@ -85,14 +92,21 @@ public class DataSourceUtil {
      * @throws SQLException
      */
     public static void insertDemo(final String sql, String datasource) throws SQLException {
-        try (Connection connection = getDataSource(datasource).getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        try {
+            connection = getDataSource(datasource).getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, 1);
             preparedStatement.setInt(2, 3);
             preparedStatement.setString(3, "##-####");
             preparedStatement.setString(4, "##-####");
             preparedStatement.execute();
-        } catch (final SQLException ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(connection != null){
+                connection.close();
+            }
         }
     }
 
@@ -105,13 +119,21 @@ public class DataSourceUtil {
      */
     public static List<Iou> getIou(final String sql, String datasource) throws SQLException {
         List<Iou> result = new LinkedList<>();
-        try (Connection connection = getDataSource(datasource).getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        Connection connection = null;
+        try {
+            connection = getDataSource(datasource).getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Iou iou = new Iou();
                 iou.setK(resultSet.getInt(2));
                 result.add(iou);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if(connection != null){
+                connection.close();
             }
         }
         return result;
@@ -215,8 +237,10 @@ public class DataSourceUtil {
     public static void  singleAllbak(String datasource) throws SQLException {
         String sql = "INSERT INTO sbtest3 (k,c,pad) VALUES (?,?,?)";
         long id = Long.MIN_VALUE;
-        try (Connection connection = getDataSource(datasource).getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        Connection connection  = null;
+        try {
+            connection = getDataSource(datasource).getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, 1);
             preparedStatement.setString(2, "##-####");
             preparedStatement.setString(3, "##-####");
@@ -224,34 +248,33 @@ public class DataSourceUtil {
             ResultSet result = preparedStatement.getGeneratedKeys();
             result.next();
             id = result.getLong(1);
-        }catch (final SQLException ex) {
-            ex.printStackTrace();
-        }
-        sql = "update sbtest3 set c=?,pad =? where id=? and k=?";
-        try (Connection connection = getDataSource(datasource).getConnection();
-             PreparedStatement pr = connection.prepareStatement(sql)) {
-            pr.setString(1,"new");
-            pr.setString(2,"new");
-            pr.setLong(3,id);
-            pr.setInt(4,1);
-            int res = pr.executeUpdate();
-        }catch (final SQLException ex) {
-            ex.printStackTrace();
-        }
-        //sql = "TRUNCATE TABLE sbtest_bt";
-        sql="delete from sbtest3 where k=? and id=?";
-        try (Connection connection = getDataSource(datasource).getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            sql = "update sbtest3 set c=?,pad =? where id=? and k=?";
+            preparedStatement = connection.prepareStatement(sql);;
+            preparedStatement.setString(1,"new");
+            preparedStatement.setString(2,"new");
+            preparedStatement.setLong(3,id);
+            preparedStatement.setInt(4,1);
+
+            sql="delete from sbtest3 where k=? and id=?";
+            preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,1);
             preparedStatement.setLong(2,id);
             preparedStatement.executeUpdate();
+
+        }catch (final SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if(connection != null){
+                connection.close();
+            }
         }
     }
     
     public static void  changeAll(String datasource) throws SQLException {
         String sql = "INSERT INTO sbtest (k,c,pad) VALUES (?,?,?)";
         Long id =  Long.MIN_VALUE;
-        Connection connection=null;
+        Connection connection = null;
         PreparedStatement preparedStatement=null;
         ResultSet resultSet= null;
         try {
@@ -276,15 +299,12 @@ public class DataSourceUtil {
             preparedStatement.setInt(1,3);
             preparedStatement.setLong(2,id);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-            result.close();
-        }catch (final SQLException ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            connection.close();
-           // preparedStatement.close();
-           // resultSet.close();
-           // connection=null;
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
     /**
@@ -322,18 +342,7 @@ public class DataSourceUtil {
             preparedStatement.executeUpdate();
         }
     }
-    
-   // public static void main(String args[]) {
-    //    DataSourceUtil.createDataSource("baitiao_test", "10.222.16.156", 3306, "");
-     //   try {
-      //      int count =10000;
-      //      while(count>0) {
-       //         DataSourceUtil.changeAll("baitiao_test");
-       //         count --;
-      //      }
-      //  } catch (Exception ex) {
-      //  }
-   // }
+
     /**
      * for update
      * @param sql
@@ -359,14 +368,20 @@ public class DataSourceUtil {
      * @throws SQLException
      */
     public static void insertIou(final String sql, String datasource) throws SQLException {
-        try (Connection connection = getDataSource(datasource).getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        try {
+            connection = getDataSource(datasource).getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, 3);
             preparedStatement.setString(2, "##-####");
             preparedStatement.setString(3, "##-####");
             preparedStatement.execute();
-        } catch (final SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 
@@ -377,9 +392,17 @@ public class DataSourceUtil {
      * @throws SQLException
      */
     public static void clean(final String sql, String datasource) throws SQLException {
-        try (Connection connection = getDataSource(datasource).getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        Connection connection = null;
+        try {
+            connection = getDataSource(datasource).getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeUpdate();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
         }
     }
 
