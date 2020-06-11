@@ -20,7 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="712a9bd9-6e1f-4d30-8935-9cde4f422d66" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/util/config/DataSourceUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/util/config/DataSourceUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
