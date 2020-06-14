@@ -3,6 +3,7 @@ package service.config;
 import org.apache.shardingsphere.masterslave.api.config.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.config.RuleConfiguration;
+import org.apache.shardingsphere.masterslave.api.config.algorithm.LoadBalanceAlgorithmConfiguration;
 import org.apache.shardingsphere.masterslave.api.config.rule.MasterSlaveDataSourceRuleConfiguration;
 import org.apache.shardingsphere.masterslave.rule.MasterSlaveRule;
 import service.util.config.DataSourceUtil;
@@ -10,10 +11,7 @@ import service.util.config.ExampleConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class MasterSlaveConfiguration implements ExampleConfiguration {
 
@@ -22,7 +20,7 @@ public class MasterSlaveConfiguration implements ExampleConfiguration {
     @Override
     public DataSource createDataSource() throws SQLException {
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig = new MasterSlaveDataSourceRuleConfiguration("master_slave", "master_ds", Arrays.asList("slave_ds_0", "slave_ds_1"), null);
-        MasterSlaveRuleConfiguration masterSlaveRuleConfiguration = new MasterSlaveRuleConfiguration(null, Arrays.asList(masterSlaveRuleConfig));
+        MasterSlaveRuleConfiguration masterSlaveRuleConfiguration = new MasterSlaveRuleConfiguration(Collections.singleton(masterSlaveRuleConfig), Collections.<String, LoadBalanceAlgorithmConfiguration>emptyMap());
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
