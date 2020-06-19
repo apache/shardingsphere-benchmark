@@ -3,7 +3,7 @@ package service.config;
 import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableRuleConfiguration;
 import org.apache.shardingsphere.sharding.api.config.strategy.sharding.StandardShardingStrategyConfiguration;
-import org.apache.shardingsphere.sharding.strategy.algorithm.sharding.inline.InlineShardingAlgorithm;
+//import org.apache.shardingsphere.sharding.strategy.algorithm.sharding.inline.InlineShardingAlgorithm;
 import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.config.RuleConfiguration;
 import service.util.config.DataSourceUtil;
@@ -27,12 +27,12 @@ public class ShardingDatabasesAndTablesConfigurationPrecise implements ExampleCo
         shardingRuleConfig.getTables().add(getOrderItemTableRuleConfiguration());
         shardingRuleConfig.getBindingTableGroups().add("t_order, t_order_item");
     
-        InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
-        shardingAlgorithm1.getProperties().setProperty("algorithm.expression", "p_ds_${user_id % 2}");
+        /*InlineShardingAlgorithm shardingAlgorithm1 = new InlineShardingAlgorithm();
+        shardingAlgorithm1.getProps().setProperty("algorithm.expression", "p_ds_${user_id % 2}");
         InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
-        shardingAlgorithm2.getProperties().setProperty("algorithm.expression", "t_order_${order_id % 2}");
-        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("user_id", shardingAlgorithm1));
-        shardingRuleConfig.setDefaultTableShardingStrategy(new StandardShardingStrategyConfiguration("order_id", shardingAlgorithm2));
+        shardingAlgorithm2.getProps().setProperty("algorithm.expression", "t_order_${order_id % 2}");*/
+        shardingRuleConfig.setDefaultDatabaseShardingStrategy(new StandardShardingStrategyConfiguration("user_id", "inline"));
+        shardingRuleConfig.setDefaultTableShardingStrategy(new StandardShardingStrategyConfiguration("order_id", "inline"));
         
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");

@@ -1,0 +1,81 @@
+package org.apache.shardingsphere.benchmark.jmeter.jdbc;
+
+import org.apache.jmeter.config.Arguments;
+import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
+import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
+import org.apache.jmeter.samplers.SampleResult;
+import org.apache.shardingsphere.benchmark.db.jdbc.JDBCDataSourceUtil;
+import org.bouncycastle.crypto.paddings.TBCPadding;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Refactor old case test_plan/new_sharding/jdbc_insert_ms_test.jmx
+ */
+public class JMeterJDBCInsertSbTest6 extends AbstractJavaSamplerClient {
+
+    public static final int DB_PORT = 3306;
+
+    public static final String DB_PASSWORD = "";
+
+    public static final String DB_USER_NAME = "root";
+
+    public static final String DB_HOST = "10.222.16.97";
+
+    public static final String DB_DATASOURCE_NAME = "baitiao_test";
+
+    public static final String TABLE_NAME = "sbtest6";
+
+    public static final String INSERT_SQL = "INSERT INTO " + TABLE_NAME + " (k,c,pad) VALUES (?,?,?)";
+
+    // Init mysql database.
+    static {
+        JDBCDataSourceUtil.initDb(DB_DATASOURCE_NAME, DB_HOST, DB_PORT, DB_USER_NAME, DB_PASSWORD);
+    }
+
+    @Override
+    public SampleResult runTest(JavaSamplerContext context) {
+
+        Connection conn = null;
+
+        SampleResult results = new SampleResult();
+        results.setSampleLabel("JdbcInsert");
+        results.sampleStart();
+
+        try {
+
+            List insertParams = Arrays.asList(3, "testtest", "test");
+            conn = JDBCDataSourceUtil.getDataSource(DB_DATASOURCE_NAME).getConnection();
+            JDBCDataSourceUtil.insert(conn, INSERT_SQL, insertParams);
+            results.setSuccessful(true);
+
+        } catch (SQLException e) {
+
+            results.setSuccessful(false);
+            e.printStackTrace();
+
+        } finally {
+
+            results.sampleEnd();
+            try {
+                JDBCDataSourceUtil.close(conn);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
+
+        return results;
+    }
+
+    @Override
+    public Arguments getDefaultParameters() {
+        return null;
+    }
+
+    @Override
+    public void setupTest(JavaSamplerContext context) {}
+}

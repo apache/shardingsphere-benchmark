@@ -36,8 +36,11 @@ public class SJPerformanceMSSelect extends AbstractJavaSamplerClient {
         SampleResult results = new SampleResult();
         results.setSampleLabel("SJPerformanceMSSelect");
         results.sampleStart();
+
         try {
+
             SJPerfDataSourceUtil.getSelect(SELECT_SQL_MASTER_SLAVE,dataSource);
+
         } catch (SQLException ex) {
             results.setSuccessful(false);
             return results;

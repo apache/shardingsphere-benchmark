@@ -1,9 +1,9 @@
 package service.config;
 
+import org.apache.shardingsphere.infra.config.algorithm.ShardingSphereAlgorithmConfiguration;
 import org.apache.shardingsphere.masterslave.api.config.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.config.RuleConfiguration;
-import org.apache.shardingsphere.masterslave.api.config.algorithm.LoadBalanceAlgorithmConfiguration;
 import org.apache.shardingsphere.masterslave.api.config.rule.MasterSlaveDataSourceRuleConfiguration;
 import org.apache.shardingsphere.masterslave.rule.MasterSlaveRule;
 import service.util.config.DataSourceUtil;
@@ -20,7 +20,7 @@ public class MasterSlaveConfiguration implements ExampleConfiguration {
     @Override
     public DataSource createDataSource() throws SQLException {
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig = new MasterSlaveDataSourceRuleConfiguration("master_slave", "master_ds", Arrays.asList("slave_ds_0", "slave_ds_1"), null);
-        MasterSlaveRuleConfiguration masterSlaveRuleConfiguration = new MasterSlaveRuleConfiguration(Collections.singleton(masterSlaveRuleConfig), Collections.<String, LoadBalanceAlgorithmConfiguration>emptyMap());
+        MasterSlaveRuleConfiguration masterSlaveRuleConfiguration = new MasterSlaveRuleConfiguration(Collections.singleton(masterSlaveRuleConfig), Collections.<String, ShardingSphereAlgorithmConfiguration>emptyMap());
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
