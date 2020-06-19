@@ -6,7 +6,9 @@ import org.apache.shardingsphere.encrypt.api.config.rule.EncryptColumnRuleConfig
 import org.apache.shardingsphere.encrypt.api.config.rule.EncryptTableRuleConfiguration;
 
 import org.apache.shardingsphere.infra.config.algorithm.ShardingSphereAlgorithmConfiguration;
+
 import org.apache.shardingsphere.masterslave.api.config.MasterSlaveRuleConfiguration;
+
 import org.apache.shardingsphere.masterslave.api.config.rule.MasterSlaveDataSourceRuleConfiguration;
 
 import org.apache.shardingsphere.sharding.api.config.ShardingRuleConfiguration;
@@ -15,8 +17,10 @@ import org.apache.shardingsphere.sharding.api.config.rule.ShardingTableRuleConfi
 import org.apache.shardingsphere.sharding.api.config.strategy.keygen.KeyGenerateStrategyConfiguration;
 import org.apache.shardingsphere.sharding.api.config.strategy.sharding.StandardShardingStrategyConfiguration;
 import org.apache.shardingsphere.sharding.spi.KeyGenerateAlgorithm;
+
 //import org.apache.shardingsphere.sharding.strategy.algorithm.keygen.SnowflakeKeyGenerateAlgorithm;
 //import org.apache.shardingsphere.sharding.strategy.algorithm.sharding.inline.InlineShardingAlgorithm;
+
 import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.config.RuleConfiguration;
 
@@ -45,6 +49,10 @@ public class SJPerfDataSourceOp {
         InlineShardingAlgorithm shardingAlgorithm2 = new InlineShardingAlgorithm();
         shardingAlgorithm2.getProps().setProperty("algorithm.expression", "sbtest99");*/
         tableRuleConfiguration.setTableShardingStrategy(new StandardShardingStrategyConfiguration("id", "inline"));
+
+        //tableRuleConfiguration.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("id", shardingAlgorithm2));
+        //tableRuleConfiguration.setKeyGenerateStrategyConfig(getKeyGeneratorConfiguration());
+
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200"); 
@@ -65,9 +73,11 @@ public class SJPerfDataSourceOp {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
         dataSourceMap.put("ds_master", SJPerfDataSourceUtil.createDataSource("baitiao_test", "10.222.16.144", 3306, ""));
         dataSourceMap.put("ds_slave0", SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,""));
+
         MasterSlaveDataSourceRuleConfiguration dataSourceConfiguration = new MasterSlaveDataSourceRuleConfiguration(
             "ds_master_slave", "ds_master", Arrays.asList("ds_slave0"),"roundRobin");
         MasterSlaveRuleConfiguration masterSlaveRuleConfig = new MasterSlaveRuleConfiguration(Collections.singleton(dataSourceConfiguration), ImmutableMap.of("roundRobin", new ShardingSphereAlgorithmConfiguration("ROUND_ROBIN", new Properties())));
+
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
@@ -83,6 +93,8 @@ public class SJPerfDataSourceOp {
     public static DataSource CreateEncryptDataSource() throws SQLException {
         DataSource dataSource = SJPerfDataSourceUtil.createDataSource("baitiao_test","10.222.16.156",3306,"");
         EncryptColumnRuleConfiguration columnConfigAes = new EncryptColumnRuleConfiguration("", "c", "",  "","aes");
+
+
         Properties properties1 = new Properties();
         properties1.setProperty("max.connections.size.per.query", "200");
         properties1.setProperty("executor.size", "200");
@@ -122,7 +134,9 @@ public class SJPerfDataSourceOp {
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_1"),"roundRobin");
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig3 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_2", "ds_2", Arrays.asList("ds_2_slave_2"),"roundRobin");
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig4 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_3", "ds_3", Arrays.asList("ds_3_slave_3"),"roundRobin");
+
         return new MasterSlaveRuleConfiguration(Arrays.asList(masterSlaveRuleConfig1, masterSlaveRuleConfig2, masterSlaveRuleConfig3, masterSlaveRuleConfig4),ImmutableMap.of("roundRobin", new ShardingSphereAlgorithmConfiguration("ROUND_ROBIN", new Properties())));
+
     }
 
 
@@ -168,7 +182,9 @@ public class SJPerfDataSourceOp {
     private static MasterSlaveRuleConfiguration getMasterSlaveRuleConfigurations() {
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig1 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_0", "ds_0", Arrays.asList("ds_0_slave_0"), null);
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig2 = new MasterSlaveDataSourceRuleConfiguration("ms_ds_1", "ds_1", Arrays.asList("ds_1_slave_0"), null);
+
         return new MasterSlaveRuleConfiguration( Arrays.asList(masterSlaveRuleConfig1, masterSlaveRuleConfig2), ImmutableMap.<String, ShardingSphereAlgorithmConfiguration>of("roundRobin",  new ShardingSphereAlgorithmConfiguration("ROUND_ROBIN", new Properties())));
+
     }
     private static Map<String, DataSource> createMSsharingDataSourceMap() {
         final Map<String, DataSource> result = new HashMap<>();
@@ -305,6 +321,7 @@ public class SJPerfDataSourceOp {
         return result;
     }
     private static EncryptRuleConfiguration getEncryptRuleConfiguration() {
+
         Properties props = new Properties();
         props.setProperty("aes.key.value", "123456abc");
         ShardingSphereAlgorithmConfiguration encryptAlgorithmConfiguration = new ShardingSphereAlgorithmConfiguration("aes", props);
@@ -314,6 +331,7 @@ public class SJPerfDataSourceOp {
         Map<String, EncryptColumnRuleConfiguration> columns = new HashMap<>();
         EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest", Arrays.asList(columnConfigAes));
         return  new EncryptRuleConfiguration(Collections.singleton(tableConfig), ImmutableMap.of("aes", encryptAlgorithmConfiguration));
+
 
     }
     private static EncryptRuleConfiguration getMsEncRuleConfiguration() {
@@ -325,7 +343,9 @@ public class SJPerfDataSourceOp {
         EncryptColumnRuleConfiguration columnConfigAes = new EncryptColumnRuleConfiguration("c", "c", "", "c","aes");
         EncryptColumnRuleConfiguration columnConfigMd5 = new EncryptColumnRuleConfiguration("pad", "pad", "", "pad","md5");
         EncryptTableRuleConfiguration tableConfig = new EncryptTableRuleConfiguration("sbtest", Arrays.asList(columnConfigMd5, columnConfigAes));
+
         return new EncryptRuleConfiguration(Collections.singleton(tableConfig), ImmutableMap.of("aes", encryptAlgorithmConfiguration));
+
     }
 
     private static Map<String, DataSource> createDataSourceMap() {
@@ -335,6 +355,13 @@ public class SJPerfDataSourceOp {
         return result;
     }
     private static KeyGenerateStrategyConfiguration getKeyGeneratorConfiguration() {
+
+        /**KeyGenerateAlgorithm keyGenerateAlgorithm = new SnowflakeKeyGenerateAlgorithm();
+        Properties pros = new Properties();
+        pros.setProperty("worker.id", "id");
+        keyGenerateAlgorithm.setProperties(pros);
+        return new KeyGeneratorConfiguration("id", keyGenerateAlgorithm);**/
+
         return new KeyGenerateStrategyConfiguration("id", "snowflake");
     }
 }

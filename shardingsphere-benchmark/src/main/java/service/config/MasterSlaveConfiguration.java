@@ -20,7 +20,9 @@ public class MasterSlaveConfiguration implements ExampleConfiguration {
     @Override
     public DataSource createDataSource() throws SQLException {
         MasterSlaveDataSourceRuleConfiguration masterSlaveRuleConfig = new MasterSlaveDataSourceRuleConfiguration("master_slave", "master_ds", Arrays.asList("slave_ds_0", "slave_ds_1"), null);
+
         MasterSlaveRuleConfiguration masterSlaveRuleConfiguration = new MasterSlaveRuleConfiguration(Collections.singleton(masterSlaveRuleConfig), Collections.<String, ShardingSphereAlgorithmConfiguration>emptyMap());
+
         Properties properties = new Properties();
         properties.setProperty("max.connections.size.per.query", "200");
         properties.setProperty("executor.size", "200");
