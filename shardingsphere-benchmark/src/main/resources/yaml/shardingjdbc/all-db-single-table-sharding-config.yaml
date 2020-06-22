@@ -1,0 +1,65 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+######################################################################################################
+#
+# Here you can configure the rules for the proxy.
+# This example is configuration of sharding rule.
+#
+# If you want to use sharding, please refer to this file;
+# if you want to use master-slave, please refer to the config-master_slave.yaml.
+#
+######################################################################################################
+dataSources:
+  ds_0: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.97:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_1: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.97:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_2: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.97:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_3: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.97:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+
+shardingRule:
+  tables:
+    sbtest:
+      actualDataNodes: ds_${0..3}.sbtest3
+      databaseStrategy:
+        inline:
+          shardingColumn: id
+          algorithmExpression: ds_${id % 4}
+      keyGenerator:
+        type: INCREMENT
+        column: id
+      tableStrategy:
+        inline:
+          shardingColumn: k
+          algorithmExpression: sbtest3
+  bindingTables:
+    - sbtest

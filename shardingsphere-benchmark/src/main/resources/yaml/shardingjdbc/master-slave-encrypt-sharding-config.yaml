@@ -1,0 +1,100 @@
+dataSources:
+  ds_0: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.86:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_0_slave_0: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.86:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_1: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.97:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_1_slave_1: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.97:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_2: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.144:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_2_slave_2: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.144:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_3: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.156:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+  ds_3_slave_3: !!com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://10.222.16.156:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+
+shardingRule:
+  tables:
+    sbtest:
+      actualDataNodes: ms_ds_${0..3}.sbtest${0..1023}
+      databaseStrategy:
+        inline:
+          shardingColumn: id
+          algorithmExpression: ms_ds_${id % 4}
+      keyGenerator:
+        type: INCREMENT
+        column: id
+      tableStrategy:
+        inline:
+          shardingColumn: k
+          algorithmExpression: sbtest${k % 1024}
+  bindingTables:
+    - sbtest
+
+  masterSlaveRules:
+    ms_ds_0:
+      masterDataSourceName: ds_0
+      slaveDataSourceNames:
+        - ds_0_slave_0
+      loadBalanceAlgorithmType: ROUND_ROBIN
+    ms_ds_1:
+      masterDataSourceName: ds_1
+      slaveDataSourceNames:
+        - ds_1_slave_1
+      loadBalanceAlgorithmType: RANDOM
+    ms_ds_2:
+      masterDataSourceName: ds_2
+      slaveDataSourceNames:
+        - ds_2_slave_2
+      loadBalanceAlgorithmType: RANDOM
+    ms_ds_3:
+      masterDataSourceName: ds_3
+      slaveDataSourceNames:
+        - ds_3_slave_3
+      loadBalanceAlgorithmType: RANDOM
+
+  encryptRule:
+    tables:
+      sbtest:
+        columns:
+          pwd:
+            cipherColumn: c
+            encryptor: encryptor_aes
+          name:
+            cipherColumn: pad
+            encryptor: encryptor_md5
+    encryptors:
+      encryptor_aes:
+        type: aes
+        props:
+          aes.key.value: 123456abc
+      encryptor_md5:
+        type: md5
+
