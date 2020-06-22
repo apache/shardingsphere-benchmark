@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.shardingsphere.shardingjdbc.api.yaml.YamlMasterSlaveDataSourceFactory;
+import org.apache.shardingsphere.shardingjdbc.api.yaml.YamlShardingDataSourceFactory;
 import service.util.config.sjperf.SJPerfDataSourceOp;
 import service.util.config.sjperf.SJPerfDataSourceUtil;
 import sjperf.v3.SQLStatement;
@@ -26,14 +28,32 @@ public class DatasourceTest {
     public static void main(String[] args){
 
         DataSource  ds = null;
+        //String fileName = "/yaml/shardingjdbc/master-slave-config.yaml";
+        String fileName ="/yaml/shardingjdbc/master-slave-config.yaml";
+        File  yamlFile = new File(DatasourceTest.class.getResource(fileName).getFile());
+        String sql = "SELECT id,k from sbtest where id=1 and k=1";
+
         try {
+            //ds = YamlShardingDataSourceFactory.createDataSource(yamlFile);
+            System.out.println(yamlFile);
+            //ds = YamlMasterSlaveDataSourceFactory.createDataSource(yamlFile);
+            ds = YamlShardingDataSourceFactory.createDataSource(yamlFile);
             String SELECT_SQL_MASTER_SLAVE = SQLStatement.SELECT_SQL_MASTER_SLAVE.getValue();
-            ds = SJPerfDataSourceOp.CreateEncryptDataSource();
-            System.out.println(SELECT_SQL_MASTER_SLAVE);
-            SJPerfDataSourceUtil.getSelect(SELECT_SQL_MASTER_SLAVE, ds);
+            //ds = SJPerfDataSourceOp.CreateEncryptDataSource();
+            Connection connection = ds.getConnection();
+            System.out.println(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                System.out.println("id: " + resultSet.getInt(1) + " , " + "k: " + resultSet.getInt(2));
+            }
+
+            connection.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
