@@ -1,6 +1,6 @@
 /target/
 /*.iml
-/.idea
 /*.git
+/.idea
 /src/main/resources/performace_machline_hosts
 /src/main/java/org/apache/shardingsphere/benchmark/TestConfig.java

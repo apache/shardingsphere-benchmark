@@ -84,40 +84,26 @@ dataSources:
       netTimeoutForStreamingResults: 0
       useServerPrepStmts: true
 
-rules:
-  - !SHARDING
-    tables:
-      sbtest:
-        actualDataNodes: ds_${0..3}.sbtest${0..99}
-        databaseStrategy:
-          standard:
-            shardingColumn: id
-            shardingAlgorithmName: database_inline
-        tableStrategy:
-          standard:
-            shardingColumn: k
-            shardingAlgorithmName: table_inline
-        keyGenerateStrategy:
-          column: id
-          keyGeneratorName: increment
-    bindingTables:
-      - sbtest
-
-    shardingAlgorithms:
-      database_inline:
-        type: INLINE
-        props:
-          algorithm-expression: ds_${id % 4}
-      table_inline:
-        type: INLINE
-        props:
-          algorithm-expression: sbtest${k % 100}
-    keyGenerators:
-      increment:
+shardingRule:
+  tables:
+    sbtest:
+      actualDataNodes: ds_${0..1}.sbtest${0..1}
+      databaseStrategy:
+        inline:
+          shardingColumn: id
+          algorithmExpression: ds_${id % 3}
+      keyGenerator:
         type: SNOWFLAKE
+        column: id
+      tableStrategy:
+        inline:
+          shardingColumn: k
+          algorithmExpression: sbtest${k % 2}
+  bindingTables:
+    - sbtest
 
 props:
-  max.connections.size.per.query: 10
+  max.connections.size.per.query: 2
   acceptor.size: 200  # The default value is available processors count * 2.
   executor.size: 200  # Infinite by default.
   query.with.cipher.column: true

@@ -28,27 +28,33 @@
 
 schemaName: sharding_db
 
-dataSourceCommon:
-  username: root
-  password:
-  connectionTimeoutMilliseconds: 30000
-  idleTimeoutMilliseconds: 60000
-  maxLifetimeMilliseconds: 1800000
-  maxPoolSize: 200
-  minPoolSize: 200
-  maintenanceIntervalMilliseconds: 30000
-
 dataSources:
   master_ds:
     url: jdbc:mysql://ss.benchmark.rangerouting.masterslave.master.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 200
+    minPoolSize: 200
+    maintenanceIntervalMilliseconds: 30000
+  
   slave_ds_0:
     url: jdbc:mysql://ss.benchmark.rangerouting.masterslave.slave.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 200
+    minPoolSize: 200
+    maintenanceIntervalMilliseconds: 30000
 
-rules:
-  - !MASTER_SLAVE
-    dataSources:
-      ms_ds:
-        name: ms_ds
-        masterDataSourceName: master_ds
-        slaveDataSourceNames: [slave_ds_0]
+shardingRule:
+  masterSlaveRules:
+    ms_ds:
+      masterDataSourceName: master_ds
+      slaveDataSourceNames:
+        - slave_ds_0
 

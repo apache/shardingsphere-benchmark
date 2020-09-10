@@ -168,87 +168,69 @@ dataSources:
       netTimeoutForStreamingResults: 0
       useServerPrepStmts: true
 
-rules:
-  - !SHARDING
-    tables:
-      sbtest:
-        actualDataNodes: ms_ds_${0..3}.sbtest${0..99}
-        databaseStrategy:
-          standard:
-            shardingColumn: id
-            shardingAlgorithmName: database_inline
-        tableStrategy:
-          standard:
-            shardingColumn: k
-            shardingAlgorithmName: table_inline
-        keyGenerateStrategy:
-          column: id
-          keyGeneratorName: increment
-    bindingTables:
-      - sbtest
-
-    shardingAlgorithms:
-      database_inline:
-        type: INLINE
-        props:
-          algorithm-expression: ms_ds_${id % 4}
-      table_inline:
-        type: INLINE
-        props:
-          algorithm-expression: sbtest${k % 100}
-    keyGenerators:
-      increment:
+shardingRule:
+  tables:
+    sbtest:
+      actualDataNodes: ms_ds_${0..4}.sbtest${0..100}
+      databaseStrategy:
+        inline:
+          shardingColumn: id
+          algorithmExpression: ms_ds_${id % 100}
+      keyGenerator:
         type: SNOWFLAKE
+        column: id
+      tableStrategy:
+        inline:
+          shardingColumn: k
+          algorithmExpression: sbtest${k % 2}
+  bindingTables:
+    - sbtest
 
-  - !ENCRYPT
-    encryptors:
-      encryptor_aes:
-        props:
-          aes-key-value: '123456abc'
-        type: AES
-      encryptor_md5:
-        type: md5
+  masterSlaveRules:
+    ms_ds_0:
+      masterDataSourceName: ds_0
+      slaveDataSourceNames:
+        - ds_0_slave_0
+      loadBalanceAlgorithmType: ROUND_ROBIN
+    ms_ds_1:
+      masterDataSourceName: ds_1
+      slaveDataSourceNames:
+        - ds_1_slave_1
+      loadBalanceAlgorithmType: ROUND_ROBIN
+    ms_ds_2:
+      masterDataSourceName: ds_2
+      slaveDataSourceNames:
+        - ds_2_slave_2
+      loadBalanceAlgorithmType: ROUND_ROBIN
+    ms_ds_3:
+      masterDataSourceName: ds_3
+      slaveDataSourceNames:
+        - ds_3_slave_3
+      loadBalanceAlgorithmType: ROUND_ROBIN
+
+  encryptRule:
     tables:
       sbtest:
         columns:
-          c:
+          pwd:
             cipherColumn: c
-            encryptorName: encryptor_aes
-          pad:
+            encryptor: encryptor_aes
+          name:
             cipherColumn: pad
-            encryptorName: encryptor_md5
+            encryptor: encryptor_md5
+    encryptors:
+      encryptor_aes:
+        type: aes
+        props:
+          aes.key.value: 123456abc
+      encryptor_md5:
+        type: md5
 
-  - !MASTER_SLAVE
-    dataSources:
-      ms_ds_0:
-        name: ms_ds_0
-        masterDataSourceName: ds_0
-        slaveDataSourceNames: [ds_0_slave_0]
-        loadBalancerName: roundRobin
-      ms_ds_1:
-        name: ms_ds_1
-        masterDataSourceName: ds_1
-        slaveDataSourceNames: [ds_1_slave_1]
-        loadBalancerName: roundRobin
-      ms_ds_2:
-        name: ms_ds_2
-        masterDataSourceName: ds_2
-        slaveDataSourceNames: [ds_2_slave_2]
-        loadBalancerName: roundRobin
-      ms_ds_3:
-        name: ms_ds_3
-        masterDataSourceName: ds_3
-        slaveDataSourceNames: [ds_3_slave_3]
-        loadBalancerName: roundRobin
-    loadBalancers:
-      roundRobin:
-        type: ROUND_ROBIN
-        
 props:
-  max.connections.size.per.query: 10
+  max.connections.size.per.query: 2
   acceptor.size: 200  # The default value is available processors count * 2.
   executor.size: 200  # Infinite by default.
   query.with.cipher.column: true
   sql.show: false
   allow.range.query.with.inline.sharding: false
-  check.table.metadata.enabled: false        
+  check.table.metadata.enabled: false

@@ -10,55 +10,65 @@
 
 schemaName: sharding_db
 
-dataSourceCommon:
-  username: root
-  password:
-  connectionTimeoutMilliseconds: 30000
-  idleTimeoutMilliseconds: 60000
-  maxLifetimeMilliseconds: 1800000
-  maxPoolSize: 200
-  minPoolSize: 200
-  maintenanceIntervalMilliseconds: 30000
-
 dataSources:
   press_test_0:
     url: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 200
+    minPoolSize: 200
+    maintenanceIntervalMilliseconds: 30000
+
   press_test_1:
     url: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 200
+    minPoolSize: 200
+    maintenanceIntervalMilliseconds: 30000
   press_test_2:
     url: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 200
+    minPoolSize: 200
+    maintenanceIntervalMilliseconds: 30000
+
   press_test_3:
     url: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds3:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 200
+    minPoolSize: 200
+    maintenanceIntervalMilliseconds: 30000
 
-rules:
-  - !SHARDING
-    defaultTableStrategy:
-      none:
-    tables:
-      sbtest:
-        actualDataNodes: press_test_${0..3}.sbtest${0..99}
-        databaseStrategy:
-          standard:
-            shardingColumn: id
-            shardingAlgorithmName: database_inline
-        tableStrategy:
-          standard:
-            shardingColumn: k
-            shardingAlgorithmName: table_inline
-        keyGenerateStrategy:
-          column: id
-          keyGeneratorName: increment
 
-    shardingAlgorithms:
-      database_inline:
-        type: INLINE
-        props:
-          algorithm-expression: press_test_${id % 4}
-      table_inline:
-        type: INLINE
-        props:
-          algorithm-expression: sbtest${k % 100}
-
-    keyGenerators:
-      increment:
+shardingRule:
+  tables:
+    sbtest:
+      actualDataNodes: press_test_${0..1}.sbtest${0..1}
+      databaseStrategy:
+        inline:
+          shardingColumn: id
+          algorithmExpression: press_test_${id % 3}
+      keyGenerator:
         type: SNOWFLAKE
+        column: id
+      tableStrategy:
+        inline:
+          shardingColumn: k
+          algorithmExpression: sbtest${k % 2}
+  bindingTables:
+    - sbtest

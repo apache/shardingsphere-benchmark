@@ -21,22 +21,22 @@ dataSources:
       netTimeoutForStreamingResults: 0
       useServerPrepStmts: true
 
-rules:
-  - !ENCRYPT
-    encryptors:
-      encryptor_aes:
-        props:
-          aes-key-value: '123456abc'
-        type: AES
+shardingRule:
+  encryptRule:
     tables:
       sbtest:
         columns:
           c:
             cipherColumn: c
-            encryptorName: encryptor_aes
+            encryptor: encryptor_aes
+    encryptors:
+      encryptor_aes:
+        type: aes
+        props:
+          aes.key.value: 123456abc
 
 props:
-  max.connections.size.per.query: 10
+  max.connections.size.per.query: 2
   acceptor.size: 200  # The default value is available processors count * 2.
   executor.size: 200  # Infinite by default.
   query.with.cipher.column: true

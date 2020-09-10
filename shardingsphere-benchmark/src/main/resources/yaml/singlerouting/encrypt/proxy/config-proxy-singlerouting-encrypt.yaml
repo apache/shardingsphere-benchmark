@@ -28,30 +28,28 @@
 
 schemaName: sharding_db
 
-dataSourceCommon:
-  username: root
-  password:
-  connectionTimeoutMilliseconds: 30000
-  idleTimeoutMilliseconds: 60000
-  maxLifetimeMilliseconds: 1800000
-  maxPoolSize: 200
-  minPoolSize: 200
-  maintenanceIntervalMilliseconds: 30000
-
 dataSources:
-  baitiao_test:
+  ds0:
     url: jdbc:mysql://ss.benchmark.singlerouting.encrypt.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 200
+    minPoolSize: 200
+    maintenanceIntervalMilliseconds: 30000
 
-rules:
-  - !ENCRYPT
-    encryptors:
-      encryptor_aes:
-        props:
-          aes-key-value: '123456abc'
-        type: AES
+shardingRule:
+  encryptRule:
     tables:
       sbtest:
         columns:
           c:
             cipherColumn: c
-            encryptorName: encryptor_aes
+            encryptor: encryptor_aes
+    encryptors:
+      encryptor_aes:
+        type: aes
+        props:
+          aes.key.value: 123456abc
