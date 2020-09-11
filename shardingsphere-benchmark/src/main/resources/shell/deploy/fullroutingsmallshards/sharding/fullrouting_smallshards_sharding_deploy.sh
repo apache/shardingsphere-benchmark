@@ -1,12 +1,14 @@
-ss_version=`head -n +1 /home/jenkins/BT_jenkins/ss_build_version.log`
-
-if [ $ss_version == 5.0 ];then
-  echo "5.0"
-  sh /export/shardingsphere-benchmark/shell/fullrouting/sharding/fullrouting_smallshards_sharding_deploy_5.0.sh
-elif [ $ss_version == 4.1.1 ];then
-  echo "4.1.1"
-  sh /export/shardingsphere-benchmark/shell/fullrouting/sharding/fullrouting_smallshards_sharding_deploy_4.0.sh
-else
-  echo "default version"
-  sh /export/shardingsphere-benchmark/shell/fullrouting/sharding/fullrouting_smallshards_sharding_deploy_5.0.sh
+#!/bin/sh
+proxy_work_dir="/home/jenkins"
+proxy_conf_dir="/export/shardingsphere-benchmark/yaml_conf"
+if [ ! -d $proxy_work_dir  ];then
+  mkdir -p $proxy_work_dir
 fi
+
+cd $proxy_work_dir
+./apache-shardingsphere-*-shardingsphere-proxy-bin/bin/stop.sh
+sleep 5
+rm -f  /home/jenkins/apache-shardingsphere-*-shardingsphere-proxy-bin/conf/config-*.yaml
+cp -f $proxy_conf_dir/fullrouting/sharding/proxy/config-proxy-fullrouting-smallshards-sharding.yaml $proxy_conf_dir/server.yaml /home/jenkins/apache-shardingsphere-*-shardingsphere-proxy-bin/conf
+./apache-shardingsphere-*-shardingsphere-proxy-bin/bin/start.sh
+sleep 10

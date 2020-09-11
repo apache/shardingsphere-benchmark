@@ -27,143 +27,107 @@
 ######################################################################################################
 
 schemaName: sharding_db
+
+dataSourceCommon:
+  username: root
+  password:
+  connectionTimeoutMilliseconds: 30000
+  idleTimeoutMilliseconds: 60000
+  maxLifetimeMilliseconds: 1800000
+  maxPoolSize: 200
+  minPoolSize: 200
+  maintenanceIntervalMilliseconds: 30000
+
 dataSources:
   master_ds_0:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000
-  
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_0:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000  
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   master_ds_1:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000  
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_1:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000  
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   master_ds_2:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000  
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_2:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000  
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   master_ds_3:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds3:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000  
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_3:
-    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds3:3306/baitiao_test?serverTimezone=UTC&useSSL=false
-    username: root
-    password:
-    connectionTimeoutMilliseconds: 30000
-    idleTimeoutMilliseconds: 60000
-    maxLifetimeMilliseconds: 1800000
-    maxPoolSize: 200
-    minPoolSize: 200
-    maintenanceIntervalMilliseconds: 30000
+    url: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
 
-shardingRule:
-  tables:
-    sbtest:
-      actualDataNodes: ms_ds_${0..1}.sbtest${0..1}
-      databaseStrategy:
-        inline:
-          shardingColumn: id
-          algorithmExpression: ms_ds_${id % 3}
-      keyGenerator:
+rules:
+  - !SHARDING
+    tables:
+      sbtest:
+        actualDataNodes: ms_ds_${0..3}.sbtest${0..99}
+        databaseStrategy:
+          standard:
+            shardingColumn: id
+            shardingAlgorithmName: database_inline
+        tableStrategy:
+          standard:
+            shardingColumn: k
+            shardingAlgorithmName: table_inline
+        keyGenerateStrategy:
+          column: id
+          keyGeneratorName: increment
+    bindingTables:
+      - sbtest
+
+    shardingAlgorithms:
+      database_inline:
+        type: INLINE
+        props:
+          algorithm-expression: ms_ds_${id % 4}
+      table_inline:
+        type: INLINE
+        props:
+          algorithm-expression: sbtest${k % 100}
+    keyGenerators:
+      increment:
         type: SNOWFLAKE
-        column: id
-      tableStrategy:
-        inline:
-          shardingColumn: k
-          algorithmExpression: sbtest${k % 2}
-  bindingTables:
-    - sbtest
 
-  masterSlaveRules:
-    ms_ds_0:
-      masterDataSourceName: master_ds_0
-      slaveDataSourceNames:
-        - slave_ds_0
-      loadBalanceAlgorithmType: ROUND_ROBIN
-    ms_ds_1:
-      masterDataSourceName: master_ds_1
-      slaveDataSourceNames:
-        - slave_ds_1
-      loadBalanceAlgorithmType: ROUND_ROBIN
-    ms_ds_2:
-      masterDataSourceName: master_ds_2
-      slaveDataSourceNames:
-        - slave_ds_2
-      loadBalanceAlgorithmType: ROUND_ROBIN
-    ms_ds_3:
-      masterDataSourceName: master_ds_3
-      slaveDataSourceNames:
-        - slave_ds_3
-      loadBalanceAlgorithmType: ROUND_ROBIN
-
-  encryptRule:
+  - !ENCRYPT
+    encryptors:
+      encryptor_aes:
+        props:
+          aes-key-value: '123456abc'
+        type: AES
+      encryptor_md5:
+        type: md5
     tables:
       sbtest:
         columns:
-          pwd:
+          c:
             cipherColumn: c
-            encryptor: encryptor_aes
-          name:
+            encryptorName: encryptor_aes
+          pad:
             cipherColumn: pad
-            encryptor: encryptor_md5
-    encryptors:
-      encryptor_aes:
-        type: aes
-        props:
-          aes.key.value: 123456abc
-      encryptor_md5:
-        type: md5
+            encryptorName: encryptor_md5
+
+  - !MASTER_SLAVE
+    dataSources:
+      ms_ds_0:
+        name: ms_ds_0
+        masterDataSourceName: master_ds_0
+        slaveDataSourceNames: [slave_ds_0]
+        loadBalancerName: roundRobin
+      ms_ds_1:
+        name: ms_ds_1
+        masterDataSourceName: master_ds_1
+        slaveDataSourceNames: [slave_ds_1]
+        loadBalancerName: roundRobin
+      ms_ds_2:
+        name: ms_ds_2
+        masterDataSourceName: master_ds_2
+        slaveDataSourceNames: [slave_ds_2]
+        loadBalancerName: roundRobin
+      ms_ds_3:
+        name: ms_ds_3
+        masterDataSourceName: master_ds_3
+        slaveDataSourceNames: [slave_ds_3]
+        loadBalancerName: roundRobin
+    loadBalancers:
+      roundRobin:
+        type: ROUND_ROBIN
