@@ -22,7 +22,6 @@
     <property name="severity" value="warning"/>
     <property name="fileExtensions" value="java, properties, xml"/>
     <module name="Header">
-        <property name="headerFile" value="copyright.txt"/>
         <property name="fileExtensions" value="java"/>
     </module>
     <module name="FileTabCharacter">
@@ -35,9 +34,9 @@
     <module name="Translation"/>
     <module name="UniqueProperties"/>
     <module name="SeverityMatchFilter"/>
-    
+
     <module name="TreeWalker">
-        
+
         <!-- Naming Conventions -->
         <module name="PackageName">
             <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
@@ -57,7 +56,7 @@
         <module name="AbbreviationAsWordInName">
             <property name="allowedAbbreviationLength" value="6"/>
         </module>
-        
+
         <!-- Size Violations -->
         <module name="AnonInnerLength"/>
         <module name="MethodLength"/>
@@ -114,7 +113,7 @@
             <property name="allowMultipleEmptyLines" value="false"/>
             <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
         </module>
-        
+
         <!-- Imports -->
         <module name="AvoidStarImport"/>
         <module name="AvoidStaticImport">
@@ -124,7 +123,7 @@
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
         <module name="CustomImportOrder"/>
-        
+
         <!-- Annotations -->
         <module name="AnnotationLocation">
             <property name="id" value="AnnotationLocationMostCases"/>
@@ -144,7 +143,7 @@
         <!-- Modifiers -->
         <module name="ModifierOrder"/>
         <module name="RedundantModifier"/>
-        
+
         <!-- Coding -->
         <module name="ArrayTrailingComma"/>
         <module name="CovariantEquals"/>
@@ -185,7 +184,7 @@
         <module name="StringLiteralEquality"/>
         <module name="UnnecessaryParentheses"/>
         <module name="VariableDeclarationUsageDistance"/>
-        
+
         <!-- Block Checks -->
         <module name="EmptyBlock"/>
         <module name="EmptyCatchBlock">
@@ -195,7 +194,7 @@
         <module name="NeedBraces"/>
         <module name="LeftCurly"/>
         <module name="RightCurly"/>
-        
+
         <!-- Class Design -->
         <module name="DesignForExtension"/>
         <module name="FinalClass"/>
@@ -207,7 +206,7 @@
         <module name="VisibilityModifier"/>
         <module name="MutableException"/>
         <module name="ThrowsCount"/>
-        
+
         <!-- Metrics -->
         <module name="BooleanExpressionComplexity"/>
         <module name="ClassDataAbstractionCoupling">
@@ -217,7 +216,7 @@
         <module name="CyclomaticComplexity"/>
         <module name="NPathComplexity"/>
         <module name="JavaNCSS"/>
-        
+
         <!-- Miscellaneous -->
         <module name="ArrayTypeStyle"/>
         <module name="UpperEll"/>
@@ -231,10 +230,10 @@
         <module name="UncommentedMain">
             <property name="excludedClasses" value="\.Bootstrap"/>
         </module>
-        
+
         <!-- Javadoc Comments -->
         <module name="AtclauseOrder">
-            <property name="tagOrder" value="@author, @param, @return, @throws, @deprecated"/>
+            <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
         </module>
         <module name="NonEmptyAtclauseDescription"/>
         <module name="JavadocParagraph"/>
@@ -253,7 +252,7 @@
             <property name="ignoreMethodNamesRegex" value="^assert.*$|^verify.*$"/>
             <property name="tokens" value="METHOD_DEF, ANNOTATION_FIELD_DEF"/>
         </module>
-        
+
         <!-- Filters -->
         <module name="SuppressionCommentFilter"/>
         <module name="SuppressWithNearbyCommentFilter"/>

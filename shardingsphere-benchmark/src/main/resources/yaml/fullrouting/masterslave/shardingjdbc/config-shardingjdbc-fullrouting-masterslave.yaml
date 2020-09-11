@@ -1,0 +1,60 @@
+dataSources:
+  ds_master: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.masterslave.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    username: root
+    password:
+    connectionTimeout: 30000
+    idleTimeout: 60000
+    maxLifetime: 1800000
+    maximumPoolSize: 200
+    dataSourceProperties:
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+      netTimeoutForStreamingResults: 0
+      useServerPrepStmts: true
+  ds_slave0: !!com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.masterslave.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    username: root
+    connectionTimeout: 30000
+    idleTimeout: 60000
+    maxLifetime: 1800000
+    maximumPoolSize: 200
+    password:
+    dataSourceProperties:
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+      netTimeoutForStreamingResults: 0
+      useServerPrepStmts: true
+
+rules:
+  - !MASTER_SLAVE
+    dataSources:
+      ms_ds:
+        name: ms_ds
+        masterDataSourceName: ds_master
+        slaveDataSourceNames: [ds_slave0]
+
+props:
+  max.connections.size.per.query: 10
+  acceptor.size: 200  # The default value is available processors count * 2.
+  executor.size: 200  # Infinite by default.
+  query.with.cipher.column: true
+  sql.show: false
+  allow.range.query.with.inline.sharding: false
+  check.table.metadata.enabled: false

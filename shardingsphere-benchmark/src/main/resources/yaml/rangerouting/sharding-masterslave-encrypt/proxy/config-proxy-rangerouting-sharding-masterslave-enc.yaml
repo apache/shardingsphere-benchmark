@@ -1,0 +1,133 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+######################################################################################################
+#
+# Here you can configure the rules for the proxy.
+# This example is configuration of master-slave rule.
+#
+# If you want to use master-slave, please refer to this file;
+# if you want to use sharding, please refer to the config-sharding.yaml.
+#
+#
+######################################################################################################
+
+schemaName: sharding_db
+
+dataSourceCommon:
+  username: root
+  password:
+  connectionTimeoutMilliseconds: 30000
+  idleTimeoutMilliseconds: 60000
+  maxLifetimeMilliseconds: 1800000
+  maxPoolSize: 200
+  minPoolSize: 200
+  maintenanceIntervalMilliseconds: 30000
+
+dataSources:
+  master_ds_0:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  slave_ds_0:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  master_ds_1:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  slave_ds_1:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  master_ds_2:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  slave_ds_2:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  master_ds_3:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  slave_ds_3:
+    url: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+
+rules:
+  - !SHARDING
+    tables:
+      sbtest:
+        actualDataNodes: ms_ds_${0..3}.sbtest${0..99}
+        databaseStrategy:
+          standard:
+            shardingColumn: id
+            shardingAlgorithmName: database_inline
+        tableStrategy:
+          standard:
+            shardingColumn: k
+            shardingAlgorithmName: table_inline
+        keyGenerateStrategy:
+          column: id
+          keyGeneratorName: increment
+    bindingTables:
+      - sbtest
+
+    shardingAlgorithms:
+      database_inline:
+        type: INLINE
+        props:
+          algorithm-expression: ms_ds_${id % 4}
+      table_inline:
+        type: INLINE
+        props:
+          algorithm-expression: sbtest${k % 100}
+    keyGenerators:
+      increment:
+        type: SNOWFLAKE
+
+  - !ENCRYPT
+    encryptors:
+      encryptor_aes:
+        props:
+          aes-key-value: '123456abc'
+        type: AES
+      encryptor_md5:
+        type: md5
+    tables:
+      sbtest:
+        columns:
+          c:
+            cipherColumn: c
+            encryptorName: encryptor_aes
+          pad:
+            cipherColumn: pad
+            encryptorName: encryptor_md5
+
+  - !MASTER_SLAVE
+    dataSources:
+      ms_ds_0:
+        name: ms_ds_0
+        masterDataSourceName: master_ds_0
+        slaveDataSourceNames: [slave_ds_0]
+        loadBalancerName: roundRobin
+      ms_ds_1:
+        name: ms_ds_1
+        masterDataSourceName: master_ds_1
+        slaveDataSourceNames: [slave_ds_1]
+        loadBalancerName: roundRobin
+      ms_ds_2:
+        name: ms_ds_2
+        masterDataSourceName: master_ds_2
+        slaveDataSourceNames: [slave_ds_2]
+        loadBalancerName: roundRobin
+      ms_ds_3:
+        name: ms_ds_3
+        masterDataSourceName: master_ds_3
+        slaveDataSourceNames: [slave_ds_3]
+        loadBalancerName: roundRobin
+    loadBalancers:
+      roundRobin:
+        type: ROUND_ROBIN
