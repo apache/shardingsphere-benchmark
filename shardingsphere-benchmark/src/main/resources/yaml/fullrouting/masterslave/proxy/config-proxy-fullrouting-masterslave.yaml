@@ -40,9 +40,9 @@ dataSourceCommon:
 
 dataSources:
   master_ds:
-    url: jdbc:mysql://ss.benchmark.fullrouting.masterslave.master.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.fullrouting.masterslave.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_0:
-    url: jdbc:mysql://ss.benchmark.fullrouting.masterslave.slave.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.fullrouting.masterslave.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
 
 rules:
   - !MASTER_SLAVE

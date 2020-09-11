@@ -40,21 +40,21 @@ dataSourceCommon:
 
 dataSources:
   master_ds_0:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_0:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   master_ds_1:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_1:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   master_ds_2:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_2:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   master_ds_3:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds3:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   slave_ds_3:
-    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds3:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
 
 rules:
   - !SHARDING
