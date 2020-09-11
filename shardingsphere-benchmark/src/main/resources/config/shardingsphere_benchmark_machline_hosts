@@ -1,0 +1,137 @@
+127.0.0.1 ss.benchmark.proxy.machine
+127.0.0.1 ss.benchmark.performance.machine
+
+127.0.0.1 ss.benchmark.fullrouting.encrypt.ds0
+127.0.0.1 ss.benchmark.fullrouting.encrypt.ds1
+127.0.0.1 ss.benchmark.fullrouting.encrypt.ds2
+127.0.0.1 ss.benchmark.fullrouting.encrypt.ds3
+127.0.0.1 jdbc.benchmark.fullrouting.encrypt.ds0
+127.0.0.1 jdbc.benchmark.fullrouting.encrypt.ds1
+127.0.0.1 jdbc.benchmark.fullrouting.encrypt.ds2
+127.0.0.1 jdbc.benchmark.fullrouting.encrypt.ds3
+127.0.0.1 ss.benchmark.fullrouting.masterslave.master.ds0
+127.0.0.1 ss.benchmark.fullrouting.masterslave.master.ds1
+127.0.0.1 ss.benchmark.fullrouting.masterslave.master.ds2
+127.0.0.1 ss.benchmark.fullrouting.masterslave.master.ds3
+127.0.0.1 ss.benchmark.fullrouting.masterslave.slave.ds0
+127.0.0.1 ss.benchmark.fullrouting.masterslave.slave.ds1
+127.0.0.1 ss.benchmark.fullrouting.masterslave.slave.ds2
+127.0.0.1 ss.benchmark.fullrouting.masterslave.slave.ds3
+127.0.0.1 jdbc.benchmark.fullrouting.masterslave.ds0
+
+127.0.0.1 jdbc.benchmark.fullrouting.masterslave.ds1
+127.0.0.1 jdbc.benchmark.fullrouting.masterslave.ds2
+127.0.0.1 jdbc.benchmark.fullrouting.masterslave.ds3
+127.0.0.1 ss.benchmark.fullrouting.sharding.ds0
+127.0.0.1 ss.benchmark.fullrouting.sharding.ds1
+127.0.0.1 ss.benchmark.fullrouting.sharding.ds2
+127.0.0.1 ss.benchmark.fullrouting.sharding.ds3
+127.0.0.1 jdbc.benchmark.fullrouting.sharding.ds0
+127.0.0.1 jdbc.benchmark.fullrouting.sharding.ds1
+127.0.0.1 jdbc.benchmark.fullrouting.sharding.ds2
+127.0.0.1 jdbc.benchmark.fullrouting.sharding.ds3
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds0
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds1
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds2
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds3
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds0
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds1
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds2
+127.0.0.1 ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds3
+
+127.0.0.1 jdbc.benchmark.fullrouting.shardingmasterslaveencrypt.ds0
+127.0.0.1 jdbc.benchmark.fullrouting.shardingmasterslaveencrypt.ds1
+127.0.0.1 jdbc.benchmark.fullrouting.shardingmasterslaveencrypt.ds2
+127.0.0.1 jdbc.benchmark.fullrouting.shardingmasterslaveencrypt.ds3
+
+127.0.0.1 ss.benchmark.rangerouting.encrypt.ds0
+127.0.0.1 ss.benchmark.rangerouting.encrypt.ds1
+127.0.0.1 ss.benchmark.rangerouting.encrypt.ds2
+127.0.0.1 ss.benchmark.rangerouting.encrypt.ds3
+127.0.0.1 jdbc.benchmark.rangerouting.encrypt.ds0
+127.0.0.1 jdbc.benchmark.rangerouting.encrypt.ds1
+127.0.0.1 jdbc.benchmark.rangerouting.encrypt.ds2
+127.0.0.1 jdbc.benchmark.rangerouting.encrypt.ds3
+127.0.0.1 ss.benchmark.rangerouting.masterslave.master.ds0
+127.0.0.1 ss.benchmark.rangerouting.masterslave.master.ds1
+127.0.0.1 ss.benchmark.rangerouting.masterslave.master.ds2
+127.0.0.1 ss.benchmark.rangerouting.masterslave.master.ds3
+127.0.0.1 ss.benchmark.rangerouting.masterslave.slave.ds0
+127.0.0.1 ss.benchmark.rangerouting.masterslave.slave.ds1
+127.0.0.1 ss.benchmark.rangerouting.masterslave.slave.ds2
+127.0.0.1 ss.benchmark.rangerouting.masterslave.slave.ds3
+
+127.0.0.1 jdbc.benchmark.rangerouting.masterslave.ds0
+127.0.0.1 jdbc.benchmark.rangerouting.masterslave.ds1
+127.0.0.1 jdbc.benchmark.rangerouting.masterslave.ds2
+127.0.0.1 jdbc.benchmark.rangerouting.masterslave.ds3
+127.0.0.1 ss.benchmark.rangerouting.sharding.ds0
+127.0.0.1 ss.benchmark.rangerouting.sharding.ds1
+127.0.0.1 ss.benchmark.rangerouting.sharding.ds2
+127.0.0.1 ss.benchmark.rangerouting.sharding.ds3
+127.0.0.1 jdbc.benchmark.rangerouting.sharding.ds0
+127.0.0.1 jdbc.benchmark.rangerouting.sharding.ds1
+127.0.0.1 jdbc.benchmark.rangerouting.sharding.ds2
+127.0.0.1 jdbc.benchmark.rangerouting.sharding.ds3
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds0
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds1
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds2
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds3
+
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds0
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds1
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds2
+127.0.0.1 ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds3
+
+
+127.0.0.1 jdbc.benchmark.rangerouting.shardingmasterslaveencrypt.ds0
+127.0.0.1 jdbc.benchmark.rangerouting.shardingmasterslaveencrypt.ds1
+127.0.0.1 jdbc.benchmark.rangerouting.shardingmasterslaveencrypt.ds2
+127.0.0.1 jdbc.benchmark.rangerouting.shardingmasterslaveencrypt.ds3
+
+127.0.0.1 ss.benchmark.singlerouting.encrypt.ds0
+127.0.0.1 ss.benchmark.singlerouting.encrypt.ds1
+127.0.0.1 ss.benchmark.singlerouting.encrypt.ds2
+127.0.0.1 ss.benchmark.singlerouting.encrypt.ds3
+127.0.0.1 jdbc.benchmark.singlerouting.encrypt.ds0
+127.0.0.1 jdbc.benchmark.singlerouting.encrypt.ds1
+127.0.0.1 jdbc.benchmark.singlerouting.encrypt.ds2
+127.0.0.1 jdbc.benchmark.singlerouting.encrypt.ds3
+127.0.0.1 ss.benchmark.singlerouting.masterslave.master.ds0
+127.0.0.1 ss.benchmark.singlerouting.masterslave.master.ds1
+127.0.0.1 ss.benchmark.singlerouting.masterslave.master.ds2
+127.0.0.1 ss.benchmark.singlerouting.masterslave.master.ds3
+
+127.0.0.1 ss.benchmark.singlerouting.masterslave.slave.ds0
+127.0.0.1 ss.benchmark.singlerouting.masterslave.slave.ds1
+127.0.0.1 ss.benchmark.singlerouting.masterslave.slave.ds2
+127.0.0.1 ss.benchmark.singlerouting.masterslave.slave.ds3
+
+127.0.0.1 jdbc.benchmark.singlerouting.masterslave.ds0
+127.0.0.1 jdbc.benchmark.singlerouting.masterslave.ds1
+127.0.0.1 jdbc.benchmark.singlerouting.masterslave.ds2
+127.0.0.1 jdbc.benchmark.singlerouting.masterslave.ds3
+127.0.0.1 ss.benchmark.singlerouting.sharding.ds0
+127.0.0.1 ss.benchmark.singlerouting.sharding.ds1
+127.0.0.1 ss.benchmark.singlerouting.sharding.ds2
+127.0.0.1 ss.benchmark.singlerouting.sharding.ds3
+127.0.0.1 jdbc.benchmark.singlerouting.sharding.ds0
+127.0.0.1 jdbc.benchmark.singlerouting.sharding.ds1
+127.0.0.1 jdbc.benchmark.singlerouting.sharding.ds2
+127.0.0.1 jdbc.benchmark.singlerouting.sharding.ds3
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds0
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds1
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds2
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.master.ds3
+
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds0
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds1
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds2
+127.0.0.1 ss.benchmark.singlerouting.shardingmasterslaveencrypt.slave.ds3
+
+127.0.0.1 jdbc.benchmark.singlerouting.shardingmasterslaveencrypt.ds0
+127.0.0.1 jdbc.benchmark.singlerouting.shardingmasterslaveencrypt.ds1
+127.0.0.1 jdbc.benchmark.singlerouting.shardingmasterslaveencrypt.ds2
+127.0.0.1 jdbc.benchmark.singlerouting.shardingmasterslaveencrypt.ds3
+
+127.0.0.1 ss.benchmark.result
