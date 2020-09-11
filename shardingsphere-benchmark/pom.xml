@@ -91,22 +91,6 @@
             <artifactId>h2</artifactId>
             <version>1.4.196</version>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>org.apache.shardingsphere</groupId>-->
-        <!--<artifactId>sharding-core-api</artifactId>-->
-        <!--<version>[5.0.0-RC1-SNAPSHOT,)</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.shardingsphere</groupId>-->
-        <!--<artifactId>sharding-jdbc-core</artifactId>-->
-        <!--<version>[5.0.0-RC1-SNAPSHOT,)</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.shardingsphere</groupId>-->
-        <!--<artifactId>encrypt-core-common</artifactId>-->
-        <!--<version>[5.0.0-RC1-SNAPSHOT,)</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
