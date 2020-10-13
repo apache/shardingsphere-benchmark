@@ -1,8 +1,8 @@
 dataSources:
-  baitiao_test: !!com.zaxxer.hikari.HikariDataSource
+  shardingsphere_benchmark: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.encrypt.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.encrypt.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000

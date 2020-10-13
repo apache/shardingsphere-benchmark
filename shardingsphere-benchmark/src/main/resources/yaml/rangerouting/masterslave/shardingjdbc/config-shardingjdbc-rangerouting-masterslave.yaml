@@ -1,7 +1,7 @@
 dataSources:
   ds_master: !!com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.jdbc.Driver
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.masterslave.master.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.masterslave.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     username: root
     password:
     connectionTimeout: 30000
@@ -22,7 +22,7 @@ dataSources:
       useServerPrepStmts: true
   ds_slave0: !!com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.jdbc.Driver
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.masterslave.slave.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.masterslave.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     username: root
     connectionTimeout: 30000
     idleTimeout: 60000

@@ -2,7 +2,7 @@ dataSources:
   ds_0: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -23,7 +23,7 @@ dataSources:
   ds_0_slave_0: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -44,7 +44,7 @@ dataSources:
   ds_1: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -65,7 +65,7 @@ dataSources:
   ds_1_slave_1: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -86,7 +86,7 @@ dataSources:
   ds_2: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -107,7 +107,7 @@ dataSources:
   ds_2_slave_2: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -128,7 +128,7 @@ dataSources:
   ds_3: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds3:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.master.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -149,7 +149,7 @@ dataSources:
   ds_3_slave_3: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds3:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.shardingmasterslaveencrypt.slave.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000

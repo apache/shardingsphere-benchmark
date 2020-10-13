@@ -22,11 +22,11 @@ dataSourceCommon:
 
 dataSources:
   press_test_0:
-    url: jdbc:mysql://ss.benchmark.singlerouting.sharding.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.sharding.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   press_test_1:
-    url: jdbc:mysql://ss.benchmark.singlerouting.sharding.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.sharding.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
   press_test_2:
-    url: jdbc:mysql://ss.benchmark.singlerouting.sharding.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://ss.benchmark.singlerouting.sharding.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
 
 rules:
   - !SHARDING
