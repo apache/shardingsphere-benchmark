@@ -2,7 +2,7 @@ dataSources:
   ds_0: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -23,7 +23,7 @@ dataSources:
   ds_0_slave_0: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -44,7 +44,7 @@ dataSources:
   ds_1: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -65,7 +65,7 @@ dataSources:
   ds_1_slave_1: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -86,7 +86,7 @@ dataSources:
   ds_2: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -107,49 +107,7 @@ dataSources:
   ds_2_slave_2: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
-    driverClassName: com.mysql.jdbc.Driver
-    connectionTimeout: 30000
-    idleTimeout: 60000
-    maxLifetime: 1800000
-    maximumPoolSize: 200
-    dataSourceProperties:
-      cachePrepStmts: true
-      prepStmtCacheSize: 250
-      prepStmtCacheSqlLimit: 2048
-      useLocalSessionState: true
-      rewriteBatchedStatements: true
-      cacheResultSetMetadata: true
-      cacheServerConfiguration: true
-      elideSetAutoCommits: true
-      maintainTimeStats: false
-      netTimeoutForStreamingResults: 0
-      useServerPrepStmts: true
-  ds_3: !!com.zaxxer.hikari.HikariDataSource
-    username: root
-    password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.master.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
-    driverClassName: com.mysql.jdbc.Driver
-    connectionTimeout: 30000
-    idleTimeout: 60000
-    maxLifetime: 1800000
-    maximumPoolSize: 200
-    dataSourceProperties:
-      cachePrepStmts: true
-      prepStmtCacheSize: 250
-      prepStmtCacheSqlLimit: 2048
-      useLocalSessionState: true
-      rewriteBatchedStatements: true
-      cacheResultSetMetadata: true
-      cacheServerConfiguration: true
-      elideSetAutoCommits: true
-      maintainTimeStats: false
-      netTimeoutForStreamingResults: 0
-      useServerPrepStmts: true
-  ds_3_slave_3: !!com.zaxxer.hikari.HikariDataSource
-    username: root
-    password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.rangerouting.shardingmasterslaveencrypt.slave.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -218,27 +176,27 @@ rules:
             cipherColumn: pad
             encryptorName: encryptor_md5
 
-  - !MASTER_SLAVE
+  - !PRIMARY_REPLICA_REPLICATION
     dataSources:
       ms_ds_0:
         name: ms_ds_0
-        masterDataSourceName: ds_0
-        slaveDataSourceNames: [ds_0_slave_0]
+        primaryDataSourceName: ds_0
+        replicaDataSourceNames: [ds_0_slave_0]
         loadBalancerName: roundRobin
       ms_ds_1:
         name: ms_ds_1
-        masterDataSourceName: ds_1
-        slaveDataSourceNames: [ds_1_slave_1]
+        primaryDataSourceName: ds_1
+        replicaDataSourceNames: [ds_1_slave_1]
         loadBalancerName: roundRobin
       ms_ds_2:
         name: ms_ds_2
-        masterDataSourceName: ds_2
-        slaveDataSourceNames: [ds_2_slave_2]
+        primaryDataSourceName: ds_2
+        replicaDataSourceNames: [ds_2_slave_2]
         loadBalancerName: roundRobin
       ms_ds_3:
         name: ms_ds_3
-        masterDataSourceName: ds_3
-        slaveDataSourceNames: [ds_3_slave_3]
+        primaryDataSourceName: ds_3
+        replicaDataSourceNames: [ds_3_slave_3]
         loadBalancerName: roundRobin
     loadBalancers:
       roundRobin:

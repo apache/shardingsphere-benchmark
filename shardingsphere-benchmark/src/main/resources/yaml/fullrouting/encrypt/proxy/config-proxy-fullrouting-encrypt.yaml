@@ -39,8 +39,8 @@ dataSourceCommon:
   maintenanceIntervalMilliseconds: 30000
 
 dataSources:
-  shardingsphere_benchmark:
-    url: jdbc:mysql://ss.benchmark.fullrouting.encrypt.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+  baitiao_test:
+    url: jdbc:mysql://ss.benchmark.fullrouting.encrypt.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
 
 rules:
   - !ENCRYPT

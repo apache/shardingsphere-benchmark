@@ -175,7 +175,7 @@ mvn clean install -Prelease
 
 
 #### 配置
-我们提取了ShardingSphere benchmark项目中所有用户相关配置，这些配置存在于 *{ShardingSphere Benchmark base dir}/src/main/resources/config/user-config.properties*文件中，所以需要根据当前运行环境进行修改。此外ShardingSphere benchmark工程中涉及到ip使用均以host方式进行配置，以防泄露引发安全问题，对于host配置已提供示例文件，文件路径为 *{ShardingSphere Benchmark base dir}/src/main/resources/config/shardingsphere_benchmark_machline_hosts*，需要依据当前环境修改对应ip并添加到host文件中。如果仅在本地测试，无需替换ip。
+我们提取了ShardingSphere benchmark项目中所有用户相关配置，这些配置存在于 *{ShardingSphere Benchmark base dir}/src/main/resources/config/user-config.properties*文件中，所以需要根据当前运行环境进行修改。此外ShardingSphere benchmark工程中涉及到ip使用均以host方式进行配置，以防泄露引发安全问题，对于host配置已提供示例文件，文件路径为 *{ShardingSphere Benchmark base dir}/src/main/resources/config/baitiao_test_machline_hosts*，需要依据当前环境修改对应ip并添加到host文件中。如果仅在本地测试，无需替换ip。
 
 ```bash
 // ShardingSphere工程根目录.

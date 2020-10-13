@@ -170,7 +170,7 @@ mvn clean install -Prelease
 
 
 #### Configuration
-We have extracted necessary user configuration which is in *{ShardingSphere Benchmark base dir}/src/main/resources/config/user-config.properties*. You have to change configuration list below as yours. By default we configure any ip with host in the code or yaml to prevent ip leakage and cause security problems。 We provide the unified host configuration at *{ShardingSphere Benchmark base dir}/src/main/resources/config/shardingsphere_benchmark_machline_hosts*, modify ips as yours and replace the host file. There is no need to change those ips if running benchmark at local machine.
+We have extracted necessary user configuration which is in *{ShardingSphere Benchmark base dir}/src/main/resources/config/user-config.properties*. You have to change configuration list below as yours. By default we configure any ip with host in the code or yaml to prevent ip leakage and cause security problems。 We provide the unified host configuration at *{ShardingSphere Benchmark base dir}/src/main/resources/config/baitiao_test_machline_hosts*, modify ips as yours and replace the host file. There is no need to change those ips if running benchmark at local machine.
 
 ```bash
 // It is base directory of ShardingSphere project.

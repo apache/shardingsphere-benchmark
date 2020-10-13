@@ -2,7 +2,7 @@ dataSources:
   ds_0: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds0:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -23,7 +23,7 @@ dataSources:
   ds_1: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds1:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds1:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -44,28 +44,7 @@ dataSources:
   ds_2: !!com.zaxxer.hikari.HikariDataSource
     username: root
     password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds2:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
-    driverClassName: com.mysql.jdbc.Driver
-    connectionTimeout: 30000
-    idleTimeout: 60000
-    maxLifetime: 1800000
-    maximumPoolSize: 200
-    dataSourceProperties:
-      cachePrepStmts: true
-      prepStmtCacheSize: 250
-      prepStmtCacheSqlLimit: 2048
-      useLocalSessionState: true
-      rewriteBatchedStatements: true
-      cacheResultSetMetadata: true
-      cacheServerConfiguration: true
-      elideSetAutoCommits: true
-      maintainTimeStats: false
-      netTimeoutForStreamingResults: 0
-      useServerPrepStmts: true
-  ds_3: !!com.zaxxer.hikari.HikariDataSource
-    username: root
-    password:
-    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds3:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://ss.benchmark.fullrouting.sharding.ds2:3306/baitiao_test?serverTimezone=UTC&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     connectionTimeout: 30000
     idleTimeout: 60000
@@ -88,7 +67,7 @@ rules:
   - !SHARDING
     tables:
       sbtest:
-        actualDataNodes: ds_${0..3}.sbtest${0..99}
+        actualDataNodes: ds_${0..2}.sbtest${0..99}
         databaseStrategy:
           standard:
             shardingColumn: id
@@ -100,14 +79,12 @@ rules:
         keyGenerateStrategy:
           column: id
           keyGeneratorName: increment
-    bindingTables:
-      - sbtest
 
     shardingAlgorithms:
       database_inline:
         type: INLINE
         props:
-          algorithm-expression: ds_${id % 4}
+          algorithm-expression: ds_${id % 3}
       table_inline:
         type: INLINE
         props:
