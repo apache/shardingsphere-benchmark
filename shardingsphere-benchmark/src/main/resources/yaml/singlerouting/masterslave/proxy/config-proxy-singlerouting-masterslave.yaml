@@ -45,10 +45,10 @@ dataSources:
     url: jdbc:mysql://ss.benchmark.singlerouting.masterslave.slave.ds0:3306/shardingsphere_benchmark?serverTimezone=UTC&useSSL=false
 
 rules:
-  - !MASTER_SLAVE
+  - !PRIMARY_REPLICA_REPLICATION
     dataSources:
       ms_ds:
         name: ms_ds
-        masterDataSourceName: master_ds
-        slaveDataSourceNames: [slave_ds_0]
+        primaryDataSourceName: master_ds
+        replicaDataSourceNames: [slave_ds_0]
 

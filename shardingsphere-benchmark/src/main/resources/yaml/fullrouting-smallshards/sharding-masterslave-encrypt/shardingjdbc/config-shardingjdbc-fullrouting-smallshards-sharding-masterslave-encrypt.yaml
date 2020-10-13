@@ -218,27 +218,27 @@ rules:
             cipherColumn: pad
             encryptorName: encryptor_md5
 
-  - !MASTER_SLAVE
+  - !PRIMARY_REPLICA_REPLICATION
     dataSources:
       ms_ds_0:
         name: ms_ds_0
-        masterDataSourceName: ds_0
-        slaveDataSourceNames: [ds_0_slave_0]
+        primaryDataSourceName: ds_0
+        replicaDataSourceNames: [ds_0_slave_0]
         loadBalancerName: roundRobin
       ms_ds_1:
         name: ms_ds_1
-        masterDataSourceName: ds_1
-        slaveDataSourceNames: [ds_1_slave_1]
+        primaryDataSourceName: ds_1
+        replicaDataSourceNames: [ds_1_slave_1]
         loadBalancerName: roundRobin
       ms_ds_2:
         name: ms_ds_2
-        masterDataSourceName: ds_2
-        slaveDataSourceNames: [ds_2_slave_2]
+        primaryDataSourceName: ds_2
+        replicaDataSourceNames: [ds_2_slave_2]
         loadBalancerName: roundRobin
       ms_ds_3:
         name: ms_ds_3
-        masterDataSourceName: ds_3
-        slaveDataSourceNames: [ds_3_slave_3]
+        primaryDataSourceName: ds_3
+        replicaDataSourceNames: [ds_3_slave_3]
         loadBalancerName: roundRobin
     loadBalancers:
       roundRobin:

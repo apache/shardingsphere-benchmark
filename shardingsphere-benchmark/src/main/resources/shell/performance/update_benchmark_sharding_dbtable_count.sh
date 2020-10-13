@@ -29,6 +29,7 @@ sed -i "s/minPoolSize: [0-9]*}/minPoolSize: $3}/g" `grep 'minPoolSize: [0-9]*' -
 sed -i "s/maxPoolSize: [0-9]*}/maxPoolSize: $4}/g" `grep 'maxPoolSize: [0-9]*' -rl ./yaml/singlerouting`
 sed -i "s/maximumPoolSize: [0-9]*}/maximumPoolSize: $4}/g" `grep 'maximumPoolSize: [0-9]*' -rl ./yaml/singlerouting`
 sed -i "s/max.connections.size.per.query: [0-9]*}/max.connections.size.per.query: $5}/g" `grep 'max.connections.size.per.query: [0-9]*' -rl ./yaml/singlerouting`
+sed -i "s/max.connections.size.per.query: [0-9]*}/max.connections.size.per.query: $5}/g" `grep 'max.connections.size.per.query: [0-9]*' -rl ./yaml/server.yaml`
 
 sed -i "s/shardingsphere.sharding.table.count=[0-9]*/shardingsphere.sharding.table.count=$2/g" `grep 'shardingsphere.sharding.table.count=[0-9]*' -rl ./config/user-config.properties`
 sed -i "s/shardingsphere.sharding.db.count=[0-9]*/shardingsphere.sharding.db.count=$1/g" `grep 'shardingsphere.sharding.db.count=[0-9]*' -rl ./config/user-config.properties`

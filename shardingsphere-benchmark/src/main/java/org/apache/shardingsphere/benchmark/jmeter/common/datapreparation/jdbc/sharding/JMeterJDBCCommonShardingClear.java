@@ -45,5 +45,23 @@ public class JMeterJDBCCommonShardingClear extends JMeterBenchmarkBase {
         }
         return results;
     }
+    
+    public static void main(String[] args){
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            JDBCDataSourceUtil.delete(connection, (String) sqlConfig.get("common.jdbc.clear"), null);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
 

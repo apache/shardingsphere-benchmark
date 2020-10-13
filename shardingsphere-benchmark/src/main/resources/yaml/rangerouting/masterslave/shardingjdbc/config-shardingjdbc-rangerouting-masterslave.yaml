@@ -43,12 +43,12 @@ dataSources:
       useServerPrepStmts: true
 
 rules:
-  - !MASTER_SLAVE
+  - !PRIMARY_REPLICA_REPLICATION
     dataSources:
       ms_ds:
         name: ms_ds
-        masterDataSourceName: ds_master
-        slaveDataSourceNames: [ds_slave0]
+        primaryDataSourceName: ds_master
+        replicaDataSourceNames: [ds_slave0]
 
 props:
   max.connections.size.per.query: 10

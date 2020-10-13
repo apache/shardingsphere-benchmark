@@ -65,9 +65,11 @@ public class JMeterShardigSphereBenchmarkStatistic extends JMeterBenchmarkBase {
         
         String resultExcelPath = (String)userConfig.get("shardingsphere.benchmark.result.base.path") + "/" + (String)userConfig.get("shardingsphere.benchmark.result.excel.name");
         String resultAvgExcelPath = (String)userConfig.get("shardingsphere.benchmark.result.base.path")  + "/" + (String)userConfig.get("shardingsphere.benchmark.avg.result.excel.name");
+        BenchmarkExcelWriter.clearExportExcel(resultExcelPath);
         BenchmarkExcelWriter.writeExcel(resultExcelPath, "full-routing-" + currentTime, true, 1, fullRoutingResult);
         BenchmarkExcelWriter.writeExcel(resultExcelPath, "range-routing-" + currentTime, true, 1, rangeRoutingResult);
         BenchmarkExcelWriter.writeExcel(resultExcelPath, "single-routing-" + currentTime, true, 1, singleRoutingResult);
+        BenchmarkExcelWriter.clearExportExcel(resultAvgExcelPath);
         BenchmarkExcelWriter.writeExcel(resultAvgExcelPath, "full-routing-" + currentTime, true, 1, fullRoutingCalResult);
         BenchmarkExcelWriter.writeExcel(resultAvgExcelPath, "range-routing-" + currentTime, true, 1, rangeRoutingCalResult);
         BenchmarkExcelWriter.writeExcel(resultAvgExcelPath, "single-routing-" + currentTime, true, 1, singleRoutingCalResult);
