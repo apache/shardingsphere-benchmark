@@ -1,4 +1,4 @@
-benchmark_base_dir="/export/benchmark_project/shardingsphere-benchmark1"
+benchmark_base_dir="/export/benchmark_project/shardingsphere-benchmark"
 benchmark_result_base_dir="/export/shardingsphere-benchmark/result"
 cd $benchmark_base_dir
 
