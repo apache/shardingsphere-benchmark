@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -96,19 +97,41 @@ public final class BenchmarkExcelWriter {
      */
     public static void clearExportExcel(String excelPath){
         Workbook workbook = null;
+        String sheetName = "";
         File exportFile = null;
         FileOutputStream fileOut = null;
         try {
             exportFile = new File(excelPath);
             if(exportFile.exists()){
                 workbook = new HSSFWorkbook(new FileInputStream(excelPath));
-                while(workbook.getNumberOfSheets() > 0){
-                    workbook.removeSheetAt(0);
+                List<Long> timeStamps = new ArrayList<Long>();
+                int sheetCount = workbook.getNumberOfSheets();
+                if (sheetCount >= 9) {
+                    for (int i = 0; i < sheetCount; i++) {
+                        sheetName = workbook.getSheetName(i);
+                        String[] nameSubs = sheetName.split("-");
+                        long timeStamp = Long.valueOf(nameSubs[2]).longValue();
+                        if (!timeStamps.contains(timeStamp)) {
+                            timeStamps.add(timeStamp);
+                        }
+                    }
+                    Collections.sort(timeStamps);
+                    long minTimeStamp = timeStamps.get(0);
+                    String removedSheetName = "full-routing-" + minTimeStamp;
+                    int sheetIndex = workbook.getSheetIndex(removedSheetName);
+                    workbook.removeSheetAt(sheetIndex);
+                    removedSheetName = "single-routing-" + minTimeStamp;
+                    sheetIndex = workbook.getSheetIndex(removedSheetName);
+                    workbook.removeSheetAt(sheetIndex);
+                    removedSheetName = "range-routing-" + minTimeStamp;
+                    sheetIndex = workbook.getSheetIndex(removedSheetName);
+                    workbook.removeSheetAt(sheetIndex);
                 }
                 fileOut = new FileOutputStream(excelPath);
                 workbook.write(fileOut);
                 workbook.close();
             }
+            
             
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
