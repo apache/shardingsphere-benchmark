@@ -132,6 +132,7 @@ public final class BenchmarkExcelWriter {
                 workbook.close();
             }
             
+            
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
