@@ -6,7 +6,8 @@ if [ -f ./ss_build_version.log ]; then
   rm ./ss_build_version.log
 fi
 echo $1 > ./ss_build_version.log
-sleep 2s
+
+sleep 10s
 
 ss_version=`head -n +1 ./ss_build_version.log`
 
