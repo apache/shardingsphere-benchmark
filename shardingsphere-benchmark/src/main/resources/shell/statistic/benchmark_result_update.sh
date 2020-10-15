@@ -16,8 +16,8 @@ if [ $1 == 5.0 ];then
   git checkout master
   git reset --hard
   git pull origin master
-  cp $benchmark_result_base_dir/shardingsphere-benchmark.xls $benchmark_base_dir/shardingsphere-benchmark
-  cp $benchmark_result_base_dir/shardingsphere-benchmark-avg.xls $benchmark_base_dir/shardingsphere-benchmark
+  cp $benchmark_result_base_dir/shardingsphere-benchmark.xls $benchmark_base_dir/shardingsphere-benchmark/resources/report
+  cp $benchmark_result_base_dir/shardingsphere-benchmark-avg.xls $benchmark_base_dir/shardingsphere-benchmark/resources/report
   git add .
   git commit -m "update benchmark result"
   git push origin master
@@ -27,8 +27,8 @@ elif [ $1 == 4.1.1 ];then
   git checkout 4.1.1
   git reset --hard
   git pull origin 4.1.1
-  cp $benchmark_result_base_dir/shardingsphere-benchmark.xls $benchmark_base_dir/shardingsphere-benchmark
-  cp $benchmark_result_base_dir/shardingsphere-benchmark-avg.xls $benchmark_base_dir/shardingsphere-benchmark  
+  cp $benchmark_result_base_dir/shardingsphere-benchmark.xls $benchmark_base_dir/shardingsphere-benchmark/resources/report
+  cp $benchmark_result_base_dir/shardingsphere-benchmark-avg.xls $benchmark_base_dir/shardingsphere-benchmark/resources/report
   git add .
   git commit -m "update benchmark result"
   git push origin 4.1.1
@@ -38,8 +38,8 @@ else
   git checkout master
   git reset --hard
   git pull origin master
-  cp $benchmark_result_base_dir/shardingsphere-benchmark.xls $benchmark_base_dir/shardingsphere-benchmark
-  cp $benchmark_result_base_dir/shardingsphere-benchmark-avg.xls $benchmark_base_dir/shardingsphere-benchmark  
+  cp $benchmark_result_base_dir/shardingsphere-benchmark.xls $benchmark_base_dir/shardingsphere-benchmark/resources/report
+  cp $benchmark_result_base_dir/shardingsphere-benchmark-avg.xls $benchmark_base_dir/shardingsphere-benchmark/resources/report
   git add .
   git commit -m "update benchmark result"
   git push origin master  
