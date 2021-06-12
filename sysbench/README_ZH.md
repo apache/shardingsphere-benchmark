@@ -105,7 +105,7 @@ Threads fairness:
 测试 proxy + pgsqsl : sysbench/proxy-pgsql/sysbench-proxy-pgsql.pipeline
 
 同时修改 `.env` 文件以及 `prepared-conf` 中对应的 yaml 配置，以期符合自己的测试需求
-
+>> 如果需要测试 mysql，需要自行将 MySQL 的 driver(例如 mysql-connector-java-8.0.24.jar) 放入要测试的目录的 prepared-conf 下。
 如下图所示 : 
 
 ![](resources/image/jenkins-sysbench-pipeline.png)
