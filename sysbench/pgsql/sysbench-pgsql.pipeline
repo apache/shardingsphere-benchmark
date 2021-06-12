@@ -1,0 +1,39 @@
+#!groovy
+
+pipeline {
+  agent any
+
+  stages {
+
+    // generate the corresponding directories and make the script read on sysbench node.
+    stage('Prepare Sysbench') {
+      agent {
+        label 'sysbench'
+      }
+      steps {
+        echo '..... prepare the directories for sysbench ......'
+        git url: 'https://gitee.com/taojintianxia/gittee-database-sysbench.git'
+        sh "chmod +x -R ${env.WORKSPACE}"
+        sh 'sysbench/pgsql/prepare-sysbench.sh pure-pgsql'
+        sh 'sysbench/pgsql/sysbench-test-function.sh'
+      }
+    }
+
+    stage("Generate Report for PGSQL") {
+      agent {
+        label 'sysbench'
+      }
+      steps {
+        echo "generate report for PGSQL"
+        publishHTML target: [
+          allowMissing: true,
+          alwaysLinkToLastBuild: true,
+          keepAll: true,
+          reportDir: "/opt/sphere-ex/pure-pgsql/sysbench-result/graph/pgsql/",
+          reportFiles: '*.png',
+          reportName: "PGSQL Report"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+schemaName: sbtest
+
+dataSources:
+  ds_0:
+    url: jdbc:mysql://10.12.3.28:3306/sbtest?serverTimezone=UTC&useSSL=false
+    username: root
+    password: sphereEx@2021
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 256
+    minPoolSize: 256
+    maintenanceIntervalMilliseconds: 30000
+
+rules:
+- !ENCRYPT
+  encryptors:
+    md5_encryptor:
+      type: MD5
+  tables:
+    sbtest1:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest2:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest3:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest4:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest5:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest6:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest7:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest8:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest9:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor
+    sbtest10:
+      columns:
+        pad:
+          cipherColumn: pad
+          encryptorName: md5_encryptor

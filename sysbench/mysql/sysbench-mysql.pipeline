@@ -1,0 +1,39 @@
+#!groovy
+
+pipeline {
+  agent any
+
+  stages {
+
+    // generate the corresponding directories and make the script read on sysbench node.
+    stage('Prepare Sysbench') {
+      agent {
+        label 'sysbench'
+      }
+      steps {
+        echo '..... prepare the directories for sysbench ......'
+        git url: 'https://gitee.com/taojintianxia/gittee-database-sysbench.git'
+        sh "chmod +x -R ${env.WORKSPACE}"
+        sh 'sysbench/mysql/prepare-sysbench.sh pure-mysql'
+        sh 'sysbench/mysql/sysbench-test-function.sh'
+      }
+    }
+
+    stage("Generate Report for MySQL") {
+      agent {
+        label 'sysbench'
+      }
+      steps {
+        echo "generate report for MySQL"
+        publishHTML target: [
+          allowMissing: true,
+          alwaysLinkToLastBuild: true,
+          keepAll: true,
+          reportDir: "/opt/sphere-ex/pure-mysql/sysbench-result/graph/mysql/",
+          reportFiles: '*.png',
+          reportName: "MySQL Report"
+        ]
+      }
+    }
+  }
+}

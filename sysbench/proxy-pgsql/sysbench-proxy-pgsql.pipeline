@@ -1,0 +1,95 @@
+#!groovy
+
+def DATABASE_TYPE
+def TEST_FUNCTION_LIST
+
+pipeline {
+  agent any
+
+  stages {
+    stage('Init Jenkins Pipeline Environment') {
+      steps {
+        script {
+          DATABASE_TYPE = 'pgsql'
+          TEST_FUNCTION_LIST = ['sharding', 'readwrite-splitting', 'encrypt']
+        }
+      }
+    }
+
+    // clone code, compile code and unzip proxy distribution on proxy node
+    stage('Install Sharding Proxy') {
+      agent {
+        label 'proxy'
+      }
+      steps {
+        echo '...... Installing Sharding Proxy ...... '
+        git url: 'https://gitee.com/taojintianxia/gittee-database-sysbench.git'
+        sh "chmod +x -R ${env.WORKSPACE}"
+        sh 'sysbench/proxy-pgsql/install-proxy.sh'
+      }
+    }
+
+    // generate the corresponding directories and make the script read on sysbench node.
+    stage('Prepare Sysbench') {
+      agent {
+        label 'sysbench'
+      }
+      steps {
+        echo '..... prepare the directories for sysbench ......'
+        git url: 'https://gitee.com/taojintianxia/gittee-database-sysbench.git'
+        sh "chmod +x -R ${env.WORKSPACE}"
+        sh 'sysbench/proxy-pgsql/prepare-sysbench.sh proxy-pgsql'
+      }
+    }
+
+    stage('Prepare Proxy') {
+      agent {
+        label 'proxy'
+      }
+      steps {
+        echo '..... prepare the directories for proxy ......'
+        git url: 'https://gitee.com/taojintianxia/gittee-database-sysbench.git'
+        sh "chmod +x -R ${env.WORKSPACE}"
+        sh 'sysbench/proxy-pgsql/prepare-proxy.sh'
+      }
+    }
+
+    stage('Test In a Loop') {
+      steps {
+        script {
+          for (int i = 0; i < TEST_FUNCTION_LIST.size(); i++) {
+            stage("Prepare Proxy Config for ${TEST_FUNCTION_LIST[i]}") {
+              node('proxy') {
+                echo "prepare the config for ${TEST_FUNCTION_LIST[i]}"
+                sh "sysbench/proxy-pgsql/prepared-conf/prepare-for-function.sh ${TEST_FUNCTION_LIST[i]}"
+              }
+            }
+
+            stage("Sysbench Start to Test ${TEST_FUNCTION_LIST[i]}") {
+              node('sysbench') {
+                echo "sysbench start to test ${TEST_FUNCTION_LIST[i]}"
+                echo "sleep 10 sencods for waiting proxy start"
+                sh "sleep 10"
+                sh "sysbench/proxy-pgsql/sysbench-test-function.sh ${TEST_FUNCTION_LIST[i]}"
+              }
+            }
+
+            stage("Generate Report for ${TEST_FUNCTION_LIST[i]}") {
+              node('sysbench') {
+                echo "generate report for ${TEST_FUNCTION_LIST[i]}"
+                publishHTML target: [
+                  allowMissing: true,
+                  alwaysLinkToLastBuild: true,
+                  keepAll: true,
+                  reportDir: "/opt/sphere-ex/pgsql/sysbench-result/graph/${TEST_FUNCTION_LIST[i]}/",
+                  reportFiles: '*.png',
+                  reportName: "${TEST_FUNCTION_LIST[i]} Report"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
