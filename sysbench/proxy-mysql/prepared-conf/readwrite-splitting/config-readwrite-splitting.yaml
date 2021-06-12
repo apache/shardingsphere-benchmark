@@ -1,0 +1,31 @@
+schemaName: sbtest
+
+dataSources:
+  write_ds:
+    url: jdbc:mysql://10.12.3.28:3306/sbtest?serverTimezone=UTC&useSSL=false
+    username: root
+    password: sphereEx@2021
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 128
+    minPoolSize: 128
+    maintenanceIntervalMilliseconds: 30000
+
+  read_ds:
+    url: jdbc:mysql://10.12.3.80:3306/sbtest?serverTimezone=UTC&useSSL=false
+    username: root
+    password: sphereEx@2021
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 128
+    minPoolSize: 128
+    maintenanceIntervalMilliseconds: 30000
+
+rules:
+- !READWRITE_SPLITTING
+  dataSources:
+    pr_ds:
+      writeDataSourceName: write_ds
+      readDataSourceNames: [read_ds]
