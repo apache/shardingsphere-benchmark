@@ -31,35 +31,34 @@ Install sysbench on `10.0.100.20`, and launch up the agent on `10.0.100.20`，`1
 
 ### Jenkins Pipeline
 
-Sysbench 是不依赖 Jenkins 以及任何 CI/CD 工具的，甚至可以手动在命令行中执行 sysbench 的脚本。选用 Jenkins 的目的是利用 Jenkins 的 pipeline 管理压测流程，使之透明化、自动化。
-Sysbench doesn't rely on and CI/CD tool, it could execute in console manually.
+Sysbench doesn't rely on any CI/CD tool, even it could be executed in console manully. The reason of choosing jenkin to manage sysbench, is that jenkins could make the pressure test process automatically and transparently.
 
-如下为 Jenkins 管理压测步骤的流程：
+Following is the test process of Jenkin management
 
   1. Install Proxy
   2. Prepare Sysbench
   3. Prepare Proxy
   4. Test Proxy
 
-#### 安装 proxy
+#### Install Proxy
 
-在这一阶段，Jenkins 会通过 agent 创建 proxy 所需目录，通过 git 克隆 ShardingSphere 的代码，编译 ShardingSphere 的代码，解压缩编译后的 proxy districution
+In this stage, jenkins will create the directories and nessasery files for proxy through jenkins agent. And then clone ShardingSphere Code by git, compile the code, unzip the proxy districution.
 
-#### 准备 sysbench
+#### Prepare Sysbench
 
-在这一阶段，Jenkins 会通过 agent 创建 sysbench 结果集所需要的目录，准备好 sysbench 所需的脚本跟参数
+In this stage, jenkins will create the directories and nessasery files for sysbench, makes the parameters and sysbench script ready.
 
-#### 准备 proxy
+#### Prepar Proxy
  
-在这一阶段，Jenkins 会将 proxy 所需的配置文件跟驱动准备好（例如 MySQL Driver），复制到 proxy 中的相应目录并且启动 proxy。
+In this stage, jenkins will prepare the config files or driver(e.g. MySQL Driver) for proxy, and start up proxy
 
-#### 测试 proxy
+#### Test Proxy
 
-在这一阶段，Jenkins 会根据配置文件中的参数启动 sysbench 压测 proxy。压测结束后，会通过一个 Python 脚本将不同批次的压测结果整合并输出为图片，在 Jenkins 的 report 中即可查看不同批次的结果变化。
+In this stage, jenkins will make pressure test to proxy by the parameters in config files. after test, a python script will generate an image by sysbench result, could check the difference of different test in jenkins report.
 
-### sysbench 的 report
+### sysbench report
 
-sysbench 的结果会输出为一个 .txt 文件，内容类似如下：
+sysbench will generate result as a .txt file, the content like following: 
 
 ```
 SQL statistics:
@@ -89,23 +88,25 @@ Threads fairness:
     execution time (avg/stddev):   179.9576/0.01
 ```
 
-项目中的 python 脚本会根据 sysbench 生成如下的统计图表：
+the python script in this projet will generate analysis image as following:
 
 ![](../resources/image/sysbench_result_img.png)
 
-### 如何自己通过 Jenkins 做同样的测试
+### How to do the same test through Jenkin by yourself
 
-建议 fork 一份当前项目，然后创建 Jenkins 的 pipeline，`Pipeline` 部分选择 `pipeline script from SCM`。SCM 的 git 地址为当前项目地址 `https://github.com/apache/shardingsphere-benchmark.git`
+fork current prject, and then create Jenkins pipeline, `Pipeline` choose `pipeline script from SCM`. the address of SCM is this project git address `https://github.com/apache/shardingsphere-benchmark.git`
 
-想测试什么类型的数据库组合，根据不同的 script path 进行设置：
+test different senario by setting different script path:
 
-测试 mysql : sysbench/mysql/sysbench-mysql.pipeline
-测试 pgsql : sysbench/mysql/sysbench-pgsql.pipeline
-测试 proxy + mysql : sysbench/proxy-mysql/sysbench-proxy-mysql.pipeline
-测试 proxy + pgsqsl : sysbench/proxy-pgsql/sysbench-proxy-pgsql.pipeline
+test mysql : sysbench/mysql/sysbench-mysql.pipeline
+test pgsql : sysbench/mysql/sysbench-pgsql.pipeline
+test proxy + mysql : sysbench/proxy-mysql/sysbench-proxy-mysql.pipeline
+test proxy + pgsqsl : sysbench/proxy-pgsql/sysbench-proxy-pgsql.pipeline
 
-同时修改 `.env` 文件以及 `prepared-conf` 中对应的 yaml 配置，以期符合自己的测试需求
-> 如果需要测试 mysql，需要自行将 MySQL 的 driver(例如 mysql-connector-java-8.0.24.jar) 放入要测试的目录的 prepared-conf 下。
-如下图所示 : 
+Modify the conf in `.env` and the yaml files in `prepared-conf` to suit your environment
+>  if test mysql, need to put MySQL driver(e.g. mysql-connector-java-8.0.24.jar) in `prepared-conf` which in the script path
+
+
+as following:
 
 ![](../resources/image/jenkins-sysbench-pipeline.png)
