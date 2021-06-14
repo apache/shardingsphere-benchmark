@@ -2,9 +2,9 @@ schemaName: sbtest
 
 dataSources:
   write_ds:
-    url: jdbc:postgresql://10.12.3.28:5432/sbtest?serverTimezone=UTC&useSSL=false
+    url: jdbc:postgresql://10.0.0.1:5432/sbtest?serverTimezone=UTC&useSSL=false
     username: postgres
-    password: sphereEx@2021
+    password:
     connectionTimeoutMilliseconds: 30000
     idleTimeoutMilliseconds: 60000
     maxLifetimeMilliseconds: 1800000
@@ -13,9 +13,9 @@ dataSources:
     maintenanceIntervalMilliseconds: 30000
 
   read_ds:
-    url: jdbc:postgresql://10.12.3.182:5432/sbtest?serverTimezone=UTC&useSSL=false
+    url: jdbc:postgresql://10.0.0.1:5432/sbtest?serverTimezone=UTC&useSSL=false
     username: postgres
-    password: sphereEx@2021
+    password:
     connectionTimeoutMilliseconds: 30000
     idleTimeoutMilliseconds: 60000
     maxLifetimeMilliseconds: 1800000

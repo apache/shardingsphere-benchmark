@@ -2,9 +2,9 @@ schemaName: sbtest
 
 dataSources:
  ds_0:
-   url: jdbc:mysql://10.12.3.28:3306/sbtest?serverTimezone=UTC&useSSL=false
+   url: jdbc:mysql://10.0.0.1:3306/sbtest?serverTimezone=UTC&useSSL=false
    username: root
-   password: sphereEx@2021
+   password:
    connectionTimeoutMilliseconds: 30000
    idleTimeoutMilliseconds: 60000
    maxLifetimeMilliseconds: 1800000
@@ -12,9 +12,9 @@ dataSources:
    minPoolSize: 1
    maintenanceIntervalMilliseconds: 30000
  ds_1:
-   url: jdbc:mysql://10.12.3.182:3306/sbtest?serverTimezone=UTC&useSSL=false
+   url: jdbc:mysql://10.0.0.2:3306/sbtest?serverTimezone=UTC&useSSL=false
    username: root
-   password: sphereEx@2021
+   password:
    connectionTimeoutMilliseconds: 30000
    idleTimeoutMilliseconds: 60000
    maxLifetimeMilliseconds: 1800000
