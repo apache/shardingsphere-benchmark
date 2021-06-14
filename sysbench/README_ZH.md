@@ -21,7 +21,7 @@ ShardingSphere 引入 Sysbench 作为性能测试工具集的一部分，可以�
 
 网络带宽统一为 10Gb Ethernet
 
-![](resources/image/sysbench-distributed-arch.png)
+![](../resources/image/sysbench-distributed-arch.png)
 
 假设目前有 5 台主机，ip 以及配置如上图
 
@@ -37,13 +37,13 @@ Sysbench 是不依赖 Jenkins 以及任何 CI/CD 工具的，甚至可以手动�
 如下为 Jenkins 管理压测步骤的流程：
 
   1. 安装 Proxy
-  2. 	准备 sysbench
+  2. 准备 sysbench
   3. 准备 proxy
   4. 测试 proxy
 
 #### 安装 proxy
 
-在这一阶段，Jenkins 会通过 agent 创建 proxy 所需目录，通过 git 克隆 ShardigSphere 的代码，编译 ShardingSphere 的代码，解压缩编译后的 proxy districution
+在这一阶段，Jenkins 会通过 agent 创建 proxy 所需目录，通过 git 克隆 ShardingSphere 的代码，编译 ShardingSphere 的代码，解压缩编译后的 proxy districution
 
 #### 准备 sysbench
 
@@ -91,7 +91,7 @@ Threads fairness:
 
 项目中的 python 脚本会根据 sysbench 生成如下的统计图表：
 
-![](resources/image/sysbench_result_img.png)
+![](../resources/image/sysbench_result_img.png)
 
 ### 如何自己通过 Jenkins 做同样的测试
 
@@ -105,7 +105,7 @@ Threads fairness:
 测试 proxy + pgsqsl : sysbench/proxy-pgsql/sysbench-proxy-pgsql.pipeline
 
 同时修改 `.env` 文件以及 `prepared-conf` 中对应的 yaml 配置，以期符合自己的测试需求
->> 如果需要测试 mysql，需要自行将 MySQL 的 driver(例如 mysql-connector-java-8.0.24.jar) 放入要测试的目录的 prepared-conf 下。
+> 如果需要测试 mysql，需要自行将 MySQL 的 driver(例如 mysql-connector-java-8.0.24.jar) 放入要测试的目录的 prepared-conf 下。
 如下图所示 : 
 
-![](resources/image/jenkins-sysbench-pipeline.png)
+![](../resources/image/jenkins-sysbench-pipeline.png)
